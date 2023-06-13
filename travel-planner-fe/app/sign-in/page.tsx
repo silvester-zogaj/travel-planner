@@ -27,7 +27,6 @@ export default function SignIn() {
 
     signIn(email, password).then(({ result, error }) => {
       if (error) {
-        console.log("result", error.code);
         setStatus(getErrorMessage(error.code));
       }
       if (result?.user.email) {
@@ -36,7 +35,7 @@ export default function SignIn() {
     }
     )
   }
-
+  
   return (
     <>
       <h1>Sign in!</h1>
@@ -56,7 +55,6 @@ export default function SignIn() {
         <br></br>
         <button type="submit">Submit</button>
       </form>
-
     </>
   );
 }

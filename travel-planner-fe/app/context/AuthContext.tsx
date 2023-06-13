@@ -1,9 +1,10 @@
+"use client"
 import React, { ReactNode } from 'react';
 import {
     onAuthStateChanged,
     getAuth,
 } from 'firebase/auth';
-import firebase_app from '../firebase/config';
+import firebase_app from '..//firebase/config';
 import { User as FirebaseUser } from "firebase/auth";
 
 const auth = getAuth(firebase_app);
