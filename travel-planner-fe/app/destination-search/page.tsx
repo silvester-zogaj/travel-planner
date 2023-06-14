@@ -12,28 +12,21 @@ export default function destination(){
   useEffect(() => {
     destinationSearch(input)
       .then((response) => {
-        // console.log(response)
-        // setInput(response)
+        
     })
   }, [])
 
 
-  const handleChange = (e: string) => {
-
-    console.log(e)
-      setInput(e)
-  }
-
   const handleSubmit = (e: React.FormEvent) => {
+    setInput(e.target[0].value)
     e.preventDefault()
   }
 
   return (
 
-    
    <form onSubmit={handleSubmit}>
 
-  <SearchBox value={input} accessToken={'pk.eyJ1IjoibGFpOTYiLCJhIjoiY2xpdWVhdmQ3MHkybjNobzdnbjJwcmx6YSJ9.0CYohMf5CN77cD-BOo7mhw'} onChange={handleChange}/>
+      <SearchBox value={input} accessToken={'pk.eyJ1IjoibGFpOTYiLCJhIjoiY2xpdWVhdmQ3MHkybjNobzdnbjJwcmx6YSJ9.0CYohMf5CN77cD-BOo7mhw'}/>
       
         <button type="submit">Continue</button>
     </form>
