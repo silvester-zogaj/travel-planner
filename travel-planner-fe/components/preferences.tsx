@@ -3,6 +3,7 @@ import { useState } from "react";
 
 export default function Preferences({ setCurrentPage, currentPage }) {
   const [isDisabled, setIsDisabled] = useState(false);
+  const [isDisabledNature, setisDisabledNature]= useState(false)
   const [preferences, setPreferences] = useState([]);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -18,8 +19,21 @@ export default function Preferences({ setCurrentPage, currentPage }) {
     setPreferences((currPreferences) => {
       return [...currPreferences, e.target.value];
     });
-    if (!e.target.disabled) {
-      e.target.disabled = true;
+    if (!isDisabled) {
+      setIsDisabled(true)
+    } else {
+      setIsDisabled(false)
+    }
+  };
+
+  const handleClickNature = (e) => {
+    setPreferences((currPreferences) => {
+      return [...currPreferences, e.target.value];
+    });
+    if (!isDisabledNature) {
+      setisDisabledNature(true)
+    } else {
+      setisDisabledNature(false)
     }
   };
 
@@ -28,10 +42,10 @@ export default function Preferences({ setCurrentPage, currentPage }) {
     <>
       <h1>Finally, tell us what you enjoy doing when you're away...</h1>
       <form onSubmit={handleSubmit}>
-        <button value="adventure" onClick={handleClick}>
+        <button disabled={isDisabled} value="adventure" onClick={handleClick}>
           Adventure
         </button>
-        <button value="nature" onClick={handleClick}>
+        <button disabled={isDisabledNature}value="nature" onClick={handleClickNature}>
           Nature
         </button>
         <button value="history" onClick={handleClick}>
