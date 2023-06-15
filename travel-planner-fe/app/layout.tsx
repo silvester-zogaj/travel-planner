@@ -1,3 +1,4 @@
+import CurrentUser from "@/components/currentUserComponent";
 import { AuthContextProvider } from "./context/AuthContext";
 import RootStyleRegistry from "./emotion";
 import "./globals.css";
@@ -19,7 +20,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <RootStyleRegistry>
-          <AuthContextProvider>{children}</AuthContextProvider>{" "}
+          <AuthContextProvider>
+            <CurrentUser />
+            {children}
+          </AuthContextProvider>{" "}
         </RootStyleRegistry>
       </body>
     </html>
