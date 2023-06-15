@@ -1,19 +1,24 @@
 "use client";
 import { use, useState } from "react";
 
-export default function Duration() {
+export default function Duration({setCurrentPage}) {
   const [day, setDay] = useState(null);
   const [numDays, setNumDays] = useState(0);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     setDay(e.target[0].value);
     setNumDays(e.target[1].value);
-    e.preventDefault();
+    setCurrentPage((currPage: number) => currPage + 1 )
   };
+
+  const handleReturn = () => {
+    
+    setCurrentPage((currPage: number) => currPage - 1 )
+  }
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} >
         <h1>Tell us a little more about your trip</h1>
         <h2>Which day do you arrive?</h2>
         <label htmlFor="day">Choose a day:</label>
@@ -32,6 +37,7 @@ export default function Duration() {
         <input type="number" id="days" name="days" min="1" max="14" />
         <br></br>
         <button type="submit">Continue</button>
+        <button type="submit" onSubmit={handleReturn}>Return</button>
       </form>
     </>
   );

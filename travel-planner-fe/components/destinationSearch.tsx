@@ -4,8 +4,7 @@ import mapboxgl from "mapbox-gl";
 import { destinationSearch } from "./apis";
 import { SearchBox } from "@mapbox/search-js-react";
 
-
-export default function destination(){
+export default function Destination({setCurrentPage}){
 
   const [ input, setInput ] = React.useState('london')
 
@@ -18,7 +17,9 @@ export default function destination(){
 
 
   const handleSubmit = (e: React.FormEvent) => {
+    console.log(e.target[0].value)
     setInput(e.target[0].value)
+    setCurrentPage((currPage) => currPage + 1 )
     e.preventDefault()
   }
 
