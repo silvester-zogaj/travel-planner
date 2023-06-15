@@ -33,6 +33,7 @@ export default function SignUp() {
         <br></br>
         <button type="submit" >Submit</button>
       </form>
+      <button onClick={() => window.location.href = '/'}>Back</button>
     </>
   );
 }
