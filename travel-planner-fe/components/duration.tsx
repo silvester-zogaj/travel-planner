@@ -1,19 +1,36 @@
 "use client";
 import { use, useState } from "react";
 
-export default function Duration() {
+export default function Duration({setCurrentPage, currentPage}) {
+
   const [day, setDay] = useState(null);
   const [numDays, setNumDays] = useState(0);
+  const [isDisabled, setIsDisabled] = useState(true)
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     setDay(e.target[0].value);
     setNumDays(e.target[1].value);
-    e.preventDefault();
+    setCurrentPage(currentPage + 1)
+    console.log(e.target[1].value.length)
+
   };
+
+  const handleReturn = () => {
+    setCurrentPage(currentPage - 1);
+  }
+ 
+
+  const handleChange = (e) => {
+    console.log(typeof e.target.value, e.target.value.length)
+    if(e.target.value.length === 1){
+      setIsDisabled(false)
+    }
+  }
+
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} >
         <h1>Tell us a little more about your trip</h1>
         <h2>Which day do you arrive?</h2>
         <label htmlFor="day">Choose a day:</label>
@@ -29,9 +46,14 @@ export default function Duration() {
 
         <h2>How many days are you there for?</h2>
         <label htmlFor="days">Number of days</label>
-        <input type="number" id="days" name="days" min="1" max="14" />
+        <input type="number" id="days" name="days" min="1" max="14" onChange={handleChange}/>
         <br></br>
-        <button type="submit">Continue</button>
+        <button type="submit" disabled={isDisabled}>Continue</button>
+        
+      </form>
+        
+      <form onSubmit={handleReturn}>
+        <button type="submit">Return</button>
       </form>
     </>
   );
