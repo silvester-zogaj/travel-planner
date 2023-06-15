@@ -7,6 +7,7 @@ import resetPassword from "../firebase/auth/resetPassword";
 const getErrorMessage = (authCode: string) => {
   switch (authCode) {
     case "auth/wrong-password":
+    case "auth/missing-password":
       return "Invalid password";
     case "auth/invalid-email":
     case "auth/user-not-found":
@@ -17,10 +18,12 @@ const getErrorMessage = (authCode: string) => {
 };
 
 export default function SignIn() {
+  // SignIn  form
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState("");
-  const { user } = useContext(AuthContext);
+
+  // Reset password form
   const [showResetPassword, setShowResetPassword] = useState(false);
   const [resetEmail, setResetEmail] = useState("");
   const [resetEmailSent, setResetEmailSent] = useState(false);
@@ -30,7 +33,7 @@ export default function SignIn() {
     event.preventDefault();
 
     try {
-      const { result, error } = await signIn(email, password);
+      const { error } = await signIn(email, password);
       if (error) {
         setStatus(getErrorMessage(error.code));
       }
@@ -41,23 +44,18 @@ export default function SignIn() {
 
   const handleResetPassword = async (event: React.FormEvent) => {
     event.preventDefault();
-
-    if (!validateEmail(resetEmail)) {
-      setResetEmailError("Invalid email");
-    } else {
-      setResetEmailError("");
-      try {
-        await resetPassword(resetEmail);
-        setResetEmailSent(true);
-      } catch (error) {
-        setResetEmailError("Failed to reset password");
-      }
+  
+    try {
+      await resetPassword(resetEmail);
+      setResetEmailSent(true);
+    } catch (error) {
+      setResetEmailError("Failed to reset password");
     }
   };
+  
 
   const toggleResetPassword = () => {
     setShowResetPassword(!showResetPassword);
-    setResetEmail("");
     setResetEmailSent(false);
     setResetEmailError("");
   };
@@ -77,11 +75,6 @@ export default function SignIn() {
     setResetEmailError("");
   };
 
-  const validateEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-
   return (
     <>
       <h1>Sign in!</h1>
@@ -90,7 +83,7 @@ export default function SignIn() {
         <input
           placeholder="johndoe@hotmail.com"
           id="email"
-          type="text"
+          type="email"
           value={email}
           onChange={handleEmailChange}
         />
@@ -116,7 +109,7 @@ export default function SignIn() {
           <input
             placeholder="johndoe@hotmail.com"
             id="reset"
-            type="text"
+            type="email"
             value={resetEmail}
             onChange={handleResetEmailChange}
           />
