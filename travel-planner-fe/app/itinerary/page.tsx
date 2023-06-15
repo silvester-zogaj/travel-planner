@@ -39,7 +39,10 @@ function Itinerary() {
               />
               <TimelineConnector />
             </TimelineSeparator>
-            <TimelineContent sx={{ height: "16vh" }}>
+            <TimelineContent
+              onClick={() => setCurrentDay(i)}
+              sx={{ height: "16vh" }}
+            >
               <Paper
                 sx={{
                   display: "flex",
