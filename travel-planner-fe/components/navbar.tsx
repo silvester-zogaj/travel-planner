@@ -1,34 +1,32 @@
+"use client";
+import { useState } from "react";
+import "./menu.css";
+import Link from "next/link";
+import CurrentUser from "./currentUserComponent";
+import { Drawer, IconButton, Stack } from "@mui/material";
+import { Menu } from "@mui/icons-material";
+import HamburgerList from "./hamburgerMenu";
 
-import { useState } from 'react';
-import "./menu.css"
-import Link from 'next/link';
+const Navbar = () => {
+  const [open, setOpen] = useState(false);
 
-const HamburgerMenu = () => {
-  const [ open, setOpen] = useState(false);
-
-  const handleMenu = () => {
+  const toggleMenu = () => {
     setOpen(!open);
   };
-
+  const handleCloseMenu = () => {
+    setOpen(false);
+  };
   return (
-    <nav className={`hamburger-menu ${open ? 'open' : ''}`}>
-        
-      <section className="hamburger" onClick={handleMenu}>
-        <span className="line"></span>
-        <span className="line"></span>
-        <span className="line"></span>
-      </section>
-
-      <ul className="menu-list">
-        <Link href="/" className="menu-item">Home</Link>
-        <Link href="/profile-settings" className="menu-item">My Profile</Link>
-        <Link href="/itineraries" className="menu-item">My Itineraries</Link>
-      </ul>
-
-    </nav>
+    <Stack direction="row" justifyContent="space-between">
+      <IconButton onClick={toggleMenu}>
+        <Menu />
+      </IconButton>
+      <Drawer open={open} onClose={handleCloseMenu} onKeyDown={handleCloseMenu}>
+        <HamburgerList handleCloseMenu={handleCloseMenu} />
+      </Drawer>
+      <CurrentUser />
+    </Stack>
   );
 };
 
-export default HamburgerMenu;
-
-
+export default Navbar;
