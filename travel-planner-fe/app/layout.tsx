@@ -3,6 +3,9 @@ import { AuthContextProvider } from "./context/AuthContext";
 import RootStyleRegistry from "./emotion";
 import "./globals.css";
 import { Inter } from "next/font/google";
+import { Drawer } from "@mui/material";
+import Hamburger from "@/components/hamburgerMenu";
+import Navbar from "@/components/navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,7 +24,8 @@ export default function RootLayout({
       <body className={inter.className}>
         <RootStyleRegistry>
           <AuthContextProvider>
-            <CurrentUser />
+            <Navbar />
+
             {children}
           </AuthContextProvider>{" "}
         </RootStyleRegistry>
