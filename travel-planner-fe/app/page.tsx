@@ -3,6 +3,7 @@ import Link from "next/link"
 import Menu from "../components/navbar"
 
 
+
 export default function LandingPage(){
     return (
 
