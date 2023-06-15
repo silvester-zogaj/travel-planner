@@ -2,7 +2,7 @@
 import { useContext, useState } from "react";
 import signIn from "../firebase/auth/signIn";
 import { AuthContext } from "../context/AuthContext";
-
+import resetPassword from "../firebase/auth/resetPassword";
 
 const getErrorMessage = (authCode: string) => {
   switch (authCode) {
@@ -12,53 +12,121 @@ const getErrorMessage = (authCode: string) => {
     case "auth/user-not-found":
       return "Invalid email";
     default:
-      return `Unknown error ${authCode}}`;
+      return `Unknown error ${authCode}`;
   }
-
-}
+};
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState("");
-  const { user } = useContext(AuthContext)
-  const handleSignIn = (event: React.FormEvent) => {
+  const { user } = useContext(AuthContext);
+  const [showResetPassword, setShowResetPassword] = useState(false);
+  const [resetEmail, setResetEmail] = useState("");
+  const [resetEmailSent, setResetEmailSent] = useState(false);
+  const [resetEmailError, setResetEmailError] = useState("");
+
+  const handleSignIn = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    signIn(email, password).then(({ result, error }) => {
+    try {
+      const { result, error } = await signIn(email, password);
       if (error) {
         setStatus(getErrorMessage(error.code));
       }
-      if (result?.user.email) {
-        setStatus(`Signed in as ${result.user.email}`);
+    } catch (error) {
+      setStatus("An error occurred during sign-in");
+    }
+  };
+
+  const handleResetPassword = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    if (!validateEmail(resetEmail)) {
+      setResetEmailError("Invalid email");
+    } else {
+      setResetEmailError("");
+      try {
+        await resetPassword(resetEmail);
+        setResetEmailSent(true);
+      } catch (error) {
+        setResetEmailError("Failed to reset password");
       }
     }
-    )
-  }
-  
+  };
+
+  const toggleResetPassword = () => {
+    setShowResetPassword(!showResetPassword);
+    setResetEmail("");
+    setResetEmailSent(false);
+    setResetEmailError("");
+  };
+
+  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
+    setStatus("");
+  };
+
+  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(event.target.value);
+    setStatus("");
+  };
+
+  const handleResetEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setResetEmail(event.target.value);
+    setResetEmailError("");
+  };
+
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   return (
     <>
       <h1>Sign in!</h1>
-      <p> Current User: {user?.email ?? "None"} </p>
       <form onSubmit={handleSignIn}>
         <label htmlFor="email">Email:</label>
-        <input placeholder="johndoe@hotmail.com" id="email" type="text" onChange={(event) => {
-          setEmail(event.target.value)
-        }} />
-        <label htmlFor="password">password:</label>
-        <input placeholder="password" id="password" type="text" onChange={(event) => {
-          setPassword(event.target.value)
-        }} />
-        <p> {status} </p>
-        <br></br>
-        <a href="/">Forgot Password</a>
-        <br></br>
-        <button type="submit">Submit</button>
+        <input
+          placeholder="johndoe@hotmail.com"
+          id="email"
+          type="text"
+          value={email}
+          onChange={handleEmailChange}
+        />
+        <label htmlFor="password">Password:</label>
+        <input
+          placeholder="password"
+          id="password"
+          type="text"
+          value={password}
+          onChange={handlePasswordChange}
+        />
+        <p>{status}</p>
+        <button type="submit">Sign In</button>
       </form>
-      <button onClick={() => window.location.href = '/'}>Back</button>
+      <br />
+      <a href="#" onClick={toggleResetPassword}>
+        Forgot Password
+      </a>
+      <br />
+      {showResetPassword && (
+        <form onSubmit={handleResetPassword}>
+          <label htmlFor="reset">Email:</label>
+          <input
+            placeholder="johndoe@hotmail.com"
+            id="reset"
+            type="text"
+            value={resetEmail}
+            onChange={handleResetEmailChange}
+          />
+          <button type="submit">Reset password</button>
+          {resetEmailError && <p>{resetEmailError}</p>}
+          {resetEmailSent && (
+            <p>If this user exists, we have sent you a password reset email</p>
+          )}
+        </form>
+      )}
     </>
   );
 }
-
-
-
