@@ -1,20 +1,32 @@
 "use client";
 import { use, useState } from "react";
 
-export default function Duration({setCurrentPage}) {
+export default function Duration({setCurrentPage, currentPage}) {
+
   const [day, setDay] = useState(null);
   const [numDays, setNumDays] = useState(0);
+  const [isDisabled, setIsDisabled] = useState(true)
 
   const handleSubmit = (e: React.FormEvent) => {
     setDay(e.target[0].value);
     setNumDays(e.target[1].value);
-    setCurrentPage((currPage: number) => currPage + 1 )
+    setCurrentPage(currentPage + 1)
+    console.log(e.target[1].value.length)
+
   };
 
   const handleReturn = () => {
-    
-    setCurrentPage((currPage: number) => currPage - 1 )
+    setCurrentPage(currentPage - 1);
   }
+ 
+
+  const handleChange = (e) => {
+    console.log(typeof e.target.value, e.target.value.length)
+    if(e.target.value.length === 1){
+      setIsDisabled(false)
+    }
+  }
+
 
   return (
     <>
@@ -34,10 +46,14 @@ export default function Duration({setCurrentPage}) {
 
         <h2>How many days are you there for?</h2>
         <label htmlFor="days">Number of days</label>
-        <input type="number" id="days" name="days" min="1" max="14" />
+        <input type="number" id="days" name="days" min="1" max="14" onChange={handleChange}/>
         <br></br>
-        <button type="submit">Continue</button>
-        <button type="submit" onSubmit={handleReturn}>Return</button>
+        <button type="submit" disabled={isDisabled}>Continue</button>
+        
+      </form>
+        
+      <form onSubmit={handleReturn}>
+        <button type="submit">Return</button>
       </form>
     </>
   );
