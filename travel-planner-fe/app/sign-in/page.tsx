@@ -98,6 +98,7 @@ export default function SignIn() {
         <p>{status}</p>
         <button type="submit">Sign In</button>
       </form>
+      <button onClick={() => window.location.href = '/'}>Back</button>
       <br />
       <a href="#" onClick={toggleResetPassword}>
         Forgot Password
