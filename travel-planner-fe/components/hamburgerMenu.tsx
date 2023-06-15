@@ -8,16 +8,13 @@ import {
   ListItemText,
 } from "@mui/material";
 import Link, { LinkProps } from "@mui/material/Link";
-import { default as NextLink } from "next/link";
-import { Home, FormatListBulleted, Logout } from "@mui/icons-material";
+import { Home, FormatListBulleted, Logout, Login } from "@mui/icons-material";
+import { useContext } from "react";
+import { AuthContext } from "@/app/context/AuthContext";
 
 interface LinkRouterProps extends LinkProps {
   to: string;
   replace?: boolean;
-}
-
-function LinkRouter(props: LinkRouterProps) {
-  return <Link {...props} component={NextLink} />;
 }
 
 interface HamburgerListProps {
@@ -25,6 +22,7 @@ interface HamburgerListProps {
 }
 
 const HamburgerList = ({ handleCloseMenu }: HamburgerListProps) => {
+  const { user } = useContext(AuthContext);
   const Buttons = [
     {
       name: "Home",
@@ -37,9 +35,9 @@ const HamburgerList = ({ handleCloseMenu }: HamburgerListProps) => {
       icon: FormatListBulleted,
     },
     {
-      name: "Logout",
-      link: "/logout",
-      icon: Logout,
+      name: user ? "Logout" : "Sign In",
+      link: user ? "/logout" : "/sign-in",
+      icon: user ? Logout : Login,
     },
   ];
 
@@ -50,7 +48,7 @@ const HamburgerList = ({ handleCloseMenu }: HamburgerListProps) => {
           <ListItem key={button.name} disablePadding>
             <ListItemButton
               onClick={handleCloseMenu}
-              component={LinkRouter as any}
+              component={Link}
               href={button.link}
             >
               <ListItemIcon>
