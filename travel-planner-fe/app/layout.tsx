@@ -24,16 +24,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <RootStyleRegistry>
+        {/* <RootStyleRegistry>
           <ThemeProvider>
             <AuthContextProvider>
               <Container>
-                <Navbar />
+                <Navbar /> */}
                 {children}
-              </Container>
+              {/* </Container>
             </AuthContextProvider>
           </ThemeProvider>
-        </RootStyleRegistry>
+        </RootStyleRegistry> */}
       </body>
     </html>
   );
