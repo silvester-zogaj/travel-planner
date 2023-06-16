@@ -1,12 +1,10 @@
 "use client";
 import { useState } from "react";
-import "./menu.css";
-import Link from "next/link";
-import CurrentUser from "./currentUserComponent";
-import { SwipeableDrawer, IconButton, Stack } from "@mui/material";
-import { Menu } from "@mui/icons-material";
+import IconButton from "@mui/material/IconButton"
+import Stack from "@mui/material/Stack";
+import MenuIcon from "@mui/icons-material/Menu";
+import SwipeableDrawer from "@mui/material/SwipeableDrawer"
 import HamburgerList from "./hamburgerMenu";
-
 const Navbar = () => {
   const [open, setOpen] = useState(false);
 
@@ -22,7 +20,7 @@ const Navbar = () => {
   return (
     <Stack direction="row" justifyContent="space-between">
       <IconButton onClick={toggleMenu}>
-        <Menu />
+        <MenuIcon />
       </IconButton>
       <SwipeableDrawer
         onOpen={handleOpenMenu}
@@ -32,7 +30,7 @@ const Navbar = () => {
       >
         <HamburgerList handleCloseMenu={handleCloseMenu} />
       </SwipeableDrawer>
-      <CurrentUser />
+      {/* <CurrentUser /> */}
     </Stack>
   );
 };

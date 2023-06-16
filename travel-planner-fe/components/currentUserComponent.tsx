@@ -12,7 +12,7 @@ function CurrentUser() {
 
   useEffect(() => {
     const getName = async () => {
-      if (user === null) return setName(null);
+      if (!user) return setName(null);
       const db = getFirestore(firebase_app);
       const docRef = doc(db, "users", user.uid);
       const currentData = await getDoc(docRef);
