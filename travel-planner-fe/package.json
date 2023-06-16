@@ -27,6 +27,7 @@
     "react": "18.2.0",
     "react-burger-menu": "^3.0.9",
     "react-dom": "18.2.0",
+    "react-map-gl": "^7.0.25"
     "tss-react": "^4.8.6"
   },
   "devDependencies": {
