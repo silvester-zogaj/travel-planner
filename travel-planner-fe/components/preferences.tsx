@@ -3,11 +3,9 @@ import { useEffect, useState } from "react";
 import { Buttons } from "./buttons";
 
 export default function Preferences({ setCurrentPage, currentPage }) {
-  const [isDisabled, setIsDisabled] = useState(false);
-  const [isDisabledNature, setisDisabledNature] = useState(false);
   const [preferences, setPreferences] = useState<
-    Record<string, boolean | undefined>
-  >({});
+    Set<string>
+  >(new Set());
 
   const allCategories = [
     "Adventure",
@@ -20,6 +18,7 @@ export default function Preferences({ setCurrentPage, currentPage }) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("current prefs", [...preferences])
   };
 
   const handleReturn = (e) => {
@@ -29,12 +28,16 @@ export default function Preferences({ setCurrentPage, currentPage }) {
 
   const handleToggle = (category: string) => {
     setPreferences((currPreferences) => {
-      console.log(currPreferences);
-      const currentState = currPreferences[category] ?? false;
-      currPreferences[category] = !currentState;
-      return currPreferences;
+      const cloned = new Set(currPreferences)
+      const isSelected = currPreferences.has(category)
+      if (isSelected) {
+        currPreferences.delete(category)
+      } else {
+        currPreferences.add(category)
+      }
+      return cloned;
     });
-    console.log("clicked");
+    console.log("clicked", preferences);
   };
 
   // useEffect(() => {
@@ -46,7 +49,7 @@ export default function Preferences({ setCurrentPage, currentPage }) {
       <h1>Finally, tell us what you enjoy doing when you're away...</h1>
       <form onSubmit={handleSubmit}>
         {allCategories.map((category) => {
-          const isSelected = preferences[category] === true;
+          const isSelected = preferences.has(category);
           console.log("is selected", isSelected)
           return (
             <button
