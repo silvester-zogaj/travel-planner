@@ -7,6 +7,19 @@
   min-height: 100vh;
 }
 
+.tripList {
+  display: flex;
+  flex-direction: column;
+}
+
+.trip {
+  width: 400px;
+  background-color: rgb(135, 217, 247);
+  height: 100px;
+  border-radius: 20px;
+  margin: 5px;
+}
+
 .delete {
   background-color: red;
   color: rgb(246, 210, 210);
