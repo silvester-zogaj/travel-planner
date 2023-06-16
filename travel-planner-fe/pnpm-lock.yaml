@@ -61,6 +61,9 @@ dependencies:
   react-dom:
     specifier: 18.2.0
     version: 18.2.0(react@18.2.0)
+  react-map-gl:
+    specifier: ^7.0.25
+    version: 7.0.25(mapbox-gl@2.15.0)(react@18.2.0)
 
 devDependencies:
   '@types/mapbox-gl':
@@ -1303,7 +1306,6 @@ packages:
     resolution: {integrity: sha512-4vSwPSTQIawZTFRiTY2R74aZwAiM9gE6KGj871xdyAPpa+DmEObXxQQXqL2PsMH31/rP9nxJ2Kv0boeTVJMXVw==}
     dependencies:
       '@types/geojson': 7946.0.10
-    dev: true
 
   /@types/node@20.3.0:
     resolution: {integrity: sha512-cumHmIAf6On83X7yP+LrsEyUOf/YlociZelmpRYaGFydoaPdxdt80MAbu6vWerQT2COCp2nPvHdsbD7tHn/YlQ==}
@@ -3520,6 +3522,17 @@ packages:
 
   /react-is@18.2.0:
     resolution: {integrity: sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==}
+    dev: false
+
+  /react-map-gl@7.0.25(mapbox-gl@2.15.0)(react@18.2.0):
+    resolution: {integrity: sha512-8aZfbDKxVcJnmTEC1eQ00VnTOu722i5wqnx+lV8VHN37ZvWEfMgb84EQ2kW6w/Q3zq6oZqP4helF7u4ydPFLtA==}
+    peerDependencies:
+      mapbox-gl: '*'
+      react: '>=16.3.0'
+    dependencies:
+      '@types/mapbox-gl': 2.7.11
+      mapbox-gl: 2.15.0
+      react: 18.2.0
     dev: false
 
   /react-transition-group@4.4.5(react-dom@18.2.0)(react@18.2.0):
