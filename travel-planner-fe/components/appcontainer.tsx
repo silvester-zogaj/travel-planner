@@ -1,5 +1,6 @@
 "use client";
-import { Paper, Stack } from "@mui/material";
+import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
 
 interface ContainerProps {
   children: React.ReactNode;
