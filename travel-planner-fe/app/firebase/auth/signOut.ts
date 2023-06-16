@@ -4,12 +4,11 @@ import { getAuth, signOut } from "firebase/auth";
 
 const auth = getAuth(firebase_app);
 
-export default async function signIn(email: string, password: string) {
+export default async function signOutUser() {
   try {
-    const result = await signOut(auth);
-    return { error: null, result };
+    await signOut(auth);
   } catch (err) {
     const error = err as FirebaseError;
-    return { error: error, result: null };
+    return error;
   }
 }
