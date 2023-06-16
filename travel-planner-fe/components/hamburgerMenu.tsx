@@ -12,11 +12,6 @@ import Login from "@mui/icons-material/Login";
 import { useContext } from "react";
 import { AuthContext } from "@/app/context/AuthContext";
 
-interface LinkRouterProps extends LinkProps {
-  to: string;
-  replace?: boolean;
-}
-
 interface HamburgerListProps {
   handleCloseMenu: () => void;
 }
