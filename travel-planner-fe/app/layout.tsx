@@ -3,9 +3,11 @@ import { AuthContextProvider } from "./context/AuthContext";
 import RootStyleRegistry from "./emotion";
 import "./globals.css";
 import { Inter } from "next/font/google";
-import { Drawer } from "@mui/material";
+import { Drawer, Paper } from "@mui/material";
 import Hamburger from "@/components/hamburgerMenu";
 import Navbar from "@/components/navbar";
+import Container from "@/components/appcontainer";
+import ThemeProvider from "@/components/createTheme";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,13 +24,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <RootStyleRegistry>
-          <AuthContextProvider>
-            <Navbar />
-
-            {children}
-          </AuthContextProvider>{" "}
-        </RootStyleRegistry>
+        {/* <RootStyleRegistry>
+          <ThemeProvider>
+            <AuthContextProvider>
+              <Container>
+                <Navbar /> */}
+                {children}
+              {/* </Container>
+            </AuthContextProvider>
+          </ThemeProvider>
+        </RootStyleRegistry> */}
       </body>
     </html>
   );
