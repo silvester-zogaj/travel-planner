@@ -35,7 +35,7 @@ export default function Duration({ setCurrentPage, currentPage }) {
       <form onSubmit={handleSubmit}>
         <h1>Tell us a little more about your trip</h1>
         <h2>Which day do you arrive?</h2>
-        <label htmlFor="day">Choose a day:</label>
+        <label htmlFor="day">Choose a day:</label>{" "}
         <select onChange={handleSelect} name="day" id="day">
           <option value="Monday">Monday</option>
           <option value="Tuesday">Tuesday</option>
@@ -47,7 +47,7 @@ export default function Duration({ setCurrentPage, currentPage }) {
         </select>
 
         <h2>How many days are you there for?</h2>
-        <label htmlFor="days">Number of days</label>
+        <label htmlFor="days">Number of days</label>{" "}
         <input
           value={numDays}
           type="number"
@@ -57,6 +57,7 @@ export default function Duration({ setCurrentPage, currentPage }) {
           max="14"
           onChange={handleChange}
         />
+        <br></br>
         <br></br>
         <button type="submit" disabled={isDisabled}>
           Continue
