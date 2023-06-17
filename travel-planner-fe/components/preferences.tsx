@@ -1,12 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Buttons } from "./buttons";
-import styles from "../app/page.module.css"
+import styles from "../app/page.module.css";
 
-export default function Preferences({ setCurrentPage, currentPage }) {
-  const [preferences, setPreferences] = useState<
-    Set<string>
-  >(new Set());
+export default function Preferences({ setCurrentPage, currentPage, lng, lat }) {
+  const [preferences, setPreferences] = useState<Set<string>>(new Set());
+  const [results, setResults] = useState<string[]>([]);
 
   const allCategories = [
     "Adventure",
@@ -19,7 +18,7 @@ export default function Preferences({ setCurrentPage, currentPage }) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("current prefs", [...preferences])
+    console.log([...preferences]);
   };
 
   const handleReturn = (e) => {
@@ -29,16 +28,16 @@ export default function Preferences({ setCurrentPage, currentPage }) {
 
   const handleToggle = (category: string) => {
     setPreferences((currPreferences) => {
-      const cloned = new Set(currPreferences)
-      const isSelected = currPreferences.has(category)
+      const cloned = new Set(currPreferences);
+      const isSelected = currPreferences.has(category);
       if (isSelected) {
-        currPreferences.delete(category)
+        currPreferences.delete(category);
       } else {
-        currPreferences.add(category)
+        currPreferences.add(category);
       }
       return cloned;
     });
-    console.log("clicked", preferences);
+    // console.log("clicked", preferences);
   };
 
   // useEffect(() => {
@@ -51,16 +50,18 @@ export default function Preferences({ setCurrentPage, currentPage }) {
       <form onSubmit={handleSubmit}>
         {allCategories.map((category) => {
           const isSelected = preferences.has(category);
-          console.log("is selected", isSelected)
+          // console.log("is selected", isSelected)
           return (
-            <button className={styles.preferencesButtons}
+            <button
+              className={styles.preferencesButtons}
               onClick={() => {
                 handleToggle(category);
               }}
               key={category}
-              
               style={isSelected ? {} : { opacity: "0.5" }}
-            >{category}</button>
+            >
+              {category}
+            </button>
           );
         })}
         <br></br>
