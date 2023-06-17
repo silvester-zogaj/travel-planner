@@ -44,7 +44,7 @@ export default function SignIn() {
 
   const handleResetPassword = async (event: React.FormEvent) => {
     event.preventDefault();
-  
+
     try {
       await resetPassword(resetEmail);
       setResetEmailSent(true);
@@ -52,7 +52,6 @@ export default function SignIn() {
       setResetEmailError("Failed to reset password");
     }
   };
-  
 
   const toggleResetPassword = () => {
     setShowResetPassword(!showResetPassword);
@@ -70,7 +69,9 @@ export default function SignIn() {
     setStatus("");
   };
 
-  const handleResetEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleResetEmailChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setResetEmail(event.target.value);
     setResetEmailError("");
   };
@@ -86,19 +87,18 @@ export default function SignIn() {
           type="email"
           value={email}
           onChange={handleEmailChange}
-        />
+        />{" "}
         <label htmlFor="password">Password:</label>
         <input
-          placeholder="password"
           id="password"
           type="text"
           value={password}
           onChange={handlePasswordChange}
         />
         <p>{status}</p>
-        <button type="submit">Sign In</button>
+        <button type="submit">Sign in</button>
       </form>
-      <button onClick={() => window.location.href = '/'}>Back</button>
+      <button onClick={() => (window.location.href = "/")}>Back</button>
       <br />
       <a href="#" onClick={toggleResetPassword}>
         Forgot Password

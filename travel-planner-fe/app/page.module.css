@@ -29,6 +29,19 @@
   width: 200px;
 }
 
+.search {
+  width: 30rem;
+}
+
+
+.preferencesButtons {
+  height: 3em;
+  margin: 2px;
+  background-color: rgb(22, 103, 22);
+  border: none;
+  color: white;
+}
+
 .description {
   display: inherit;
   justify-content: inherit;

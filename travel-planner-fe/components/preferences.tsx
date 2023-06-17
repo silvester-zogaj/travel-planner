@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Buttons } from "./buttons";
+import styles from "../app/page.module.css"
 
 export default function Preferences({ setCurrentPage, currentPage }) {
   const [preferences, setPreferences] = useState<
@@ -52,7 +53,7 @@ export default function Preferences({ setCurrentPage, currentPage }) {
           const isSelected = preferences.has(category);
           console.log("is selected", isSelected)
           return (
-            <button
+            <button className={styles.preferencesButtons}
               onClick={() => {
                 handleToggle(category);
               }}
@@ -62,6 +63,7 @@ export default function Preferences({ setCurrentPage, currentPage }) {
             >{category}</button>
           );
         })}
+        <br></br>
         <br></br>
         <button type="submit">Generate plan</button>
       </form>
