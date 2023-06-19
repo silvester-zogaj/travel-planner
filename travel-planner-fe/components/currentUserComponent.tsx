@@ -26,7 +26,7 @@ function CurrentUser() {
   return (
     <Box>
       <Stack direction="row" alignContent={"center"} gap={1}>
-        <Typography variant="h4">
+        <Typography variant="d">
           {user?.email ? `Logged In As ${name}` : "Logged Out"}
         </Typography>
         <Avatar />
