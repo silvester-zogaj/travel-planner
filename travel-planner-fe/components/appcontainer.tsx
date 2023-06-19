@@ -1,5 +1,5 @@
 "use client";
-import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 
 interface ContainerProps {
@@ -7,9 +7,9 @@ interface ContainerProps {
 }
 function Container({ children }: ContainerProps) {
   return (
-    <Paper
+    <Box
       sx={{
-        p: 1,
+        p: 0,
         width: "100%",
         height: "calc(100vh - 74px)",
         display: "flex",
@@ -20,7 +20,7 @@ function Container({ children }: ContainerProps) {
       <Stack alignItems="center" justifyContent="center">
         {children}
       </Stack>
-    </Paper>
+    </Box>
   );
 }
 
