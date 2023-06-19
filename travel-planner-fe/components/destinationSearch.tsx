@@ -1,40 +1,51 @@
 "use client";
 import React, { useRef, useEffect, useState } from "react";
-import mapboxgl from "mapbox-gl";
-import { destinationSearch } from "./apis";
 import { SearchBox } from "@mapbox/search-js-react";
+import styles from "../app/page.module.css";
 
-export default function Destination({ setCurrentPage }) {
-  const [input, setInput] = React.useState("London");
+export default function destination({ setCurrentPage, setLng, setLat }) {
+  const [destination, setDestination] = useState<string>("");
+  const [isDisabled, setIsDisabled] = useState<boolean>(true);
+  
 
-  // useEffect(() => {
-  //   destinationSearch(input)
-  //     .then((response) => {
 
-  //   })
-  // }, [])
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     setCurrentPage((currPage) => currPage + 1);
     e.preventDefault();
   };
 
   const handleRetrieve = (e) => {
-    setInput(e.features[0].properties.name);
+    setLng(e.features[0].properties.coordinates.longitude);
+    setLat(e.features[0].properties.coordinates.latitude);
+    setDestination(e.features[0].properties.name);
+    setIsDisabled(false);
+  };
+
+  const handleChange = (e) => {
+    setIsDisabled(true);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <SearchBox
-        options={{ types: "place" }}
-        onRetrieve={handleRetrieve}
-        value={input}
-        accessToken={
-          "pk.eyJ1IjoibGFpOTYiLCJhIjoiY2xpdWVhdmQ3MHkybjNobzdnbjJwcmx6YSJ9.0CYohMf5CN77cD-BOo7mhw"
-        }
-      />
+    <>
+      <h1>Where are you headed?</h1>
+      <form className={styles.search} onSubmit={handleSubmit}>
+        <SearchBox
+          options={{
+            language: "en",
+            types: "place",
+          }}
+          value={destination}
+          accessToken={
+            "pk.eyJ1IjoibGFpOTYiLCJhIjoiY2xpdWVhdmQ3MHkybjNobzdnbjJwcmx6YSJ9.0CYohMf5CN77cD-BOo7mhw"
+          }
+          onRetrieve={handleRetrieve}
+          onChange={handleChange}
+        />
 
-      <button type="submit">Continue</button>
-    </form>
+        <button disabled={isDisabled} type="submit">
+          Continue
+        </button>
+      </form>
+    </>
   );
 }

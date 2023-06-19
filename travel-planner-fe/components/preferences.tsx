@@ -1,13 +1,23 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Buttons } from "./buttons";
+import styles from "../app/page.module.css"
 
 export default function Preferences({ setCurrentPage, currentPage }) {
-  const [isDisabled, setIsDisabled] = useState(false);
-  const [isDisabledNature, setisDisabledNature]= useState(false)
-  const [preferences, setPreferences] = useState([]);
+  const [preferences, setPreferences] = useState<Set<string>>(new Set());
+
+  const allCategories = [
+    "Adventure",
+    "Nature",
+    "History",
+    "Culture",
+    "Sport/Exercise",
+    "Relaxing",
+  ];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("current prefs", [...preferences]);
   };
 
   const handleReturn = (e) => {
@@ -15,52 +25,46 @@ export default function Preferences({ setCurrentPage, currentPage }) {
     e.preventDefault();
   };
 
-  const handleClick = (e) => {
+  const handleToggle = (category: string) => {
     setPreferences((currPreferences) => {
-      return [...currPreferences, e.target.value];
+      const cloned = new Set(currPreferences);
+      const isSelected = currPreferences.has(category);
+      if (isSelected) {
+        cloned.delete(category);
+      } else {
+        cloned.add(category);
+      }
+      return cloned;
     });
-    if (!isDisabled) {
-      setIsDisabled(true)
-    } else {
-      setIsDisabled(false)
-    }
+    console.log("clicked", preferences, "added", category);
   };
 
-  const handleClickNature = (e) => {
-    setPreferences((currPreferences) => {
-      return [...currPreferences, e.target.value];
-    });
-    if (!isDisabledNature) {
-      setisDisabledNature(true)
-    } else {
-      setisDisabledNature(false)
-    }
-  };
+  // useEffect(() => {
+  //   console.log(preferences);
+  // }, [preferences]);
 
-  console.log(preferences);
   return (
     <>
       <h1>Finally, tell us what you enjoy doing when you're away...</h1>
       <form onSubmit={handleSubmit}>
-        <button disabled={isDisabled} value="adventure" onClick={handleClick}>
-          Adventure
-        </button>
-        <button disabled={isDisabledNature}value="nature" onClick={handleClickNature}>
-          Nature
-        </button>
-        <button value="history" onClick={handleClick}>
-          History
-        </button>
-        <button value="culture" onClick={handleClick}>
-          Culture
-        </button>
-        <button value="relaxing" onClick={handleClick}>
-          Relaxing
-        </button>
-        <button value="sports" onClick={handleClick}>
-          Sports
-        </button>
-        <button type="submit">Continue</button>
+        {allCategories.map((category) => {
+          const isSelected = preferences.has(category);
+          console.log("is selected", isSelected);
+          return (
+            <button className={styles.preferencesButtons}
+              onClick={() => {
+                handleToggle(category);
+              }}
+              key={category}
+              style={isSelected ? {} : { opacity: "0.5" }}
+            >
+              {category}
+            </button>
+          );
+        })}
+        <br></br>
+        <br></br>
+        <button type="submit">Generate plan</button>
       </form>
       <form onSubmit={handleReturn}>
         <button type="submit">Return</button>

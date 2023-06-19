@@ -1,13 +1,10 @@
-import CurrentUser from "@/components/currentUserComponent";
 import { AuthContextProvider } from "./context/AuthContext";
-import RootStyleRegistry from "./emotion";
 import "./globals.css";
 import { Inter } from "next/font/google";
-import { Drawer, Paper } from "@mui/material";
-import Hamburger from "@/components/hamburgerMenu";
-import Navbar from "@/components/navbar";
 import Container from "@/components/appcontainer";
-import ThemeProvider from "@/components/createTheme";
+import MuiTheme from "./theme";
+import Navbar from "@/components/navbar";
+import { NextAppDirEmotionCacheProvider } from "tss-react/next/appDir";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,17 +20,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head></head>
       <body className={inter.className}>
-        {/* <RootStyleRegistry>
-          <ThemeProvider>
-            <AuthContextProvider>
-              <Container>
-                <Navbar /> */}
-                {children}
-              {/* </Container>
-            </AuthContextProvider>
-          </ThemeProvider>
-        </RootStyleRegistry> */}
+        <AuthContextProvider>
+          <NextAppDirEmotionCacheProvider options={{ key: "css" }}>
+            <MuiTheme>
+              <Navbar />
+              <Container>{children}</Container>
+            </MuiTheme>
+          </NextAppDirEmotionCacheProvider>
+        </AuthContextProvider>
       </body>
     </html>
   );

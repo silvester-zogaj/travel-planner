@@ -1,7 +1,11 @@
 "use client";
 import { useContext, useEffect, useState } from "react";
 import signOutUser from "../firebase/auth/signOut";
-import { Button, Link, LinkProps, Stack, Typography } from "@mui/material";
+import Button from "@mui/material/Button";
+import Link from "@mui/material/Link";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+
 import { AuthContext } from "../context/AuthContext";
 
 function Logout() {

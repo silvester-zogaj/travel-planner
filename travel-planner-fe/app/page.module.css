@@ -7,6 +7,41 @@
   min-height: 100vh;
 }
 
+.tripList {
+  display: flex;
+  flex-direction: column;
+}
+
+.trip {
+  width: 400px;
+  background-color: rgb(135, 217, 247);
+  height: 100px;
+  border-radius: 20px;
+  margin: 5px;
+}
+
+.delete {
+  background-color: red;
+  color: rgb(246, 210, 210);
+}
+
+.img {
+  width: 200px;
+}
+
+.search {
+  width: 30rem;
+}
+
+
+.preferencesButtons {
+  height: 3em;
+  margin: 2px;
+  background-color: rgb(22, 103, 22);
+  border: none;
+  color: white;
+}
+
 .description {
   display: inherit;
   justify-content: inherit;
@@ -97,7 +132,7 @@
 
 .center::before,
 .center::after {
-  content: '';
+  content: "";
   left: 50%;
   position: absolute;
   filter: blur(45px);

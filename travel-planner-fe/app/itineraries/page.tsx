@@ -1,15 +1,17 @@
 "use client";
+
 import { useState, useEffect } from "react";
-import { Paper, Stack, Typography } from "@mui/material";
-import {
-  Timeline,
-  TimelineConnector,
-  TimelineContent,
-  TimelineDot,
-  TimelineItem,
-  TimelineSeparator,
-  timelineItemClasses,
-} from "@mui/lab";
+
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+
+import Timeline from "@mui/lab/Timeline"
+import TimelineConnector from "@mui/lab/TimelineConnector"
+import TimelineContent from "@mui/lab/TimelineContent"
+import TimelineDot from "@mui/lab/TimelineDot"
+import TimelineItem, {timelineItemClasses} from "@mui/lab/TimelineItem"
+import TimelineSeparator from "@mui/lab/TimelineSeparator"
+
 import { orange, red } from "@mui/material/colors";
 import LoadingPage from "@/components/loadingPage";
 

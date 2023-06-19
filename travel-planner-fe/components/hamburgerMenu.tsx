@@ -1,21 +1,16 @@
 "use client";
-import {
-  Drawer,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-} from "@mui/material";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
 import Link, { LinkProps } from "@mui/material/Link";
-import { Home, FormatListBulleted, Logout, Login } from "@mui/icons-material";
+import Home from "@mui/icons-material/Home";
+import FormatListBulleted from "@mui/icons-material/FormatListBulleted";
+import Logout from "@mui/icons-material/Logout";
+import Login from "@mui/icons-material/Login";
 import { useContext } from "react";
 import { AuthContext } from "@/app/context/AuthContext";
-
-interface LinkRouterProps extends LinkProps {
-  to: string;
-  replace?: boolean;
-}
 
 interface HamburgerListProps {
   handleCloseMenu: () => void;
@@ -46,11 +41,7 @@ const HamburgerList = ({ handleCloseMenu }: HamburgerListProps) => {
       {Buttons.map((button) => {
         return (
           <ListItem key={button.name} disablePadding>
-            <ListItemButton
-              onClick={handleCloseMenu}
-              component={Link}
-              href={button.link}
-            >
+            <ListItemButton onClick={handleCloseMenu} href={button.link}>
               <ListItemIcon>
                 <button.icon />
               </ListItemIcon>
