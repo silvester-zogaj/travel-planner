@@ -1,10 +1,11 @@
 "use client";
 import { useState } from "react";
-import IconButton from "@mui/material/IconButton"
+import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import MenuIcon from "@mui/icons-material/Menu";
-import SwipeableDrawer from "@mui/material/SwipeableDrawer"
+import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import HamburgerList from "./hamburgerMenu";
+import CurrentUser from "./currentUserComponent";
 const Navbar = () => {
   const [open, setOpen] = useState(false);
 
@@ -30,7 +31,7 @@ const Navbar = () => {
       >
         <HamburgerList handleCloseMenu={handleCloseMenu} />
       </SwipeableDrawer>
-      {/* <CurrentUser /> */}
+      <CurrentUser />
     </Stack>
   );
 };
