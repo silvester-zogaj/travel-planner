@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import { Buttons } from "./buttons";
 import styles from "../app/page.module.css"
+import { Link } from "@mui/material";
+import Itinerary from "../app/itineraries/page";
 
 export default function Preferences({ setCurrentPage, currentPage }) {
   const [preferences, setPreferences] = useState<Set<string>>(new Set());
@@ -64,7 +66,9 @@ export default function Preferences({ setCurrentPage, currentPage }) {
         })}
         <br></br>
         <br></br>
+        <Link href="/itineraries">
         <button type="submit">Generate plan</button>
+        </Link>
       </form>
       <form onSubmit={handleReturn}>
         <button type="submit">Return</button>

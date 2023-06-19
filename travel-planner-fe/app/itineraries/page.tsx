@@ -1,10 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-
 import Timeline from "@mui/lab/Timeline"
 import TimelineConnector from "@mui/lab/TimelineConnector"
 import TimelineContent from "@mui/lab/TimelineContent"

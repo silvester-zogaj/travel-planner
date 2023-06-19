@@ -11,11 +11,11 @@
 	font-size: calc(16px + (24 - 16) * (100vw - 320px) / (1280 - 320));
 }
 body {
-    background: var(--bg);
+   
     color: var(--fg);
     font: 1em/1.5 sans-serif;
     height: 100vh;
-    display: flex;
+
     align-items: center;
     justify-content: center;
   }
