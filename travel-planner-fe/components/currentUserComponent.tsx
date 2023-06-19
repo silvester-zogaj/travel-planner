@@ -8,7 +8,12 @@ function CurrentUser() {
 
   return (
     <Box>
-      <Stack direction="row" alignContent={"center"} gap={1}>
+      <Stack
+        direction="row"
+        alignItems="center"
+        gap={1}
+        sx={{ height: "100%" }}
+      >
         <Typography variant="body1">
           {user?.email ? `Logged In As ${name}` : "Logged Out"}
         </Typography>
