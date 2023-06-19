@@ -7,17 +7,20 @@ interface ContainerProps {
 }
 function Container({ children }: ContainerProps) {
   return (
-    <Stack alignItems="center">
-      <Paper
-        sx={{
-          p: 1,
-          width: "100%",
-          height: "100vh",
-        }}
-      >
+    <Paper
+      sx={{
+        p: 1,
+        width: "100%",
+        height: "calc(100vh - 74px)",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Stack alignItems="center" justifyContent="center">
         {children}
-      </Paper>
-    </Stack>
+      </Stack>
+    </Paper>
   );
 }
 

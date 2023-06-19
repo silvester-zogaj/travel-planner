@@ -8,7 +8,7 @@ export default function LandingPage() {
   const { user } = useContext(AuthContext);
   useEffect(() => {
     if (user) {
-      redirect("/choices");
+      redirect("/home");
     }
   }, [user]);
   return (
