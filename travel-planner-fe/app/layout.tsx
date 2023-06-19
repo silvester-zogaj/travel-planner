@@ -1,5 +1,4 @@
 import { AuthContextProvider } from "./context/AuthContext";
-import "./globals.css";
 import { Inter } from "next/font/google";
 import Container from "@/components/appcontainer";
 import MuiTheme from "./theme";

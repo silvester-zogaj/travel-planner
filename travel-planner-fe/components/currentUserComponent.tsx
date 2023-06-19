@@ -1,13 +1,13 @@
 "use client";
 import { AuthContext } from "@/app/context/AuthContext";
-import { Avatar, Box, Stack, Typography } from "@mui/material";
+import { Avatar, Box, Paper, Stack, Typography } from "@mui/material";
 import { useContext } from "react";
 
 function CurrentUser() {
   const { user, name } = useContext(AuthContext);
 
   return (
-    <Box>
+    <Paper sx={{ p: 1 }} elevation={2}>
       <Stack
         direction="row"
         alignItems="center"
@@ -19,7 +19,7 @@ function CurrentUser() {
         </Typography>
         <Avatar />
       </Stack>
-    </Box>
+    </Paper>
   );
 }
 

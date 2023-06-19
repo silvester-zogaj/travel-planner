@@ -1,8 +1,6 @@
 "use client";
 import { PlacesMap } from "@/components/placesMap";
 import styles from "../../page.module.css";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
 export default function SingleDay() {
   return (
