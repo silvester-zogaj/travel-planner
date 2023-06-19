@@ -1,12 +1,14 @@
 "use client";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import signIn from "../firebase/auth/signIn";
 import { AuthContext } from "../context/AuthContext";
 import resetPassword from "../firebase/auth/resetPassword";
 import { getErrorMessage } from "../firebase/authErrors";
+import { redirect } from "next/navigation";
 
 export default function SignIn() {
   // SignIn  form
+  const { user } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState("");
@@ -16,6 +18,12 @@ export default function SignIn() {
   const [resetEmail, setResetEmail] = useState("");
   const [resetEmailSent, setResetEmailSent] = useState(false);
   const [resetEmailError, setResetEmailError] = useState("");
+
+  useEffect(() => {
+    if (user) {
+      redirect("/home");
+    }
+  }, [user]);
 
   const handleSignIn = async (event: React.FormEvent) => {
     event.preventDefault();
