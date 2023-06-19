@@ -1,24 +1,34 @@
 "use client";
-import { use, useState } from "react";
+import { SetStateAction, useState } from "react";
 
-export default function Duration({ setCurrentPage, currentPage }) {
+interface DurationProps {
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  currentPage: number;
+}
+
+export default function Duration({
+  setCurrentPage,
+  currentPage,
+}: DurationProps) {
   const [day, setDay] = useState("Monday");
   const [numDays, setNumDays] = useState(0);
   const [isDisabled, setIsDisabled] = useState(true);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    setDay(e.target[0].value);
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    // @ts-ignore
+    const [day, numDays] = e.target;
+    setDay(day.value);
     setCurrentPage(currentPage + 1);
-    console.log(e.target[1].value.length);
+    console.log(numDays.value.length);
   };
 
-  const handleReturn = (e) => {
+  const handleReturn = (e: React.MouseEvent<HTMLButtonElement>) => {
     setCurrentPage(currentPage - 1);
     e.preventDefault();
   };
 
-  const handleChange = (e) => {
-    setNumDays(e.target.value);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNumDays(Number(e.target.value));
     if (e.target.value.length === 1) {
       setIsDisabled(false);
     } else {
@@ -26,7 +36,7 @@ export default function Duration({ setCurrentPage, currentPage }) {
     }
   };
 
-  const handleSelect = (e) => {
+  const handleSelect = (e: { target: { value: SetStateAction<string> } }) => {
     setDay(e.target.value);
   };
 
@@ -45,7 +55,6 @@ export default function Duration({ setCurrentPage, currentPage }) {
           <option value="Saturday">Saturday</option>
           <option value="Sunday">Sunday</option>
         </select>
-
         <h2>How many days are you there for?</h2>
         <label htmlFor="days">Number of days</label>{" "}
         <input
@@ -64,9 +73,9 @@ export default function Duration({ setCurrentPage, currentPage }) {
         </button>
       </form>
 
-      <form onSubmit={handleReturn}>
-        <button type="submit">Return</button>
-      </form>
+      <button onClick={handleReturn} type="submit">
+        Return
+      </button>
     </>
   );
 }

@@ -4,7 +4,19 @@ import styles from "../app/page.module.css";
 import { destinationSearch } from "./apis";
 import { useRouter } from "next/navigation";
 
-export default function Preferences({ setCurrentPage, currentPage, lng, lat }) {
+interface PreferencesProps {
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  currentPage: number;
+  lng: number | null;
+  lat: number | null;
+}
+
+export default function Preferences({
+  setCurrentPage,
+  currentPage,
+  lng,
+  lat,
+}: PreferencesProps) {
   const router = useRouter();
   const [preferences, setPreferences] = useState<Set<string>>(new Set());
   const [results, setResults] = useState<string[]>([]);
@@ -12,6 +24,7 @@ export default function Preferences({ setCurrentPage, currentPage, lng, lat }) {
   const allCategories = ["park", "coffee", "sports", "food", "museum"];
 
   const handleSubmit = (e: React.FormEvent) => {
+    if (!lng || !lat) return;
     e.preventDefault();
 
     [...preferences].forEach((category) => {
@@ -23,45 +36,40 @@ export default function Preferences({ setCurrentPage, currentPage, lng, lat }) {
     });
     router.push("/itineraries/1");
   };
-  console.log(results)
+  console.log(results);
 
-  const handleReturn = (e) => {
+  const handleReturn = (e: React.MouseEvent<HTMLButtonElement>) => {
     setCurrentPage(currentPage - 1);
     e.preventDefault();
   };
 
- 
-    
-    const handleToggle = (category: string) => {
-      setPreferences((currPreferences) => {
-        const cloned = new Set(currPreferences);
-        const isSelected = currPreferences.has(category);
-        if (isSelected) {
-          cloned.delete(category);
-        } else {
-          cloned.add(category);
-        }
-        return cloned;
-      });
-      console.log("clicked", preferences, "added", category);
-    };
-    // console.log("clicked", preferences);
-
- 
+  const handleToggle = (category: string) => {
+    setPreferences((currPreferences) => {
+      const cloned = new Set(currPreferences);
+      const isSelected = currPreferences.has(category);
+      if (isSelected) {
+        cloned.delete(category);
+      } else {
+        cloned.add(category);
+      }
+      return cloned;
+    });
+    console.log("clicked", preferences, "added", category);
+  };
+  // console.log("clicked", preferences);
 
   // useEffect(() => {
   //   console.log(preferences);
   // }, [preferences]);
 
-return (
+  return (
     <>
-      <h1>Finally, tell us what you enjoy doing when you're away...</h1>
+      <h1>{`Finally, tell us what you enjoy doing when you're away...`}</h1>
       {allCategories.map((category) => {
         const isSelected = preferences.has(category);
         // console.log("is selected", isSelected)
         return (
           <button
-            type="text"
             className={styles.preferencesButtons}
             onClick={() => {
               handleToggle(category);
@@ -76,11 +84,25 @@ return (
       <br></br>
       <br></br>
       <form onSubmit={handleSubmit}>
+        {allCategories.map((category) => {
+          const isSelected = preferences.has(category);
+          console.log("is selected", isSelected);
+          return (
+            <button
+              onClick={() => {
+                handleToggle(category);
+              }}
+              key={category}
+              style={isSelected ? {} : { opacity: "0.5" }}
+            >
+              {category}
+            </button>
+          );
+        })}
+        <br></br>
         <button type="submit">Generate plan</button>
       </form>
-      <form onSubmit={handleReturn}>
-        <button type="submit">Return</button>
-      </form>
+      <button onClick={handleReturn}>Return</button>
     </>
   );
 }

@@ -1,34 +1,29 @@
 import Image from "next/image";
-import ReactMapGL, { Marker, Popup, Source, Layer } from "react-map-gl";
-
+import styles from "../app/page.module.css";
+import ReactMapGL, {
+  Marker,
+  Popup,
+  Source,
+  Layer,
+  NavigationControl,
+} from "react-map-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import { red } from "@mui/material/colors";
 interface MapProps {
   locations: {
     id: number;
     latitude: number;
     longitude: number;
   }[];
+  lng: number;
+  lat: number;
+  zoom: number;
 }
 
-function Map({ locations }: MapProps) {
+function Map({ locations, lng, lat, zoom }: MapProps) {
   return (
-    <ReactMapGL
-      mapboxAccessToken="pk.eyJ1IjoibGFpOTYiLCJhIjoiY2xpdWVhdmQ3MHkybjNobzdnbjJwcmx6YSJ9.0CYohMf5CN77cD-BOo7mhw"
-      mapStyle="mapbox://styles/mapbox/streets-v11"
-    >
-      {locations.map((location) => {
-        return (
-          <Marker
-            key={location.id}
-            latitude={location.latitude}
-            longitude={location.longitude}
-          >
-            <button className="marker-btn">
-              <Image src="/location.svg" alt="location icon" />
-            </button>
-          </Marker>
-        );
-      })}
-    </ReactMapGL>
+
   );
 }
 

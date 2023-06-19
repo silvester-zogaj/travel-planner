@@ -4,8 +4,7 @@ import styles from "../../page.module.css";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-export default function SingleDay(x: number) {
-
+export default function SingleDay() {
   return (
     <main className={styles.mapCenter}>
       <h1>Day number</h1>
