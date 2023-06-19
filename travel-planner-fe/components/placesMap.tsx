@@ -16,7 +16,6 @@ import { red } from "@mui/material/colors";
 import mapboxgl from "mapbox-gl";
 import { useRef, useState, useEffect } from "react";
 import "mapbox-gl/dist/mapbox-gl.css";
-import MapComponent from "./mapComponent";
 
 const DEFAULT_LAT = 41.390205;
 const DEFAULT_LNG = 2.154007;
