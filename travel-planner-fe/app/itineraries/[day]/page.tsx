@@ -1,14 +1,21 @@
+"use client";
+import { PlacesMap } from "@/components/placesMap";
+import styles from "../../page.module.css";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+
 export default function SingleDay(x: number) {
-    return (
-      <>
-        <h1>Day number</h1>
-        <p>*Map component goes here*</p>
-        <h2>Morning</h2>
-        <p>*Morning activities component goes here*</p>
-        <h2>Afternoon</h2>
-        <p>*Afternoon activities component goes here*</p>
-        <h2>Evening</h2>
-        <p>*Evening activities component goes here*</p>
-      </>
-    );
-  }
+
+  return (
+    <main className={styles.mapCenter}>
+      <h1>Day number</h1>
+      <PlacesMap />
+      <h2>Morning</h2>
+      <p>*Morning activities component goes here*</p>
+      <h2>Afternoon</h2>
+      <p>*Afternoon activities component goes here*</p>
+      <h2>Evening</h2>
+      <p>*Evening activities component goes here*</p>
+    </main>
+  );
+}

@@ -11,7 +11,7 @@ export default function App() {
   const [lng, setLng] = useState<number | null>(null);
   const [lat, setLat] = useState<number | null>(null);
 
-  console.log(lng, lat)
+
   return (
     <div>
       {currentPage === 1 && <Destination setCurrentPage={setCurrentPage} setLng={setLng} setLat={setLat} />}
@@ -22,6 +22,8 @@ export default function App() {
         <Preferences
           setCurrentPage={setCurrentPage}
           currentPage={currentPage}
+          lng={lng}
+          lat={lat}
         />
       )}
     </div>
