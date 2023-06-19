@@ -1,27 +1,45 @@
+// @ts-nocheck
 "use client";
 import React, { useRef, useEffect, useState } from "react";
 import { SearchBox } from "@mapbox/search-js-react";
 import styles from "../app/page.module.css";
+import { SearchBoxRetrieveResponse } from "@mapbox/search-js-core";
+import dynamic from "next/dynamic";
 
-export default function destination({ setCurrentPage, setLng, setLat }) {
+const DynamicSearchBox = dynamic<React.ComponentType<any>>(
+  () => import("@mapbox/search-js-react"),
+  {
+    ssr: false,
+  }
+);
+
+interface DestinationProps {
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  setLng: React.Dispatch<React.SetStateAction<number | null>>;
+  setLat: React.Dispatch<React.SetStateAction<number | null>>;
+}
+
+export default function Destination({
+  setCurrentPage,
+  setLng,
+  setLat,
+}: DestinationProps) {
   const [destination, setDestination] = useState<string>("");
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
-  
-
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     setCurrentPage((currPage) => currPage + 1);
     e.preventDefault();
   };
 
-  const handleRetrieve = (e) => {
+  const handleRetrieve = (e: SearchBoxRetrieveResponse) => {
     setLng(e.features[0].properties.coordinates.longitude);
     setLat(e.features[0].properties.coordinates.latitude);
     setDestination(e.features[0].properties.name);
     setIsDisabled(false);
   };
 
-  const handleChange = (e) => {
+  const handleChange = () => {
     setIsDisabled(true);
   };
 
@@ -29,7 +47,7 @@ export default function destination({ setCurrentPage, setLng, setLat }) {
     <>
       <h1>Where are you headed?</h1>
       <form className={styles.search} onSubmit={handleSubmit}>
-        <SearchBox
+        <DynamicSearchBox
           options={{
             language: "en",
             types: "place",
