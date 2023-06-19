@@ -1,13 +1,13 @@
-// @ts-nocheck
 "use client";
+// @ts-nocheck
 import React, { useRef, useEffect, useState } from "react";
-import { SearchBox } from "@mapbox/search-js-react";
+// import { SearchBox } from "@mapbox/search-js-react";
 import styles from "../app/page.module.css";
 import { SearchBoxRetrieveResponse } from "@mapbox/search-js-core";
 import dynamic from "next/dynamic";
 
-const DynamicSearchBox = dynamic<React.ComponentType<any>>(
-  () => import("@mapbox/search-js-react"),
+const DynamicSearchBox = dynamic(
+  () => import("@mapbox/search-js-react").then((module) => module.SearchBox),
   {
     ssr: false,
   }
