@@ -1,3 +1,4 @@
+import Image from "next/image";
 import ReactMapGL, { Marker, Popup, Source, Layer } from "react-map-gl";
 
 interface MapProps {
@@ -22,7 +23,7 @@ function Map({ locations }: MapProps) {
             longitude={location.longitude}
           >
             <button className="marker-btn">
-              <img src="/location.svg" alt="location icon" />
+              <Image src="/location.svg" alt="location icon" />
             </button>
           </Marker>
         );
