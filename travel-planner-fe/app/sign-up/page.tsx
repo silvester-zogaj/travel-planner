@@ -1,16 +1,42 @@
 "use client";
 import React, { useState } from "react";
 import signUp from "../firebase/auth/signUp";
+import Link from "next/link";
+
+const getErrorMessage = (authCode: string) => {
+  switch (authCode) {
+    case "auth/wrong-password":
+    case "auth/missing-password":
+      return "Invalid password";
+    case "auth/invalid-email":
+    case "auth/user-not-found":
+      return "Invalid email";
+    case "auth/email-already-in-use":
+      return "Email already in use";
+    default:
+      return `Unknown error ${authCode}`;
+  }
+};
 
 export default function SignUp() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [status, setStatus] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSignUp = (event: React.FormEvent) => {
+  const handleSignUp = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    signUp(email, password, name);
+    try {
+      const { error, result } = await signUp(email, password, name);
+      if (error) {
+        setStatus(getErrorMessage(error.code));
+      } else if (result) {
+        setStatus("Account created!");
+      }
+    } catch (error) {
+      setStatus("An error occurred during sign-in");
+    }
   };
 
   return (
@@ -21,6 +47,7 @@ export default function SignUp() {
         <input
           placeholder="John Doe"
           id="name"
+          required
           type="text"
           onChange={(event) => {
             setName(event.target.value);
@@ -30,7 +57,8 @@ export default function SignUp() {
         <input
           placeholder="johndoe@hotmail.com"
           id="email"
-          type="text"
+          required
+          type="email"
           onChange={(event) => {
             setEmail(event.target.value);
           }}
@@ -38,11 +66,17 @@ export default function SignUp() {
         <label htmlFor="password">Password:</label>{" "}
         <input
           id="password"
-          type="text"
+          required
+          minLength={6}
+          type="password"
           onChange={(event) => {
             setPassword(event.target.value);
           }}
         />
+        <p>
+          Already have an account? <Link href="/sign-in">Sign in</Link>
+        </p>
+        <p>{status}</p>
         <br></br>
         <br></br>
         <button type="submit">Submit</button>
