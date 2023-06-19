@@ -3,12 +3,12 @@
 import { useState, useEffect } from "react";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import Timeline from "@mui/lab/Timeline"
-import TimelineConnector from "@mui/lab/TimelineConnector"
-import TimelineContent from "@mui/lab/TimelineContent"
-import TimelineDot from "@mui/lab/TimelineDot"
-import TimelineItem, {timelineItemClasses} from "@mui/lab/TimelineItem"
-import TimelineSeparator from "@mui/lab/TimelineSeparator"
+import Timeline from "@mui/lab/Timeline";
+import TimelineConnector from "@mui/lab/TimelineConnector";
+import TimelineContent from "@mui/lab/TimelineContent";
+import TimelineDot from "@mui/lab/TimelineDot";
+import TimelineItem, { timelineItemClasses } from "@mui/lab/TimelineItem";
+import TimelineSeparator from "@mui/lab/TimelineSeparator";
 
 import { orange, red } from "@mui/material/colors";
 import LoadingPage from "@/components/loadingPage";
@@ -18,7 +18,7 @@ const days = ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5", "Day 6"];
 function Itinerary() {
   const [currentDay, setCurrentDay] = useState<number | null>(null);
 
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -33,7 +33,7 @@ function Itinerary() {
   }
 
   return (
-    <Paper sx={{ height: "100vh", maxWidth: "800px" }}>
+    <>
       <Timeline
         sx={{
           [`& .${timelineItemClasses.root}:before`]: {
@@ -57,7 +57,7 @@ function Itinerary() {
             </TimelineSeparator>
             <TimelineContent
               onClick={() => setCurrentDay(i)}
-              sx={{ height: "16vh" }}
+              sx={{ height: "14vh", width: "80vw" }}
             >
               <Paper
                 sx={{
@@ -75,7 +75,7 @@ function Itinerary() {
           </TimelineItem>
         ))}
       </Timeline>
-    </Paper>
+    </>
   );
 }
 
