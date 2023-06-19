@@ -1,9 +1,7 @@
 "use client";
 import { AuthContext } from "@/app/context/AuthContext";
-import firebase_app from "@/app/firebase/config";
 import { Avatar, Box, Stack, Typography } from "@mui/material";
-import { doc, getDoc, getFirestore, onSnapshot } from "firebase/firestore";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 
 function CurrentUser() {
   const { user, name } = useContext(AuthContext);

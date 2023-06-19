@@ -1,9 +1,7 @@
 "use client";
 import { Button, Typography } from "@mui/material";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { getFirestore, doc, getDoc } from "firebase/firestore";
-import firebase_app from "../firebase/config";
 
 function Home() {
   const { name } = useContext(AuthContext);
