@@ -9,4 +9,3 @@ export function destinationSearch(activity: string, lng: number, lat: number) {
       return response.data;
     });
 }
-

@@ -1,15 +1,15 @@
 "use client";
-
-import { ThemeProvider, createTheme } from "@mui/material/styles";
+import ThemeProvider from "@mui/material/styles/ThemeProvider";
+import createTheme from "@mui/material/styles/createTheme";
 import NextLink from "next/link";
-import { forwardRef } from "react";
+import React, { ReactElement, ReactNode, forwardRef } from "react";
 
 const LinkBehaviour = forwardRef(function LinkBehaviour(props, ref) {
   // @ts-ignore
   return <NextLink ref={ref} {...props} />;
 });
 
-const theme = createTheme({
+export const theme = createTheme({
   components: {
     MuiLink: {
       defaultProps: {
@@ -25,12 +25,8 @@ const theme = createTheme({
   },
 });
 
-interface ProviderProps {
-  children: React.ReactNode;
-}
-
-const Provider = ({ children }: ProviderProps) => {
+const makeTheme = ({ children }: { children: ReactNode }) => {
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 };
 
-export default Provider;
+export default makeTheme;

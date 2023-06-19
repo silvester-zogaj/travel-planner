@@ -1,21 +1,37 @@
 "use client";
-import { useState } from "react";
-import { Paper, Stack, Typography } from "@mui/material";
-import {
-  Timeline,
-  TimelineConnector,
-  TimelineContent,
-  TimelineDot,
-  TimelineItem,
-  TimelineSeparator,
-  timelineItemClasses,
-} from "@mui/lab";
+
+import { useState, useEffect } from "react";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import Timeline from "@mui/lab/Timeline"
+import TimelineConnector from "@mui/lab/TimelineConnector"
+import TimelineContent from "@mui/lab/TimelineContent"
+import TimelineDot from "@mui/lab/TimelineDot"
+import TimelineItem, {timelineItemClasses} from "@mui/lab/TimelineItem"
+import TimelineSeparator from "@mui/lab/TimelineSeparator"
+
 import { orange, red } from "@mui/material/colors";
+import LoadingPage from "@/components/loadingPage";
 
 const days = ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5", "Day 6"];
 
 function Itinerary() {
   const [currentDay, setCurrentDay] = useState<number | null>(null);
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return <LoadingPage />;
+  }
+
   return (
     <Paper sx={{ height: "100vh", maxWidth: "800px" }}>
       <Timeline

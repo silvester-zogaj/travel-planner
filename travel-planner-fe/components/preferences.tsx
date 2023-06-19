@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Buttons } from "./buttons";
 import styles from "../app/page.module.css";
 import { destinationSearch } from "./apis";
 import { useRouter } from "next/navigation";
@@ -44,15 +43,16 @@ export default function Preferences({ setCurrentPage, currentPage, lng, lat }) {
       return cloned;
     });
     // console.log("clicked", preferences);
+
   };
 
   // useEffect(() => {
   //   console.log(preferences);
   // }, [preferences]);
 
-  return (
+return (
     <>
-      <h1>Finally, tell us what you enjoy doing when you're away...</h1>    
+      <h1>Finally, tell us what you enjoy doing when you're away...</h1>
       {allCategories.map((category) => {
         const isSelected = preferences.has(category);
         // console.log("is selected", isSelected)
