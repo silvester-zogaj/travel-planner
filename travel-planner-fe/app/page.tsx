@@ -1,8 +1,11 @@
 "use client";
-import Link from "next/link";
+import Link from "@mui/material/Link";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "./context/AuthContext";
 import { redirect } from "next/navigation";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
 
 export default function LandingPage() {
   const { user } = useContext(AuthContext);
@@ -12,19 +15,21 @@ export default function LandingPage() {
     }
   }, [user]);
   return (
-    <main>
-      <h1>Ready, Jet Set, Go! 🧳</h1>
-      <p>
+    <Stack sx={{ gap: 5 }}>
+      <Typography textAlign="center" variant="h3">
+        Ready, Jet Set, Go! 🧳
+      </Typography>
+      <Typography textAlign="center" variant="body2">
         Welcome to your itinerary travel planner, the ultimate companion for
         seamless trip organization and unforgettable adventures!
-      </p>
-      <button>
-        <Link href="/sign-in">Sign in</Link>
-      </button>
+      </Typography>
+      <Button variant="contained" href="/sign-in">
+        Sign in
+      </Button>
       <br></br>
-      <p>
+      <Typography textAlign="center">
         If you do not have an account, <Link href="/sign-up">sign up here</Link>
-      </p>
-    </main>
+      </Typography>
+    </Stack>
   );
 }
