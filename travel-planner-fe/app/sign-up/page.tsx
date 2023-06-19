@@ -1,14 +1,23 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import signUp from "../firebase/auth/signUp";
 import Link from "next/link";
 import { getErrorMessage } from "../firebase/authErrors";
+import { redirect } from "next/navigation";
+import { AuthContext } from "../context/AuthContext";
 
 export default function SignUp() {
+  const { user } = useContext(AuthContext);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState("");
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    if (user) {
+      redirect("/home");
+    }
+  }, [user]);
 
   const handleSignUp = async (event: React.FormEvent) => {
     event.preventDefault();
