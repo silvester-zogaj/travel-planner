@@ -21,9 +21,6 @@ const DEFAULT_LAT = 41.390205;
 const DEFAULT_LNG = 2.154007;
 const DEFAULT_ZOOM = 12;
 export const PlacesMap = () => {
-  const [lng, setLng] = useState<number>(DEFAULT_LNG);
-  const [lat, setLat] = useState<number>(DEFAULT_LAT);
-  const [zoom, setZoom] = useState<number>(DEFAULT_ZOOM);
   const mapRef = useRef<MapRef | null>(null);
 
   const allCoordinates = [
@@ -55,6 +52,9 @@ export const PlacesMap = () => {
         ref={mapRef}
         mapboxAccessToken="pk.eyJ1IjoibGFpOTYiLCJhIjoiY2xpdWVhdmQ3MHkybjNobzdnbjJwcmx6YSJ9.0CYohMf5CN77cD-BOo7mhw"
         mapStyle="mapbox://styles/mapbox/streets-v11"
+        latitude={DEFAULT_LAT}
+        longitude={DEFAULT_LNG}
+        zoom={DEFAULT_ZOOM}
       >
         <NavigationControl
           showZoom={false}
