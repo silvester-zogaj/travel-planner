@@ -3,19 +3,7 @@ import { useContext, useState } from "react";
 import signIn from "../firebase/auth/signIn";
 import { AuthContext } from "../context/AuthContext";
 import resetPassword from "../firebase/auth/resetPassword";
-
-const getErrorMessage = (authCode: string) => {
-  switch (authCode) {
-    case "auth/wrong-password":
-    case "auth/missing-password":
-      return "Invalid password";
-    case "auth/invalid-email":
-    case "auth/user-not-found":
-      return "Invalid email";
-    default:
-      return `Unknown error ${authCode}`;
-  }
-};
+import { getErrorMessage } from "../firebase/authErrors";
 
 export default function SignIn() {
   // SignIn  form
