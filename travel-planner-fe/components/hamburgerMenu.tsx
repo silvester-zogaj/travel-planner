@@ -26,7 +26,7 @@ const HamburgerList = ({ handleCloseMenu }: HamburgerListProps) => {
     },
     {
       name: "My Itineraries",
-      link: "/itineraries",
+      link: "/trips",
       icon: FormatListBulleted,
     },
     {
