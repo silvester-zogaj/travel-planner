@@ -30,21 +30,24 @@ export default function Preferences({ setCurrentPage, currentPage, lng, lat }) {
     e.preventDefault();
   };
 
-  const handleToggle = (category: string) => {
+ 
     
-    setPreferences((currPreferences) => {
-      const cloned = new Set(currPreferences);
-      const isSelected = currPreferences.has(category);
-      if (isSelected) {
-        currPreferences.delete(category);
-      } else {
-        currPreferences.add(category);
-      }
-      return cloned;
-    });
+    const handleToggle = (category: string) => {
+      setPreferences((currPreferences) => {
+        const cloned = new Set(currPreferences);
+        const isSelected = currPreferences.has(category);
+        if (isSelected) {
+          cloned.delete(category);
+        } else {
+          cloned.add(category);
+        }
+        return cloned;
+      });
+      console.log("clicked", preferences, "added", category);
+    };
     // console.log("clicked", preferences);
 
-  };
+ 
 
   // useEffect(() => {
   //   console.log(preferences);
