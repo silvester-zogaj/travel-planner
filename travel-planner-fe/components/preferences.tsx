@@ -23,39 +23,35 @@ export default function Preferences({ setCurrentPage, currentPage, lng, lat }) {
     });
     router.push("/itineraries/1");
   };
-  console.log(results)
+  console.log(results);
 
   const handleReturn = (e) => {
     setCurrentPage(currentPage - 1);
     e.preventDefault();
   };
 
- 
-    
-    const handleToggle = (category: string) => {
-      setPreferences((currPreferences) => {
-        const cloned = new Set(currPreferences);
-        const isSelected = currPreferences.has(category);
-        if (isSelected) {
-          cloned.delete(category);
-        } else {
-          cloned.add(category);
-        }
-        return cloned;
-      });
-      console.log("clicked", preferences, "added", category);
-    };
-    // console.log("clicked", preferences);
-
- 
+  const handleToggle = (category: string) => {
+    setPreferences((currPreferences) => {
+      const cloned = new Set(currPreferences);
+      const isSelected = currPreferences.has(category);
+      if (isSelected) {
+        cloned.delete(category);
+      } else {
+        cloned.add(category);
+      }
+      return cloned;
+    });
+    console.log("clicked", preferences, "added", category);
+  };
+  // console.log("clicked", preferences);
 
   // useEffect(() => {
   //   console.log(preferences);
   // }, [preferences]);
 
-return (
+  return (
     <>
-      <h1>Finally, tell us what you enjoy doing when you're away...</h1>
+      <h1>{`Finally, tell us what you enjoy doing when you're away...`}</h1>
       {allCategories.map((category) => {
         const isSelected = preferences.has(category);
         // console.log("is selected", isSelected)
