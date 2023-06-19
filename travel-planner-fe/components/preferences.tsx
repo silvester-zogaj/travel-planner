@@ -3,9 +3,7 @@ import { useEffect, useState } from "react";
 import { Buttons } from "./buttons";
 
 export default function Preferences({ setCurrentPage, currentPage }) {
-  const [preferences, setPreferences] = useState<
-    Set<string>
-  >(new Set());
+  const [preferences, setPreferences] = useState<Set<string>>(new Set());
 
   const allCategories = [
     "Adventure",
@@ -18,7 +16,7 @@ export default function Preferences({ setCurrentPage, currentPage }) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("current prefs", [...preferences])
+    console.log("current prefs", [...preferences]);
   };
 
   const handleReturn = (e) => {
@@ -28,16 +26,16 @@ export default function Preferences({ setCurrentPage, currentPage }) {
 
   const handleToggle = (category: string) => {
     setPreferences((currPreferences) => {
-      const cloned = new Set(currPreferences)
-      const isSelected = currPreferences.has(category)
+      const cloned = new Set(currPreferences);
+      const isSelected = currPreferences.has(category);
       if (isSelected) {
-        currPreferences.delete(category)
+        cloned.delete(category);
       } else {
-        currPreferences.add(category)
+        cloned.add(category);
       }
       return cloned;
     });
-    console.log("clicked", preferences);
+    console.log("clicked", preferences, "added", category);
   };
 
   // useEffect(() => {
@@ -50,16 +48,17 @@ export default function Preferences({ setCurrentPage, currentPage }) {
       <form onSubmit={handleSubmit}>
         {allCategories.map((category) => {
           const isSelected = preferences.has(category);
-          console.log("is selected", isSelected)
+          console.log("is selected", isSelected);
           return (
             <button
               onClick={() => {
                 handleToggle(category);
               }}
               key={category}
-              
               style={isSelected ? {} : { opacity: "0.5" }}
-            >{category}</button>
+            >
+              {category}
+            </button>
           );
         })}
         <br></br>
