@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import styles from "../app/page.module.css";
 import { destinationSearch } from "./apis";
 import { useRouter } from "next/navigation";
+import fetchPlaces from "@/utils/fetchPlaces";
 
 interface PreferencesProps {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
@@ -21,23 +22,19 @@ export default function Preferences({
   const [preferences, setPreferences] = useState<Set<string>>(new Set());
   const [results, setResults] = useState<string[]>([]);
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
-  const allCategories = ["park", "coffee", "sports", "food", "museum"];
+  const allCategories = ["beach", "museum", "art", "mountain", "park", "winery", "theme_park", "garden"];
 
   const handleSubmit = (e: React.FormEvent) => {
     if (!lng || !lat) return;
     e.preventDefault();
 
-    [...preferences].forEach((category) => {
-      destinationSearch(category, lng, lat).then((response) => {
-        setResults((currResults) => {
-          return [...currResults, ...response.features];
-        });
-      });
-    });
+    fetchPlaces(preferences, lng, lat).then((results) => {
+      setResults(results);
+    })
+    
     router.push("/itineraries/1");
   };
   console.log(results);
-
   const handleReturn = (e: React.MouseEvent<HTMLButtonElement>) => {
     setCurrentPage(currentPage - 1);
     e.preventDefault();
