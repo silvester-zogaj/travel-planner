@@ -6,6 +6,8 @@ import styles from "../app/page.module.css";
 import { SearchBoxRetrieveResponse } from "@mapbox/search-js-core";
 import dynamic from "next/dynamic";
 
+const accessToken = process.env.NEXT_PUBLIC_ACCESS_TOKEN || "";
+
 const DynamicSearchBox = dynamic(
   () => import("@mapbox/search-js-react").then((module) => module.SearchBox),
   {
@@ -17,14 +19,17 @@ interface DestinationProps {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
   setLng: React.Dispatch<React.SetStateAction<number | null>>;
   setLat: React.Dispatch<React.SetStateAction<number | null>>;
+  setDestination: React.Dispatch<React.SetStateAction<string>>;
+  destination: string;
 }
 
 export default function Destination({
   setCurrentPage,
   setLng,
   setLat,
+  setDestination,
+  destination,
 }: DestinationProps) {
-  const [destination, setDestination] = useState<string>("");
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -53,9 +58,7 @@ export default function Destination({
             types: "place",
           }}
           value={destination}
-          accessToken={
-            "pk.eyJ1IjoibGFpOTYiLCJhIjoiY2xpdWVhdmQ3MHkybjNobzdnbjJwcmx6YSJ9.0CYohMf5CN77cD-BOo7mhw"
-          }
+          accessToken={accessToken}
           onRetrieve={handleRetrieve}
           onChange={handleChange}
         />

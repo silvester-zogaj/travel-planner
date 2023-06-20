@@ -7,6 +7,7 @@ import Preferences from "@/components/preferences";
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState(1);
+  const [destination, setDestination] = useState<string>("");
   const [lng, setLng] = useState<number | null>(null);
   const [lat, setLat] = useState<number | null>(null);
   const [numDays, setNumDays] = useState(0);
@@ -18,6 +19,8 @@ export default function App() {
           setCurrentPage={setCurrentPage}
           setLng={setLng}
           setLat={setLat}
+          setDestination={setDestination}
+          destination={destination}
         />
       )}
       {currentPage === 2 && (
@@ -35,6 +38,7 @@ export default function App() {
           lng={lng}
           lat={lat}
           numDays={numDays}
+          destination={destination}
         />
       )}
     </div>
