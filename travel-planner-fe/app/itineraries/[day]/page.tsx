@@ -6,16 +6,26 @@ import { AuthContext } from "@/app/context/AuthContext";
 import { useContext, useEffect } from "react";
 
 export default function SingleDay() {
-  const {user} = useContext(AuthContext)
-  useEffect(()=>{
-    if (!user){
-      return
+  const { user } = useContext(AuthContext);
+  useEffect(() => {
+    if (!user) {
+      return;
     }
-    FetchData(user.uid)
-  },[user])
+    return FetchData(user.uid).then((response) => {
+      console.log(
+        response._document.data.value.mapValue.fields.itineraries.mapValue
+          .fields.London.mapValue.fields.places.arrayValue.values
+      );
+      console.log(
+        response._document.data.value.mapValue.fields.itineraries.mapValue
+          .fields.London.mapValue.fields.restaurants.arrayValue.values
+      );
+      console.log(response);
+    });
+  }, [user]);
   return (
     <main className={styles.mapCenter}>
-      <h1>Day number</h1>
+      <h1>Day 1</h1>
       <PlacesMap />
       <h2>Morning</h2>
       <p>*Morning activities component goes here*</p>
