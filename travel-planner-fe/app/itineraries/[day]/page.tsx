@@ -1,8 +1,18 @@
 "use client";
 import { PlacesMap } from "@/components/placesMap";
 import styles from "../../page.module.css";
+import FetchData from "@/app/firebase/fetchData";
+import { AuthContext } from "@/app/context/AuthContext";
+import { useContext, useEffect } from "react";
 
 export default function SingleDay() {
+  const {user} = useContext(AuthContext)
+  useEffect(()=>{
+    if (!user){
+      return
+    }
+    FetchData(user.uid)
+  },[user])
   return (
     <main className={styles.mapCenter}>
       <h1>Day number</h1>
