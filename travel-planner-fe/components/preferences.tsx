@@ -3,12 +3,18 @@ import { useEffect, useState } from "react";
 import styles from "../app/page.module.css";
 import { destinationSearch } from "./apis";
 import { useRouter } from "next/navigation";
+import {
+  fetchPlaces,
+  fetchRestaurants,
+  transformData,
+} from "@/utils/placesUtils";
 
 interface PreferencesProps {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
   currentPage: number;
   lng: number | null;
   lat: number | null;
+  numDays: number;
 }
 
 export default function Preferences({
@@ -16,28 +22,47 @@ export default function Preferences({
   currentPage,
   lng,
   lat,
+  numDays,
 }: PreferencesProps) {
   const router = useRouter();
   const [preferences, setPreferences] = useState<Set<string>>(new Set());
-  const [results, setResults] = useState<string[]>([]);
+  const [places, setPlaces] = useState<object[]>([]);
+  const [restaurants, setRestaurants] = useState<object[]>([]);
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
-  const allCategories = ["park", "coffee", "sports", "food", "museum"];
+  const allCategories = [
+    "beach",
+    "museum",
+    "art",
+    "mountain",
+    "park",
+    "winery",
+    "theme_park",
+    "garden",
+  ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     if (!lng || !lat) return;
     e.preventDefault();
 
-    [...preferences].forEach((category) => {
-      destinationSearch(category, lng, lat).then((response) => {
-        setResults((currResults) => {
-          return [...currResults, ...response.features];
-        });
-      });
-    });
-    router.push("/itineraries/1");
-  };
-  console.log(results);
+    try {
+      const [placesData, restaurantsData] = await Promise.all([
+        fetchPlaces(preferences, lng, lat),
+        fetchRestaurants(lng, lat),
+      ]);
 
+      const transformedPlaces = transformData(numDays, placesData);
+      setPlaces(transformedPlaces);
+
+      const transformedRestaurants = transformData(numDays, restaurantsData);
+      setRestaurants(transformedRestaurants);
+
+      router.push("/itineraries/1");
+    } catch (error) {
+      console.error("Error retrieving data:", error);
+    }
+  };
+
+  console.log(places, restaurants);
   const handleReturn = (e: React.MouseEvent<HTMLButtonElement>) => {
     setCurrentPage(currentPage - 1);
     e.preventDefault();

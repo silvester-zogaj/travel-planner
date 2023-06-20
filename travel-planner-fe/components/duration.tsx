@@ -4,14 +4,17 @@ import { SetStateAction, useState } from "react";
 interface DurationProps {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
   currentPage: number;
+  numDays: number;
+  setNumDays: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default function Duration({
   setCurrentPage,
   currentPage,
+  numDays,
+  setNumDays,
 }: DurationProps) {
   const [day, setDay] = useState("Monday");
-  const [numDays, setNumDays] = useState(0);
   const [isDisabled, setIsDisabled] = useState(true);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -63,7 +66,7 @@ export default function Duration({
           id="days"
           name="days"
           min="1"
-          max="14"
+          max="7"
           onChange={handleChange}
         />
         <br></br>
