@@ -105,7 +105,7 @@ export default function SignUp() {
             >
               Sign up
             </Button>
-            <Link href="/sign-up" variant="body2">
+            <Link href="/sign-in" variant="body2">
               {"Already have an account? Sign in"}
             </Link>
           </form>
