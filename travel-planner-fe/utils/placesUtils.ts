@@ -3,7 +3,10 @@ import { destinationSearch } from "../components/apis";
 type itemProperties = {
   name: string;
   full_address: string;
-  coordinates: object;
+  coordinates: {
+    latitude: number;
+    longitude: number;
+  };
   poi_category: object;
 };
 
@@ -87,7 +90,7 @@ function transformData(numDays: number, places: Array<Item>) {
       name,
       full_address,
       coordinates: { latitude, longitude },
-      poi_category,
+      categories: poi_category,
     };
   });
 
