@@ -1,5 +1,16 @@
 import { destinationSearch } from "../components/apis";
 
+type itemProperties = {
+  name: string;
+  full_address: string;
+  coordinates: object;
+  poi_category: object;
+};
+
+type Item = {
+  properties: itemProperties;
+};
+
 async function fetchPlaces(preferences: Set<string>, lng: number, lat: number) {
   const results = [];
 
@@ -34,7 +45,7 @@ async function fetchRestaurants(lng: number, lat: number) {
   return results;
 }
 
-function removeDuplicates(array) {
+function removeDuplicates(array: Array<Item>) {
   const uniqueNames = new Set();
   const uniqueArray = [];
 
@@ -50,7 +61,7 @@ function removeDuplicates(array) {
   return uniqueArray;
 }
 
-function getRandomValuesFromArray(array, count) {
+function getRandomValuesFromArray(array: Array<Item>, count: number) {
   const shuffledArray = [...removeDuplicates(array)];
 
   for (let i = shuffledArray.length - 1; i > 0; i--) {
@@ -64,13 +75,13 @@ function getRandomValuesFromArray(array, count) {
   return shuffledArray.slice(0, count);
 }
 
-function transformData(numDays: number, places: Array<object>) {
+function transformData(numDays: number, places: Array<Item>) {
   const placesAmount = numDays * 3;
 
   const selectedPlaces = getRandomValuesFromArray(places, placesAmount);
 
-  const transformedData = selectedPlaces.map(({ properties }) => {
-    const { name, full_address, coordinates, poi_category } = properties;
+  const transformedData = selectedPlaces.map((place) => {
+    const { name, full_address, coordinates, poi_category } = place.properties;
     return { name, full_address, coordinates, poi_category };
   });
 
