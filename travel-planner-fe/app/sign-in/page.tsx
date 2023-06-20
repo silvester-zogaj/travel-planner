@@ -110,6 +110,9 @@ export default function SignIn() {
               id="password"
               autoComplete="current-password"
               inputProps={{ minLength: 6 }}
+              sx={{
+                visibility: showResetPassword ? "hidden" : "visible",
+              }}
             />
             <Box sx={{ textAlign: "center", height: "16px" }}>
               <Typography fontWeight="bold">{status}</Typography>
