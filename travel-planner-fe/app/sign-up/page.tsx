@@ -1,17 +1,22 @@
 "use client";
 import React, { useContext, useEffect, useState } from "react";
 import signUp from "../firebase/auth/signUp";
-import Link from "next/link";
 import { getErrorMessage } from "../firebase/authErrors";
 import { redirect } from "next/navigation";
 import { AuthContext } from "../context/AuthContext";
+import Container from "@mui/material/Container";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Avatar from "@mui/material/Avatar";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import Link from "@mui/material/Link";
 
 export default function SignUp() {
   const { user } = useContext(AuthContext);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
   const [status, setStatus] = useState("");
-  const [password, setPassword] = useState("");
 
   useEffect(() => {
     if (user) {
@@ -21,13 +26,17 @@ export default function SignUp() {
 
   const handleSignUp = async (event: React.FormEvent) => {
     event.preventDefault();
-
+    const data = new FormData(event.currentTarget as HTMLFormElement);
+    const formEmail = data.get("email") as string;
+    const formPassword = data.get("password") as string;
+    const formName = data.get("name") as string;
     try {
-      const { error, result } = await signUp(email, password, name);
+      const { error, result } = await signUp(formEmail, formPassword, formName);
       if (error) {
         setStatus(getErrorMessage(error.code));
       } else if (result) {
         setStatus("Account created!");
+        redirect("/home");
       }
     } catch (error) {
       setStatus("An error occurred during sign-in");
@@ -36,47 +45,82 @@ export default function SignUp() {
 
   return (
     <>
-      <h1>Create your account!</h1>
-      <form onSubmit={handleSignUp}>
-        <label htmlFor="name">Name:</label>{" "}
-        <input
-          placeholder="John Doe"
-          id="name"
-          required
-          type="text"
-          onChange={(event) => {
-            setName(event.target.value);
+      <Container component="main" maxWidth="xs">
+        <Box
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
-        />{" "}
-        <label htmlFor="email">Email:</label>{" "}
-        <input
-          placeholder="johndoe@hotmail.com"
-          id="email"
-          required
-          type="email"
-          onChange={(event) => {
-            setEmail(event.target.value);
-          }}
-        />{" "}
-        <label htmlFor="password">Password:</label>{" "}
-        <input
-          id="password"
-          required
-          minLength={6}
-          type="password"
-          onChange={(event) => {
-            setPassword(event.target.value);
-          }}
-        />
-        <p>
-          Already have an account? <Link href="/sign-in">Sign in</Link>
-        </p>
-        <p>{status}</p>
-        <br></br>
-        <br></br>
-        <button type="submit">Submit</button>
-      </form>
-      <button onClick={() => (window.location.href = "/")}>Back</button>
+        >
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign up
+          </Typography>
+          <form onSubmit={handleSignUp}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="name"
+              label="Name"
+              name="name"
+              autoComplete="email"
+              autoFocus
+              type="text"
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              type="email"
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              inputProps={{ minLength: 6 }}
+            />
+            <Box sx={{ textAlign: "center", height: "16px" }}>
+              <Typography fontWeight="bold">{status}</Typography>
+            </Box>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign up
+            </Button>
+            <Link href="/sign-in" variant="body2">
+              {"Already have an account? Sign in"}
+            </Link>
+          </form>
+        </Box>
+      </Container>
+      <Button
+        sx={{
+          my: 10,
+          p: 1,
+        }}
+        href={"/"}
+        variant="contained"
+      >
+        Back
+      </Button>
     </>
   );
 }

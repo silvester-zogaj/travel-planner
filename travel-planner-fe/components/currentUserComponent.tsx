@@ -1,20 +1,30 @@
 "use client";
 import { AuthContext } from "@/app/context/AuthContext";
-import { Avatar, Box, Stack, Typography } from "@mui/material";
+
+import Avatar from "@mui/material/Avatar";
+import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+
 import { useContext } from "react";
 
 function CurrentUser() {
   const { user, name } = useContext(AuthContext);
 
   return (
-    <Box>
-      <Stack direction="row" alignContent={"center"} gap={1}>
+    <Paper sx={{ p: 1 }} elevation={2}>
+      <Stack
+        direction="row"
+        alignItems="center"
+        gap={1}
+        sx={{ height: "100%" }}
+      >
         <Typography variant="body1">
           {user?.email ? `Logged In As ${name}` : "Logged Out"}
         </Typography>
         <Avatar />
       </Stack>
-    </Box>
+    </Paper>
   );
 }
 

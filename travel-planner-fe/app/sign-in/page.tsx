@@ -5,19 +5,23 @@ import { AuthContext } from "../context/AuthContext";
 import resetPassword from "../firebase/auth/resetPassword";
 import { getErrorMessage } from "../firebase/authErrors";
 import { redirect } from "next/navigation";
+import Container from "@mui/material/Container";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Avatar from "@mui/material/Avatar";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import Link from "@mui/material/Link";
 
 export default function SignIn() {
   // SignIn  form
   const { user } = useContext(AuthContext);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [status, setStatus] = useState("");
 
   // Reset password form
   const [showResetPassword, setShowResetPassword] = useState(false);
-  const [resetEmail, setResetEmail] = useState("");
-  const [resetEmailSent, setResetEmailSent] = useState(false);
-  const [resetEmailError, setResetEmailError] = useState("");
 
   useEffect(() => {
     if (user) {
@@ -27,11 +31,15 @@ export default function SignIn() {
 
   const handleSignIn = async (event: React.FormEvent) => {
     event.preventDefault();
-
+    const data = new FormData(event.currentTarget as HTMLFormElement);
+    const formEmail = data.get("email") as string;
+    const formPassword = data.get("password") as string;
     try {
-      const { error } = await signIn(email, password);
+      const { error } = await signIn(formEmail, formPassword);
       if (error) {
         setStatus(getErrorMessage(error.code));
+      } else {
+        redirect("/home");
       }
     } catch (error) {
       setStatus("An error occurred during sign-in");
@@ -40,83 +48,108 @@ export default function SignIn() {
 
   const handleResetPassword = async (event: React.FormEvent) => {
     event.preventDefault();
-
+    const data = new FormData(event.currentTarget as HTMLFormElement);
+    const formEmail = data.get("email") as string;
     try {
-      await resetPassword(resetEmail);
-      setResetEmailSent(true);
+      await resetPassword(formEmail);
+      setStatus("Password reset email sent");
     } catch (error) {
-      setResetEmailError("Failed to reset password");
+      setStatus("Failed to reset password");
+    }
+  };
+
+  const handleFormSubmit = (event: React.FormEvent) => {
+    if (showResetPassword) {
+      handleResetPassword(event);
+    } else {
+      handleSignIn(event);
     }
   };
 
   const toggleResetPassword = () => {
     setShowResetPassword(!showResetPassword);
-    setResetEmailSent(false);
-    setResetEmailError("");
-  };
-
-  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
-    setStatus("");
-  };
-
-  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
-    setStatus("");
-  };
-
-  const handleResetEmailChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setResetEmail(event.target.value);
-    setResetEmailError("");
   };
 
   return (
     <>
-      <h1>Sign in!</h1>
-      <form onSubmit={handleSignIn}>
-        <label htmlFor="email">Email:</label>
-        <input
-          placeholder="johndoe@hotmail.com"
-          id="email"
-          type="email"
-          value={email}
-          onChange={handleEmailChange}
-        />{" "}
-        <label htmlFor="password">Password:</label>
-        <input
-          id="password"
-          type="text"
-          value={password}
-          onChange={handlePasswordChange}
-        />
-        <p>{status}</p>
-        <button type="submit">Sign in</button>
-      </form>
-      <button onClick={() => (window.location.href = "/")}>Back</button>
-      <br />
-      <a href="#" onClick={toggleResetPassword}>
-        Forgot Password
-      </a>
-      <br />
-      {showResetPassword && (
-        <form onSubmit={handleResetPassword}>
-          <label htmlFor="reset">Email:</label>
-          <input
-            placeholder="johndoe@hotmail.com"
-            id="reset"
-            type="email"
-            value={resetEmail}
-            onChange={handleResetEmailChange}
-          />
-          <button type="submit">Reset password</button>
-          {resetEmailError && <p>{resetEmailError}</p>}
-          {resetEmailSent && (
-            <p>If this user exists, we have sent you a password reset email</p>
-          )}
-        </form>
-      )}
+      <Container component="main" maxWidth="xs">
+        <Box
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            {showResetPassword ? "Reset password" : "Sign in"}
+          </Typography>
+          <form onSubmit={handleFormSubmit}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              type="email"
+            />
+            <TextField
+              disabled={showResetPassword}
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              inputProps={{ minLength: 6 }}
+              sx={{
+                visibility: showResetPassword ? "hidden" : "visible",
+              }}
+            />
+            <Box sx={{ textAlign: "center", height: "16px" }}>
+              <Typography fontWeight="bold">{status}</Typography>
+            </Box>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              {showResetPassword ? "Reset password" : "Sign in"}
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link href="#" onClick={toggleResetPassword} variant="body2">
+                  {showResetPassword ? "Sign in" : "Forgot password?"}
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link href="/sign-up" variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
+            </Grid>
+          </form>
+        </Box>
+      </Container>
+      <Button
+        sx={{
+          my: 10,
+          p: 1,
+        }}
+        href={"/"}
+        variant="contained"
+      >
+        Back
+      </Button>
     </>
   );
 }
