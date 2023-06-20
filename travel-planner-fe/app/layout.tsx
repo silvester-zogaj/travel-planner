@@ -1,11 +1,9 @@
 import { AuthContextProvider } from "./context/AuthContext";
 import { Inter } from "next/font/google";
 import Container from "@/components/appcontainer";
-import MuiTheme from "./theme";
 import Navbar from "@/components/navbar";
 import { NextAppDirEmotionCacheProvider } from "tss-react/next/appDir";
 import AppMuiThemeProvider from "@/shared/AppMuiThemeProvider";
-import CssBaseline from "@mui/material/CssBaseline";
 
 const inter = Inter({ subsets: ["latin"] });
 
