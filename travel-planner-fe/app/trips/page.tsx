@@ -35,14 +35,6 @@ export default function Trips() {
           </ButtonGroup>
         ))}
       </Stack>
-      <Link href="/itineraries">
-        <button className={styles.trip}>Barcelona 🗑️ </button>
-      </Link>
-      <Button variant="contained" className={styles.trip}>
-        Paris 🗑️
-      </Button>
-      <Button className={styles.trip}>Tokyo 🗑️</Button>
-      <Button className={styles.trip}>New York 🗑️</Button>
     </main>
   );
 }
