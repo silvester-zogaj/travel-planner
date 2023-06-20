@@ -25,6 +25,15 @@ async function fetchPlaces(preferences: Set<string>, lng: number, lat: number) {
   return results;
 }
 
+async function fetchRestaurants(lng: number, lat: number) {
+  const results = [];
+
+  const response = await destinationSearch("restaurant", lng, lat, 25);
+  results.push(...response.features);
+
+  return results;
+}
+
 function removeDuplicates(array) {
   const uniqueNames = new Set();
   const uniqueArray = [];
@@ -68,4 +77,4 @@ function transformData(numDays: number, places: Array<object>) {
   return transformedData;
 }
 
-export { fetchPlaces, transformData };
+export { fetchPlaces, fetchRestaurants, transformData };

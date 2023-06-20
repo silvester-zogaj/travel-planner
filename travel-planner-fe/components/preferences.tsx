@@ -3,7 +3,11 @@ import { useEffect, useState } from "react";
 import styles from "../app/page.module.css";
 import { destinationSearch } from "./apis";
 import { useRouter } from "next/navigation";
-import { fetchPlaces, transformData } from "@/utils/placesUtils";
+import {
+  fetchPlaces,
+  fetchRestaurants,
+  transformData,
+} from "@/utils/placesUtils";
 
 interface PreferencesProps {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
@@ -23,6 +27,7 @@ export default function Preferences({
   const router = useRouter();
   const [preferences, setPreferences] = useState<Set<string>>(new Set());
   const [places, setPlaces] = useState<object[]>([]);
+  const [restaurants, setRestaurants] = useState<object[]>([]);
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const allCategories = [
     "beach",
@@ -35,18 +40,29 @@ export default function Preferences({
     "garden",
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     if (!lng || !lat) return;
     e.preventDefault();
 
-    fetchPlaces(preferences, lng, lat).then((results) => {
-      const transformedData = transformData(numDays, results);
-      setPlaces(transformedData);
-    });
+    try {
+      const [placesData, restaurantsData] = await Promise.all([
+        fetchPlaces(preferences, lng, lat),
+        fetchRestaurants(lng, lat),
+      ]);
 
-    router.push("/itineraries/1");
+      const transformedPlaces = transformData(numDays, placesData);
+      setPlaces(transformedPlaces);
+
+      const transformedRestaurants = transformData(numDays, restaurantsData);
+      setRestaurants(transformedRestaurants);
+
+      router.push("/itineraries/1");
+    } catch (error) {
+      console.error("Error retrieving data:", error);
+    }
   };
-  console.log(places);
+
+  console.log(places, restaurants);
   const handleReturn = (e: React.MouseEvent<HTMLButtonElement>) => {
     setCurrentPage(currentPage - 1);
     e.preventDefault();
