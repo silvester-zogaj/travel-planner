@@ -12,6 +12,7 @@ import Paper from "@mui/material/Paper";
 import ThemeProvider from "@mui/material/styles/ThemeProvider";
 import NextLink from "next/link";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { Box } from "@mui/material";
 
 const contextIsDark = createContext<
   { isDark: boolean; setIsDark: (isDark: boolean) => void } | undefined
@@ -45,7 +46,28 @@ export default function AppMuiThemeProvider(props: {
     () =>
       createTheme({
         palette: {
-          mode: prefersDarkMode ? "dark" : "light",
+          primary: {
+            light: "#FFD180",
+            main: "#FFA726",
+            dark: "#E65100",
+            contrastText: "#fff",
+          },
+          secondary: {
+            light: "#FFCC80",
+            main: "#FF9800",
+            dark: "#EF6C00",
+            contrastText: "#fff",
+          },
+          background: {
+            default: "#FFB74D",
+            paper: "#FFE0B2",
+          },
+        },
+        typography: {
+          // fontFamily: "Do Hyeon",
+        },
+        shape: {
+          borderRadius: 16,
         },
         components: {
           MuiLink: {
@@ -66,7 +88,14 @@ export default function AppMuiThemeProvider(props: {
 
   return (
     <ThemeProvider theme={theme}>
-      <Paper sx={{ p: 0 }}>{children}</Paper>
+      <Box
+        id="app-container"
+        sx={{
+          backgroundColor: (theme) => theme.palette.background.paper,
+        }}
+      >
+        {children}
+      </Box>
     </ThemeProvider>
   );
 }
