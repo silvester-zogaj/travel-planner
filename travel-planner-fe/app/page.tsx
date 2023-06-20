@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
+import { useIsDark } from "@/shared/AppMuiThemeProvider";
 
 export default function LandingPage() {
   const { user } = useContext(AuthContext);

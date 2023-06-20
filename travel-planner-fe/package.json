@@ -25,6 +25,7 @@
     "firebase": "^9.22.2",
     "mapbox-gl": "^2.15.0",
     "next": "13.4.7-canary.0",
+    "powerhooks": "^0.26.14",
     "react": "18.2.0",
     "react-burger-menu": "^3.0.9",
     "react-dom": "18.2.0",
@@ -36,6 +37,7 @@
     "@types/react": "^17.0.38",
     "@types/react-burger-menu": "^2.8.3",
     "@types/react-dom": "^18.2.4",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
     "typescript": "^5.1.3"
   }
 }

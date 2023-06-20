@@ -1,5 +1,7 @@
 "use client";
-import { Button, Link, Typography } from "@mui/material";
+import Button from "@mui/material/Button";
+import Link from "@mui/material/Link";
+import Typography from "@mui/material/Typography";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 

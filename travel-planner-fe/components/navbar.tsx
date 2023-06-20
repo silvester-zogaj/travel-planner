@@ -20,7 +20,7 @@ const Navbar = () => {
   };
   return (
     <Stack direction="row" justifyContent="space-between">
-      <IconButton onClick={toggleMenu}>
+      <IconButton style={{ borderRadius: 0 }} onClick={toggleMenu}>
         <MenuIcon />
       </IconButton>
       <SwipeableDrawer

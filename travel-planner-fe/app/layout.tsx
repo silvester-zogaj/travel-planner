@@ -4,6 +4,8 @@ import Container from "@/components/appcontainer";
 import MuiTheme from "./theme";
 import Navbar from "@/components/navbar";
 import { NextAppDirEmotionCacheProvider } from "tss-react/next/appDir";
+import AppMuiThemeProvider from "@/shared/AppMuiThemeProvider";
+import CssBaseline from "@mui/material/CssBaseline";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,13 +22,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head></head>
-      <body className={inter.className}>
+      <body>
         <AuthContextProvider>
           <NextAppDirEmotionCacheProvider options={{ key: "css" }}>
-            <MuiTheme>
+            <AppMuiThemeProvider>
               <Navbar />
               <Container>{children}</Container>
-            </MuiTheme>
+            </AppMuiThemeProvider>
           </NextAppDirEmotionCacheProvider>
         </AuthContextProvider>
       </body>

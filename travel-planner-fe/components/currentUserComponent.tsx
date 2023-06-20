@@ -1,6 +1,11 @@
 "use client";
 import { AuthContext } from "@/app/context/AuthContext";
-import { Avatar, Box, Paper, Stack, Typography } from "@mui/material";
+
+import Avatar from "@mui/material/Avatar";
+import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+
 import { useContext } from "react";
 
 function CurrentUser() {
