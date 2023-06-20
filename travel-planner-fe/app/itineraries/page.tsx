@@ -9,6 +9,7 @@ import TimelineContent from "@mui/lab/TimelineContent";
 import TimelineDot from "@mui/lab/TimelineDot";
 import TimelineItem, { timelineItemClasses } from "@mui/lab/TimelineItem";
 import TimelineSeparator from "@mui/lab/TimelineSeparator";
+import Link from "next/link";
 
 import { orange, red } from "@mui/material/colors";
 import LoadingPage from "@/components/loadingPage";
@@ -34,6 +35,7 @@ function Itinerary() {
 
   return (
     <>
+    <Link href="/itineraries/day-1">
       <Timeline
         sx={{
           [`& .${timelineItemClasses.root}:before`]: {
@@ -43,6 +45,7 @@ function Itinerary() {
         }}
       >
         {days.map((day, i) => (
+
           <TimelineItem key={day}>
             <TimelineSeparator>
               <TimelineConnector />
@@ -75,6 +78,7 @@ function Itinerary() {
           </TimelineItem>
         ))}
       </Timeline>
+      </Link>
     </>
   );
 }

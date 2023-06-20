@@ -59,6 +59,16 @@
   gap: 0.5rem;
 }
 
+.day{
+  background-color: rgb(51, 135, 54);
+  border-radius: 20px;
+  max-width: 30rem;
+  padding: 10px;
+  margin: 5px;
+  text-align: center;
+}
+
+
 .description p {
   position: relative;
   margin: 0;
