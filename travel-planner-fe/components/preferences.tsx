@@ -9,12 +9,21 @@ import {
   transformData,
 } from "@/utils/placesUtils";
 
+import { useContext } from "react";
+import { AuthContext } from "@/app/context/AuthContext";
+import firebase_app from "@/app/firebase/config";
+import { getFirestore } from "firebase/firestore";
+import writeDataToFirebase from "@/utils/firebaseUtils";
+
+const db = getFirestore(firebase_app);
+
 interface PreferencesProps {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
   currentPage: number;
   lng: number | null;
   lat: number | null;
   numDays: number;
+  destination: string;
 }
 
 export default function Preferences({
@@ -23,12 +32,14 @@ export default function Preferences({
   lng,
   lat,
   numDays,
+  destination,
 }: PreferencesProps) {
   const router = useRouter();
   const [preferences, setPreferences] = useState<Set<string>>(new Set());
   const [places, setPlaces] = useState<object[]>([]);
   const [restaurants, setRestaurants] = useState<object[]>([]);
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
+  const { user } = useContext(AuthContext);
   const allCategories = [
     "beach",
     "museum",
@@ -41,7 +52,7 @@ export default function Preferences({
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {
-    if (!lng || !lat) return;
+    if (!lng || !lat || !user) return;
     e.preventDefault();
 
     try {
@@ -56,13 +67,20 @@ export default function Preferences({
       const transformedRestaurants = transformData(numDays, restaurantsData);
       setRestaurants(transformedRestaurants);
 
+      await writeDataToFirebase(
+        db,
+        user.uid,
+        transformedPlaces,
+        transformedRestaurants,
+        destination
+      );
+
       router.push("/itineraries/1");
     } catch (error) {
       console.error("Error retrieving data:", error);
     }
   };
 
-  console.log(places, restaurants);
   const handleReturn = (e: React.MouseEvent<HTMLButtonElement>) => {
     setCurrentPage(currentPage - 1);
     e.preventDefault();
@@ -79,20 +97,13 @@ export default function Preferences({
       }
       return cloned;
     });
-    console.log("clicked", preferences, "added", category);
   };
-  // console.log("clicked", preferences);
-
-  // useEffect(() => {
-  //   console.log(preferences);
-  // }, [preferences]);
 
   return (
     <>
       <h1>{`Finally, tell us what you enjoy doing when you're away...`}</h1>
       {allCategories.map((category) => {
         const isSelected = preferences.has(category);
-        // console.log("is selected", isSelected)
         return (
           <button
             className={styles.preferencesButtons}
@@ -111,7 +122,6 @@ export default function Preferences({
       <form onSubmit={handleSubmit}>
         {allCategories.map((category) => {
           const isSelected = preferences.has(category);
-          console.log("is selected", isSelected);
           return (
             <button
               onClick={() => {

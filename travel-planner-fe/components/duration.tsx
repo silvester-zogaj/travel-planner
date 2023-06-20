@@ -22,7 +22,6 @@ export default function Duration({
     const [day, numDays] = e.target;
     setDay(day.value);
     setCurrentPage(currentPage + 1);
-    console.log(numDays.value.length);
   };
 
   const handleReturn = (e: React.MouseEvent<HTMLButtonElement>) => {
