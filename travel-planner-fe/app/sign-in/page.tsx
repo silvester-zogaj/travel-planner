@@ -128,7 +128,7 @@ export default function SignIn() {
             <Grid container>
               <Grid item xs>
                 <Link href="#" onClick={toggleResetPassword} variant="body2">
-                  Forgot password?
+                  {showResetPassword ? "Sign in" : "Forgot password?"}
                 </Link>
               </Grid>
               <Grid item>
