@@ -21,9 +21,6 @@ const DEFAULT_LAT = 41.390205;
 const DEFAULT_LNG = 2.154007;
 const DEFAULT_ZOOM = 12;
 export const PlacesMap = () => {
-  const [lng, setLng] = useState<number>(DEFAULT_LNG);
-  const [lat, setLat] = useState<number>(DEFAULT_LAT);
-  const [zoom, setZoom] = useState<number>(DEFAULT_ZOOM);
   const mapRef = useRef<MapRef | null>(null);
 
   const allCoordinates = [
@@ -36,13 +33,10 @@ export const PlacesMap = () => {
 
   const handleClick = () => {
     mapRef.current?.flyTo({
-      center: [lng, lat],
-      zoom: zoom,
+      center: [DEFAULT_LNG, DEFAULT_LAT],
+      zoom: DEFAULT_ZOOM,
       essential: true,
     });
-    setLat(DEFAULT_LAT);
-    setLng(DEFAULT_LNG);
-    setZoom(DEFAULT_ZOOM);
   };
   const locations = allCoordinates.map((coordinates, index) => ({
     id: index,
@@ -55,6 +49,11 @@ export const PlacesMap = () => {
         ref={mapRef}
         mapboxAccessToken="pk.eyJ1IjoibGFpOTYiLCJhIjoiY2xpdWVhdmQ3MHkybjNobzdnbjJwcmx6YSJ9.0CYohMf5CN77cD-BOo7mhw"
         mapStyle="mapbox://styles/mapbox/streets-v11"
+        initialViewState={{
+          longitude: DEFAULT_LNG,
+          latitude: DEFAULT_LAT,
+          zoom: DEFAULT_ZOOM,
+        }}
       >
         <NavigationControl
           showZoom={false}
