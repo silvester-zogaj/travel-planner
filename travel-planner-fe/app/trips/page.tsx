@@ -16,6 +16,7 @@ import LoadingPage from "@/components/loadingPage";
 
 import { AuthContext } from "@/app/context/AuthContext";
 import { getFirestore } from "firebase/firestore";
+import { redirect } from "next/navigation";
 
 const db = getFirestore(firebase_app);
 
@@ -27,7 +28,6 @@ export default function Trips() {
   useEffect(() => {
     async function fetchData() {
       if (!user?.uid) return;
-
       try {
         setIsLoading(true);
         const data = await fetchDataFromFirebase(db, user.uid);
@@ -40,8 +40,11 @@ export default function Trips() {
       }
     }
 
+    if (!user) {
+      redirect("/sign-in");
+    }
     fetchData();
-  }, [user?.uid]);
+  }, [user]);
 
   const handleDelete = async (destination: string) => {
     if (!user?.uid) return;
