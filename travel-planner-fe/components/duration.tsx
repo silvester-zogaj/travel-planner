@@ -2,7 +2,7 @@
 import { SetStateAction, useState } from "react";
 import FormControl from "@mui/material/FormControl";
 import Typography from "@mui/material/Typography";
-import Select from "@mui/material/Select";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
 import TextField from "@mui/material/TextField";
@@ -38,10 +38,9 @@ export default function Duration({
     setIsDisabled(value < 1 || value > 7);
   };
 
-  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setDay(e.target.value);
+  const handleSelect = (event: SelectChangeEvent<string>) => {
+    setDay(event.target.value);
   };
-
   return (
     <>
       <form onSubmit={handleSubmit}>

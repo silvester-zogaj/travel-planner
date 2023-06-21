@@ -1,6 +1,8 @@
+"use client";
 import styles from "../page.module.css";
 import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
+import firebase_app from "@/app/firebase/config";
 import {
   fetchDataFromFirebase,
   deleteDataFromFirebase,
@@ -11,7 +13,11 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Typography from "@mui/material/Typography";
 import LoadingPage from "@/components/loadingPage";
+
 import { AuthContext } from "@/app/context/AuthContext";
+import { getFirestore } from "firebase/firestore";
+
+const db = getFirestore(firebase_app);
 
 export default function Trips() {
   const [trips, setTrips] = useState<string[]>([]);
