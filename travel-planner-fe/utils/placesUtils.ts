@@ -3,7 +3,10 @@ import { destinationSearch } from "../components/apis";
 type itemProperties = {
   name: string;
   full_address: string;
-  coordinates: object;
+  coordinates: {
+    latitude: number;
+    longitude: number;
+  };
   poi_category: object;
 };
 
@@ -82,7 +85,13 @@ function transformData(numDays: number, places: Array<Item>) {
 
   const transformedData = selectedPlaces.map((place) => {
     const { name, full_address, coordinates, poi_category } = place.properties;
-    return { name, full_address, coordinates, poi_category };
+    const { latitude, longitude } = coordinates;
+    return {
+      name,
+      full_address,
+      coordinates: { latitude, longitude },
+      categories: poi_category,
+    };
   });
 
   return transformedData;

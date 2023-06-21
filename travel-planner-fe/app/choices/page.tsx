@@ -13,6 +13,7 @@ enum Pages {
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<Pages>(Pages.Preferences);
+  const [destination, setDestination] = useState<string>("");
   const [lng, setLng] = useState<number | null>(null);
   const [lat, setLat] = useState<number | null>(null);
   const [numDays, setNumDays] = useState<null | number>(null);
@@ -24,6 +25,8 @@ export default function App() {
           setCurrentPage={setCurrentPage}
           setLng={setLng}
           setLat={setLat}
+          setDestination={setDestination}
+          destination={destination}
         />
       )}
       {currentPage === Pages.Duration && (
@@ -41,6 +44,7 @@ export default function App() {
           lng={lng}
           lat={lat}
           numDays={numDays}
+          destination={destination}
         />
       )}
     </div>

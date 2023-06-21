@@ -21,32 +21,24 @@ export default function Duration({
   numDays,
   setNumDays,
 }: DurationProps) {
-  const [day, setDay] = useState("Monday");
-  const [isDisabled, setIsDisabled] = useState(true);
+  const [day, setDay] = useState<string>("Monday");
+  const [isDisabled, setIsDisabled] = useState<boolean>(true);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    // @ts-ignore
-    const [day, numDays] = e.target;
-    setDay(day.value);
     setCurrentPage(currentPage + 1);
-    console.log(numDays.value.length);
   };
 
   const handleReturn = (e: React.MouseEvent<HTMLButtonElement>) => {
     setCurrentPage(currentPage - 1);
-    e.preventDefault();
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNumDays(Number(e.target.value));
-    if (e.target.value.length === 1) {
-      setIsDisabled(false);
-    } else {
-      setIsDisabled(true);
-    }
+    const value = Number(e.target.value);
+    setNumDays(value);
+    setIsDisabled(value < 1 || value > 7);
   };
 
-  const handleSelect = (e: { target: { value: SetStateAction<string> } }) => {
+  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setDay(e.target.value);
   };
 

@@ -20,7 +20,7 @@ export default async function signUp(
       profileImageUrl: "",
       email: email,
       role: "user",
-      userdata: [],
+      itineraries: [],
     });
     return { error: null, result };
   } catch (err) {

@@ -1,8 +1,7 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styles from "../app/page.module.css";
-import { destinationSearch } from "./apis";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import {
   fetchPlaces,
   fetchRestaurants,
@@ -24,12 +23,21 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Grid from "@mui/material/Grid";
 
+import { useContext } from "react";
+import { AuthContext } from "@/app/context/AuthContext";
+import firebase_app from "@/app/firebase/config";
+import { getFirestore } from "firebase/firestore";
+import { writeDataToFirebase } from "@/utils/firebaseUtils";
+
+const db = getFirestore(firebase_app);
+
 interface PreferencesProps {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
   currentPage: number;
   lng: number | null;
   lat: number | null;
   numDays: number | null;
+  destination: string;
 }
 
 export default function Preferences({
@@ -38,12 +46,11 @@ export default function Preferences({
   lng,
   lat,
   numDays,
+  destination,
 }: PreferencesProps) {
   const router = useRouter();
   const [preferences, setPreferences] = useState<Set<string>>(new Set());
-  const [places, setPlaces] = useState<object[]>([]);
-  const [restaurants, setRestaurants] = useState<object[]>([]);
-  const [isDisabled, setIsDisabled] = useState<boolean>(true);
+  const { user } = useContext(AuthContext);
   const allCategories = [
     {
       name: "Beach",
@@ -89,7 +96,7 @@ export default function Preferences({
 
   const handleSubmit = async (e: React.FormEvent) => {
     const dayNum = numDays ? numDays : 1;
-    if (!lng || !lat) return;
+    if (!lng || !lat || !user) return;
     e.preventDefault();
 
     try {
@@ -99,18 +106,23 @@ export default function Preferences({
       ]);
 
       const transformedPlaces = transformData(dayNum, placesData);
-      setPlaces(transformedPlaces);
 
       const transformedRestaurants = transformData(dayNum, restaurantsData);
-      setRestaurants(transformedRestaurants);
 
-      router.push("/itineraries/1");
+      await writeDataToFirebase(
+        db,
+        user.uid,
+        transformedPlaces,
+        transformedRestaurants,
+        destination
+      );
+
+      redirect(`/itineraries?destination=${encodeURIComponent(destination)}`);
     } catch (error) {
       console.error("Error retrieving data:", error);
     }
   };
 
-  console.log(places, restaurants);
   const handleReturn = (e: React.MouseEvent<HTMLButtonElement>) => {
     setCurrentPage(currentPage - 1);
     e.preventDefault();
@@ -127,13 +139,9 @@ export default function Preferences({
       }
       return cloned;
     });
-    console.log("clicked", preferences, "added", category);
-  };
-  // console.log("clicked", preferences);
 
-  // useEffect(() => {
-  //   console.log(preferences);
-  // }, [preferences]);
+    console.log(preferences);
+  };
 
   return (
     <>
