@@ -99,7 +99,7 @@ export const PlacesMap = ({ places, restaurants, destinationCoordinates }) => {
                   onClose={() => setPopupInfo(null)}
                 >
                   <div className={styles.popupdiv}>
-                    <h1>"{popupInfo.name}"</h1>
+                    <h1>{popupInfo.name}</h1>
                     {popupInfo.category.includes("beach") ? (
                       <BeachAccessIcon />
                     ) : popupInfo.category.includes("museum") ? (
