@@ -164,9 +164,10 @@ export default function Preferences({
                 onDelete={() => {
                   handleToggle(category);
                 }}
+                color={isSelected ? "secondary" : "primary"}
                 icon={icon}
                 deleteIcon={isSelected ? <CheckCircle /> : <Circle />}
-                variant={isSelected ? "outlined" : "filled"}
+                variant={isSelected ? "filled" : "outlined"}
               />
             );
           })}

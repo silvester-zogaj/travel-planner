@@ -10,7 +10,9 @@ function Home() {
 
   return (
     <>
-      <Typography>Hi {name}, welcome back 🏖️</Typography>
+      <Typography variant="h5" style={{ marginBottom: "10px" }}>
+        Hi {name}, welcome back 🏖️
+      </Typography>
       <Button component={Link} href="/trips" variant="contained">
         View your itineraries
       </Button>
