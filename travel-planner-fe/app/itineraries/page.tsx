@@ -6,7 +6,7 @@ import { orange, red } from "@mui/material/colors";
 import { useSearchParams } from "next/navigation";
 import { AuthContext } from "@/app/context/AuthContext";
 import firebase_app from "@/app/firebase/config";
-import { fetchDataByDestination } from "@/utils/firebaseUtils";
+import { fetchDataFromFirebase } from "@/utils/firebaseUtils";
 import Link from "next/link";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
@@ -36,7 +36,7 @@ function Itinerary() {
 
     const fetchData = async () => {
       setIsLoading(true);
-      const data = await fetchDataByDestination(db, user.uid, destination);
+      const data = await fetchDataFromFirebase(db, user.uid, destination);
       setItineraryData(data);
       setIsLoading(false);
     };
