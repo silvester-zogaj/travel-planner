@@ -74,10 +74,16 @@ function Itinerary() {
           </TimelineSeparator>
           <TimelineContent
             onClick={() => setCurrentDay(index)}
-            sx={{ height: `${70 / days}vh` }}
+            sx={{
+              height: `${70 / days}vh`, display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "50vw",
+            }}
           >
             <Button
               fullWidth
+              variant="contained"
               href={`/itineraries/day-${index + 1}?places=${encodeURIComponent(
                 JSON.stringify(
                   itineraryData.places.slice(index * 3, index * 3 + 3)
@@ -88,19 +94,9 @@ function Itinerary() {
                 )
               )}`}
             >
-              <Paper
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: "100%",
-                  width: "50vw",
-                }}
-              >
-                <Typography variant="h2" align="center">
-                  Day {index + 1}
-                </Typography>
-              </Paper>
+              <Typography variant="h2" align="center">
+                Day {index + 1}
+              </Typography>
             </Button>
           </TimelineContent>
         </TimelineItem>
