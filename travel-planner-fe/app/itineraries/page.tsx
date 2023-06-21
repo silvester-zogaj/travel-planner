@@ -29,6 +29,7 @@ function Itinerary() {
   const [itineraryData, setItineraryData] = useState({
     places: [],
     restaurants: [],
+    destination_coordinates: {},
   });
 
   useEffect(() => {
@@ -83,6 +84,8 @@ function Itinerary() {
                 JSON.stringify(
                   itineraryData.restaurants.slice(index * 3, index * 3 + 3)
                 )
+              )}&destination_coordinates=${encodeURIComponent(
+                JSON.stringify(itineraryData.destination_coordinates)
               )}`}
             >
               <Paper
