@@ -1,7 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styles from "../app/page.module.css";
-import { destinationSearch } from "./apis";
 import { useRouter } from "next/navigation";
 import {
   fetchPlaces,
@@ -13,7 +12,7 @@ import { useContext } from "react";
 import { AuthContext } from "@/app/context/AuthContext";
 import firebase_app from "@/app/firebase/config";
 import { getFirestore } from "firebase/firestore";
-import writeDataToFirebase from "@/utils/firebaseUtils";
+import { writeDataToFirebase } from "@/utils/firebaseUtils";
 
 const db = getFirestore(firebase_app);
 
@@ -36,8 +35,6 @@ export default function Preferences({
 }: PreferencesProps) {
   const router = useRouter();
   const [preferences, setPreferences] = useState<Set<string>>(new Set());
-  const [places, setPlaces] = useState<object[]>([]);
-  const [restaurants, setRestaurants] = useState<object[]>([]);
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const { user } = useContext(AuthContext);
   const allCategories = [
@@ -62,10 +59,8 @@ export default function Preferences({
       ]);
 
       const transformedPlaces = transformData(numDays, placesData);
-      setPlaces(transformedPlaces);
 
       const transformedRestaurants = transformData(numDays, restaurantsData);
-      setRestaurants(transformedRestaurants);
 
       await writeDataToFirebase(
         db,
@@ -75,7 +70,9 @@ export default function Preferences({
         destination
       );
 
-      router.push("/itineraries/1");
+      router.push(
+        `/itineraries?destination=${encodeURIComponent(destination)}`
+      );
     } catch (error) {
       console.error("Error retrieving data:", error);
     }
