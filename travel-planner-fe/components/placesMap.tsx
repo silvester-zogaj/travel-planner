@@ -100,9 +100,7 @@ export const PlacesMap = ({ places, restaurants, destinationCoordinates }) => {
                 >
                   <div className={styles.popupdiv}>
                     <h1>"{popupInfo.name}"</h1>
-                    {popupInfo.category.includes("restaurant") ? (
-                      <RestaurantIcon />
-                    ) : popupInfo.category.includes("beach") ? (
+                    {popupInfo.category.includes("beach") ? (
                       <BeachAccessIcon />
                     ) : popupInfo.category.includes("museum") ? (
                       <MuseumIcon />
@@ -114,15 +112,14 @@ export const PlacesMap = ({ places, restaurants, destinationCoordinates }) => {
                       <ParkIcon />
                     ) : popupInfo.category.includes("winery") ? (
                       <WineBarIcon />
-                    ) : popupInfo.category.includes("theme_park") ? (
+                    ) : popupInfo.category.includes("theme park") ? (
                       <AttractionsIcon />
                     ) : popupInfo.category.includes("garden") ? (
                       <LocalFloristIcon />
                     ) : (
-                      ""
+                      <RestaurantIcon />
                     )}
                     <h2>{popupInfo.address}</h2>
-                    <p>{popupInfo.category[0]} </p>
                   </div>
                 </Popup>
               )}
