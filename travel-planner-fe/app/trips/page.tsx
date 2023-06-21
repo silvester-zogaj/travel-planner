@@ -75,7 +75,7 @@ export default function Trips() {
         {trips.map((trip, i) => (
           <ButtonGroup variant="contained" key={i}>
             <Button
-              href="/itineraries"
+              href={`/itineraries?destination=${trip}`}
               component={Link}
               size="large"
               sx={{
