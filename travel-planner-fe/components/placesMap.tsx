@@ -24,18 +24,51 @@ import WineBarIcon from "@mui/icons-material/WineBar";
 import AttractionsIcon from "@mui/icons-material/Attractions";
 import LocalFloristIcon from "@mui/icons-material/LocalFlorist";
 import RestaurantIcon from "@mui/icons-material/Restaurant";
+import React from "react";
+import { SetStateAction } from "react";
 
-export const PlacesMap = ({ places, restaurants, destinationCoordinates }) => {
+interface ItemsProps {
+  name: string;
+  full_address: string;
+  categories: string[];
+  coordinates: {
+    longitude: number;
+    latitude: number;
+  };
+}
+interface PlacesMapProps {
+  places: ItemsProps[];
+  restaurants: ItemsProps[];
+
+  destinationCoordinates: {
+    lat: number;
+    lng: number;
+  };
+}
+
+interface LocationProps {
+  
+    id: number;
+    latitude: number;
+    longitude: number;
+    name: string;
+    address: string;
+    category: string[];
+  
+}
+
+export const PlacesMap = ({
+  places,
+  restaurants,
+  destinationCoordinates,
+}: PlacesMapProps) => {
   const mapRef = useRef<MapRef | null>(null);
-  const [popupInfo, setPopupInfo] = useState(null);
-
+  const [popupInfo, setPopupInfo] = useState<LocationProps | null>(null);
   const allPlaces = [...places, ...restaurants];
-
   const DEFAULT_LAT = destinationCoordinates.lat;
   const DEFAULT_LNG = destinationCoordinates.lng;
   const DEFAULT_ZOOM = 12;
 
-  console.log(allPlaces);
   const locations = allPlaces.map((place, index) => ({
     id: index,
     latitude: place.coordinates.latitude,
@@ -52,6 +85,8 @@ export const PlacesMap = ({ places, restaurants, destinationCoordinates }) => {
       essential: true,
     });
   };
+
+  console.log(places, restaurants);
 
   return (
     <div id="mapbox-gl" className={styles.map}>
