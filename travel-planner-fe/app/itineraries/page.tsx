@@ -88,7 +88,7 @@ function Itinerary() {
                 )
               )}&destination_coordinates=${encodeURIComponent(
                 JSON.stringify(itineraryData.destination_coordinates)
-              )}}&destination=${encodeURIComponent(destination)
+              )}&destination=${encodeURIComponent(destination)
               }`}
             >
               <Paper
