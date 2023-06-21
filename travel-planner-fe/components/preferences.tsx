@@ -61,12 +61,15 @@ export default function Preferences({
 
       const transformedRestaurants = transformData(numDays, restaurantsData);
 
+      const destination_coordinates = { lng, lat };
+
       await writeDataToFirebase(
         db,
         user.uid,
         transformedPlaces,
         transformedRestaurants,
-        destination
+        destination,
+        destination_coordinates
       );
 
       router.push(
@@ -93,8 +96,6 @@ export default function Preferences({
       }
       return cloned;
     });
-
-    console.log(preferences)
   };
 
   return (
@@ -106,7 +107,8 @@ export default function Preferences({
         {allCategories.map((category) => {
           const isSelected = !preferences.has(category);
           return (
-            <button className={styles.preferencesButtons}
+            <button
+              className={styles.preferencesButtons}
               onClick={() => {
                 handleToggle(category);
               }}
