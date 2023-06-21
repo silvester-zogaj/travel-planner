@@ -2,9 +2,11 @@
 // @ts-nocheck
 import React, { useRef, useEffect, useState } from "react";
 // import { SearchBox } from "@mapbox/search-js-react";
-import styles from "../app/page.module.css";
+// import styles from "../app/page.module.css";
 import { SearchBoxRetrieveResponse } from "@mapbox/search-js-core";
 import dynamic from "next/dynamic";
+import Button from "@mui/material/Button";
+import FormControl from "@mui/material/FormControl";
 
 const DynamicSearchBox = dynamic(
   () => import("@mapbox/search-js-react").then((module) => module.SearchBox),
@@ -46,23 +48,32 @@ export default function Destination({
   return (
     <>
       <h1>Where are you headed?</h1>
-      <form className={styles.search} onSubmit={handleSubmit}>
-        <DynamicSearchBox
-          options={{
-            language: "en",
-            types: "place",
+      <form onSubmit={handleSubmit}>
+        <FormControl
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+            gap: "1rem",
           }}
-          value={destination}
-          accessToken={
-            "pk.eyJ1IjoibGFpOTYiLCJhIjoiY2xpdWVhdmQ3MHkybjNobzdnbjJwcmx6YSJ9.0CYohMf5CN77cD-BOo7mhw"
-          }
-          onRetrieve={handleRetrieve}
-          onChange={handleChange}
-        />
+        >
+          <DynamicSearchBox
+            options={{
+              language: "en",
+              types: "place",
+            }}
+            value={destination}
+            accessToken={
+              "pk.eyJ1IjoibGFpOTYiLCJhIjoiY2xpdWVhdmQ3MHkybjNobzdnbjJwcmx6YSJ9.0CYohMf5CN77cD-BOo7mhw"
+            }
+            onRetrieve={handleRetrieve}
+            onChange={handleChange}
+          />
 
-        <button disabled={isDisabled} type="submit">
-          Continue
-        </button>
+          <Button variant="contained" disabled={isDisabled} type="submit">
+            Continue
+          </Button>
+        </FormControl>
       </form>
     </>
   );
