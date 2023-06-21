@@ -13,9 +13,19 @@ import ThemeProvider from "@mui/material/styles/ThemeProvider";
 import NextLink from "next/link";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Box } from "@mui/material";
+import { StaticImageData } from "next/image";
+import milford from "../public/milford.jpg";
 
 const contextIsDark = createContext<
   { isDark: boolean; setIsDark: (isDark: boolean) => void } | undefined
+>(undefined);
+
+const contextBackgroundImage = createContext<
+  | {
+      backgroundImage: string;
+      setBackgroundImage: (image: string) => void;
+    }
+  | undefined
 >(undefined);
 
 const LinkBehaviour = forwardRef(function LinkBehaviour(props, ref) {
@@ -27,6 +37,7 @@ export default function AppMuiThemeProvider(props: {
   children: React.ReactNode;
 }) {
   const { children } = props;
+  const [backgroundImage, setBackgroundImage] = useState<string>(milford.src);
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
 
   useEffect(() => {
@@ -47,20 +58,18 @@ export default function AppMuiThemeProvider(props: {
       createTheme({
         palette: {
           primary: {
-            light: "#FFD180",
-            main: "#FFA726",
-            dark: "#E65100",
-            contrastText: "#fff",
+            main: "#FF4F61",
           },
           secondary: {
-            light: "#FFCC80",
-            main: "#FF9800",
-            dark: "#EF6C00",
-            contrastText: "#fff",
+            main: "#FFCB3A",
           },
           background: {
-            default: "#FFB74D",
-            paper: "#FFE0B2",
+            paper: "#0049B7",
+            default: "#1E2425",
+          },
+          text: {
+            primary: "#FFF",
+            secondary: "#FFFFFF",
           },
         },
         typography: {
@@ -85,19 +94,38 @@ export default function AppMuiThemeProvider(props: {
       }),
     [prefersDarkMode]
   );
+  const wrap = useMemo(
+    () => ({ backgroundImage, setBackgroundImage }),
+    [backgroundImage]
+  );
 
   return (
     <ThemeProvider theme={theme}>
-      <Box
-        id="app-container"
-        sx={{
-          backgroundColor: (theme) => theme.palette.background.paper,
-        }}
-      >
-        {children}
-      </Box>
+      <contextBackgroundImage.Provider value={wrap}>
+        <Box
+          id="app-container"
+          sx={{
+            backgroundColor: (theme) => theme.palette.background.paper,
+            backgroundImage: `url(${backgroundImage})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          {children}
+        </Box>
+      </contextBackgroundImage.Provider>
     </ThemeProvider>
   );
+}
+
+export function useBackgroundImage() {
+  const wrap = useContext(contextBackgroundImage);
+
+  if (wrap === undefined) {
+    throw new Error("Not wrapped in provider");
+  }
+
+  return wrap;
 }
 
 export function useIsDark() {
