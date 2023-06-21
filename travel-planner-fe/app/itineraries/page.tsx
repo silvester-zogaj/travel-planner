@@ -108,9 +108,7 @@ function Itinerary() {
         </TimelineItem>
       ))}
     </Timeline>
-    <Link href="/trips">
-      <button>Return to your trips</button>
-    </Link>
+    <Button variant="contained" href="/trips">Return to your trips</Button>
   </section>
   </>
   );
