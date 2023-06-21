@@ -57,8 +57,8 @@ export default function AppMuiThemeProvider(props: {
   const theme = useMemo(
     () =>
       createTheme({
+        mode: "light",
         palette: {
-          type: "light",
           primary: {
             main: "#fff685",
           },
