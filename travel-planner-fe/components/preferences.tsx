@@ -14,7 +14,7 @@ interface PreferencesProps {
   currentPage: number;
   lng: number | null;
   lat: number | null;
-  numDays: number;
+  numDays: number | null;
 }
 
 export default function Preferences({
@@ -41,7 +41,7 @@ export default function Preferences({
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {
-    if (!lng || !lat) return;
+    if (!lng || !lat || !numDays) return;
     e.preventDefault();
 
     try {
