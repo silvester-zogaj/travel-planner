@@ -23,7 +23,7 @@ const db = getFirestore(firebase_app);
 function Itinerary() {
   const [currentDay, setCurrentDay] = useState<number | null>(null);
   const searchParams = useSearchParams();
-  const destination = searchParams.get("destination");
+  const destination = searchParams.get("destination") || "";
   const { user } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const [itineraryData, setItineraryData] = useState({
@@ -50,6 +50,8 @@ function Itinerary() {
   }
 
   return (
+    <>
+    <section>
     <Timeline
       sx={{
         [`& .${timelineItemClasses.root}:before`]: {
@@ -86,7 +88,8 @@ function Itinerary() {
                 )
               )}&destination_coordinates=${encodeURIComponent(
                 JSON.stringify(itineraryData.destination_coordinates)
-              )}`}
+              )}&destination=${encodeURIComponent(destination)
+              }`}
             >
               <Paper
                 sx={{
@@ -105,6 +108,11 @@ function Itinerary() {
         </TimelineItem>
       ))}
     </Timeline>
+    <Link href="/trips">
+      <button>Return to your trips</button>
+    </Link>
+  </section>
+  </>
   );
 }
 

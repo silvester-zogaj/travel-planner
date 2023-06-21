@@ -2,6 +2,7 @@
 
 import { useSearchParams, usePathname } from "next/navigation";
 import { PlacesMap } from "@/components/placesMap";
+import Link from "next/link";
 
 type itemProperties = {
   name: string;
@@ -15,12 +16,16 @@ export default function SingleDay() {
   const restaurants = searchParams.get("restaurants") || null;
   const destinationCoordinates =
     searchParams.get("destination_coordinates") || null;
+  
+  const destination = searchParams.get("destination") || "";
 
   const parsedPlaces = places ? JSON.parse(places) : [];
   const parsedRestaurants = restaurants ? JSON.parse(restaurants) : [];
   const parsedCoordinates = destinationCoordinates
     ? JSON.parse(destinationCoordinates)
     : [];
+
+ 
 
   return (
     <main>
@@ -56,6 +61,9 @@ export default function SingleDay() {
           </ul>
         </article>
       </section>
+      <Link href={`/itineraries?destination=${encodeURIComponent(destination)}`}>
+          <button>Return to itinerary</button>
+        </Link>
     </main>
   );
 }
