@@ -28,7 +28,7 @@ export default function LandingPage() {
           objectFit: "contain",
         }}
       />
-      <Typography textAlign="center" variant="body2">
+      <Typography textAlign="center" variant="h6">
         Welcome to your itinerary travel planner, the ultimate companion for
         seamless trip organization and unforgettable adventures!
       </Typography>
