@@ -35,7 +35,6 @@ export default function Preferences({
 }: PreferencesProps) {
   const router = useRouter();
   const [preferences, setPreferences] = useState<Set<string>>(new Set());
-  const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const { user } = useContext(AuthContext);
   const allCategories = [
     "beach",
@@ -100,7 +99,7 @@ export default function Preferences({
     <>
       <h1>{`Finally, tell us what you enjoy doing when you're away...`}</h1>
       {allCategories.map((category) => {
-        const isSelected = preferences.has(category);
+        const isSelected = !preferences.has(category);
         return (
           <button
             className={styles.preferencesButtons}

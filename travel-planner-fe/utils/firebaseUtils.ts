@@ -30,10 +30,10 @@ export async function writeDataToFirebase(
   }
 }
 
-export async function fetchDataByDestination(
+export async function fetchDataFromFirebase(
   db: Firestore,
   uid: string,
-  destination: string
+  destination?: string
 ) {
   try {
     const userRef = doc(db, "users", uid);
@@ -42,13 +42,13 @@ export async function fetchDataByDestination(
     if (userSnapshot.exists()) {
       const userData = userSnapshot.data();
 
-      if (
-        userData &&
-        userData.itineraries &&
-        userData.itineraries[destination]
-      ) {
-        const itineraryData = userData.itineraries[destination];
-        return itineraryData;
+      if (userData && userData.itineraries) {
+        if (destination && userData.itineraries[destination]) {
+          const itineraryData = userData.itineraries[destination];
+          return itineraryData;
+        } else {
+          return userData.itineraries;
+        }
       }
     }
   } catch (error) {
