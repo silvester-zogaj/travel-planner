@@ -108,12 +108,24 @@ export default function AppMuiThemeProvider(props: {
         <Box
           id="app-container"
           sx={{
-            backgroundColor: (theme) => theme.palette.background.paper,
-            backgroundImage: `url(${backgroundImage})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
+            height: "100vh",
+            width: "100vw",
           }}
         >
+          <Box
+            sx={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              backgroundImage: `url(${backgroundImage})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              filter: "blur(5px)", // Change the pixel value to adjust the blur
+              zIndex: -1,
+            }}
+          />
           {children}
         </Box>
       </contextBackgroundImage.Provider>
