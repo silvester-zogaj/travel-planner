@@ -3,7 +3,10 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "@/app/context/AuthContext";
 import firebase_app from "@/app/firebase/config";
-import { fetchDataFromFirebase } from "@/utils/firebaseUtils";
+import {
+  fetchDataFromFirebase,
+  deleteDataFromFirebase,
+} from "@/utils/firebaseUtils";
 import { getFirestore } from "firebase/firestore";
 import styles from "../page.module.css";
 import Link from "next/link";
@@ -26,7 +29,6 @@ export default function Trips() {
         const tripNames = Object.keys(data);
         setTrips(tripNames);
         setIsLoading(false);
-        console.log(tripNames);
       } catch (error) {
         console.error("Error fetching data:", error);
         setIsLoading(false);
@@ -35,6 +37,18 @@ export default function Trips() {
 
     fetchData();
   }, [user?.uid]);
+
+  const handleDelete = async (destination: string) => {
+    if (!user?.uid) return;
+
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this itinerary?"
+    );
+    if (!confirmDelete) return;
+
+    await deleteDataFromFirebase(db, user?.uid, destination);
+    setTrips((prevTrips) => prevTrips.filter((trip) => trip !== destination));
+  };
 
   if (isLoading) {
     return <LoadingPage />;
@@ -48,9 +62,12 @@ export default function Trips() {
     <main className={styles.tripList}>
       <h1>Your trips 🌎</h1>
       {trips.map((trip) => (
-        <Link key={trip} href={`/itineraries?destination=${trip}`}>
-          <button className={styles.trip}>{trip} 🗑️</button>
-        </Link>
+        <section key={trip}>
+          <Link key={trip} href={`/itineraries?destination=${trip}`}>
+            <button className={styles.trip}>{trip} 🗑️</button>
+          </Link>
+          <button onClick={() => handleDelete(trip)}>Delete</button>
+        </section>
       ))}
     </main>
   );
