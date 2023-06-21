@@ -109,12 +109,15 @@ export default function Preferences({
 
       const transformedRestaurants = transformData(dayNum, restaurantsData);
 
+      const destination_coordinates = { lng, lat };
+
       await writeDataToFirebase(
         db,
         user.uid,
         transformedPlaces,
         transformedRestaurants,
-        destination
+        destination,
+        destination_coordinates
       );
 
       redirect(`/itineraries?destination=${encodeURIComponent(destination)}`);
@@ -139,8 +142,6 @@ export default function Preferences({
       }
       return cloned;
     });
-
-    console.log(preferences);
   };
 
   return (

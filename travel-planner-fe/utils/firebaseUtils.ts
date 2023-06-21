@@ -5,7 +5,8 @@ export async function writeDataToFirebase(
   uid: string,
   places: Array<{}>,
   restaurants: Array<{}>,
-  destination: string
+  destination: string,
+  destination_coordinates: { lng: number; lat: number }
 ) {
   try {
     const userRef = doc(db, "users", uid);
@@ -22,6 +23,7 @@ export async function writeDataToFirebase(
           name: destination,
           places: [...places],
           restaurants: [...restaurants],
+          destination_coordinates,
         },
       },
     });
