@@ -35,6 +35,7 @@ const LinkBehaviour = forwardRef(function LinkBehaviour(props, ref) {
 
 export default function AppMuiThemeProvider(props: {
   children: React.ReactNode;
+  fontFamily?: string;
 }) {
   const { children } = props;
   const [backgroundImage, setBackgroundImage] = useState<string>(milford.src);
@@ -57,23 +58,25 @@ export default function AppMuiThemeProvider(props: {
     () =>
       createTheme({
         palette: {
+          type: "light",
           primary: {
-            main: "#FF4F61",
+            main: "#fff685",
           },
           secondary: {
-            main: "#FFCB3A",
+            main: "#00ddff",
           },
           background: {
-            paper: "#0049B7",
-            default: "#1E2425",
+            paper: "#d01746",
+            default: "#ff1d58",
           },
           text: {
-            primary: "#FFF",
-            secondary: "#FFFFFF",
+            primary: "rgba(255,255,255,0.87)",
+            secondary: "rgba(16,16,16,0.54)",
           },
+          divider: "#000044",
         },
         typography: {
-          // fontFamily: "Do Hyeon",
+          fontFamily: props.fontFamily,
         },
         shape: {
           borderRadius: 16,
