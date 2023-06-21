@@ -50,6 +50,7 @@ export default function Preferences({
 }: PreferencesProps) {
   const router = useRouter();
   const [preferences, setPreferences] = useState<Set<string>>(new Set());
+  const [redirectUrl, setRedirectUrl] = useState<string | null>(null);
   const { user } = useContext(AuthContext);
   const allCategories = [
     {
@@ -120,11 +121,17 @@ export default function Preferences({
         destination_coordinates
       );
 
-      redirect(`/itineraries?destination=${encodeURIComponent(destination)}`);
+      setRedirectUrl(
+        `/itineraries?destination=${encodeURIComponent(destination)}`
+      );
     } catch (error) {
       console.error("Error retrieving data:", error);
     }
   };
+
+  if (redirectUrl) {
+    redirect(redirectUrl);
+  }
 
   const handleReturn = (e: React.MouseEvent<HTMLButtonElement>) => {
     setCurrentPage(currentPage - 1);

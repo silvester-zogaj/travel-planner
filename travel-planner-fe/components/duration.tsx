@@ -57,18 +57,6 @@ export default function Duration({
             Tell us a little more about your trip
           </Typography>
           <FormControl fullWidth>
-            <InputLabel>Which day do you arrive?</InputLabel>
-            <Select label="Which day do you arrive?" onChange={handleSelect}>
-              <MenuItem value="Monday">Monday</MenuItem>
-              <MenuItem value="Tuesday">Tuesday</MenuItem>
-              <MenuItem value="Wednesday">Wednesday</MenuItem>
-              <MenuItem value="Thursday">Thursday</MenuItem>
-              <MenuItem value="Friday">Friday</MenuItem>
-              <MenuItem value="Saturday">Saturday</MenuItem>
-              <MenuItem value="Sunday">Sunday</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl fullWidth>
             <TextField
               label="How many days are you there for?"
               id="numDays"

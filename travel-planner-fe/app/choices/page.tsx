@@ -12,7 +12,7 @@ enum Pages {
 }
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState<Pages>(Pages.Preferences);
+  const [currentPage, setCurrentPage] = useState<Pages>(Pages.Destination);
   const [destination, setDestination] = useState<string>("");
   const [lng, setLng] = useState<number | null>(null);
   const [lat, setLat] = useState<number | null>(null);
