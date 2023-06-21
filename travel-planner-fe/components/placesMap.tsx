@@ -11,25 +11,39 @@ import ReactMapGL, {
 } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import red from "@mui/material/colors/red";
-
+import { red } from "@mui/material/colors";
 import mapboxgl from "mapbox-gl";
 import { useRef, useState, useEffect } from "react";
-import "mapbox-gl/dist/mapbox-gl.css";
 
-const DEFAULT_LAT = 41.390205;
-const DEFAULT_LNG = 2.154007;
-const DEFAULT_ZOOM = 12;
-export const PlacesMap = () => {
+import BeachAccessIcon from "@mui/icons-material/BeachAccess";
+import MuseumIcon from "@mui/icons-material/Museum";
+import PaletteIcon from "@mui/icons-material/Palette";
+import HikingIcon from "@mui/icons-material/Hiking";
+import ParkIcon from "@mui/icons-material/Park";
+import WineBarIcon from "@mui/icons-material/WineBar";
+import AttractionsIcon from "@mui/icons-material/Attractions";
+import LocalFloristIcon from "@mui/icons-material/LocalFlorist";
+import RestaurantIcon from "@mui/icons-material/Restaurant";
+
+export const PlacesMap = ({ places, restaurants, destinationCoordinates }) => {
   const mapRef = useRef<MapRef | null>(null);
+  const [popupInfo, setPopupInfo] = useState(null);
 
-  const allCoordinates = [
-    [2.18, 41.385],
-    [2.18, 41.381],
-    [2.18, 41.376],
-    [2.18, 41.382],
-    [2.172, 41.382],
-  ];
+  const allPlaces = [...places, ...restaurants];
+
+  const DEFAULT_LAT = destinationCoordinates.lat;
+  const DEFAULT_LNG = destinationCoordinates.lng;
+  const DEFAULT_ZOOM = 12;
+
+  console.log(allPlaces);
+  const locations = allPlaces.map((place, index) => ({
+    id: index,
+    latitude: place.coordinates.latitude,
+    longitude: place.coordinates.longitude,
+    name: place.name,
+    address: place.full_address,
+    category: place.categories,
+  }));
 
   const handleClick = () => {
     mapRef.current?.flyTo({
@@ -38,11 +52,7 @@ export const PlacesMap = () => {
       essential: true,
     });
   };
-  const locations = allCoordinates.map((coordinates, index) => ({
-    id: index,
-    latitude: coordinates[1],
-    longitude: coordinates[0],
-  }));
+
   return (
     <div id="mapbox-gl" className={styles.map}>
       <ReactMapGL
@@ -62,17 +72,61 @@ export const PlacesMap = () => {
         />
         {locations.map((location) => {
           return (
-            <Marker
-              key={location.id}
-              latitude={location.latitude}
-              longitude={location.longitude}
-            >
-              <LocationOnIcon
-                sx={{
-                  color: red[500],
+            <>
+              <Marker
+                key={location.id}
+                latitude={location.latitude}
+                longitude={location.longitude}
+                onClick={(e) => {
+                  e.originalEvent.stopPropagation();
+                  setPopupInfo(location);
                 }}
-              />
-            </Marker>
+              >
+                {location.category.includes("restaurant") ? (
+                  <LocationOnIcon className={styles.restaurantMarker} />
+                ) : (
+                  <LocationOnIcon className={styles.activityMarker} />
+                )}
+              </Marker>
+
+              {popupInfo && (
+                <Popup
+                  closeButton={false}
+                  className={styles.popup}
+                  anchor="bottom"
+                  longitude={popupInfo.longitude}
+                  latitude={popupInfo.latitude}
+                  onClose={() => setPopupInfo(null)}
+                >
+                  <div className={styles.popupdiv}>
+                    <h1>"{popupInfo.name}"</h1>
+                    {popupInfo.category.includes("restaurant") ? (
+                      <RestaurantIcon />
+                    ) : popupInfo.category.includes("beach") ? (
+                      <BeachAccessIcon />
+                    ) : popupInfo.category.includes("museum") ? (
+                      <MuseumIcon />
+                    ) : popupInfo.category.includes("art") ? (
+                      <PaletteIcon />
+                    ) : popupInfo.category.includes("mountain") ? (
+                      <HikingIcon />
+                    ) : popupInfo.category.includes("park") ? (
+                      <ParkIcon />
+                    ) : popupInfo.category.includes("winery") ? (
+                      <WineBarIcon />
+                    ) : popupInfo.category.includes("theme_park") ? (
+                      <AttractionsIcon />
+                    ) : popupInfo.category.includes("garden") ? (
+                      <LocalFloristIcon />
+                    ) : (
+                      ""
+                    )}
+                    <h2>{popupInfo.address}</h2>
+                    <p>{popupInfo.category[0]} </p>
+                  </div>
+                </Popup>
+              )}
+            </>
           );
         })}
       </ReactMapGL>

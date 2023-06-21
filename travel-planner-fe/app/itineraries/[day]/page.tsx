@@ -25,7 +25,11 @@ export default function SingleDay() {
   return (
     <main>
       <h1>Day {currentDay}</h1>
-      <PlacesMap />
+      <PlacesMap
+        places={parsedPlaces}
+        restaurants={parsedRestaurants}
+        destinationCoordinates={parsedCoordinates}
+      />
       <section>
         <article>
           <h2>Places to Visit</h2>
