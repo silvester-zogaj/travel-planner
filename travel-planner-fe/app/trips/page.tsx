@@ -1,16 +1,21 @@
 "use client";
-
+import styles from "../page.module.css";
+import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "@/app/context/AuthContext";
 import firebase_app from "@/app/firebase/config";
 import {
   fetchDataFromFirebase,
   deleteDataFromFirebase,
 } from "@/utils/firebaseUtils";
-import { getFirestore } from "firebase/firestore";
-import styles from "../page.module.css";
-import Link from "next/link";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import DeleteIcon from "@mui/icons-material/Delete";
+import Typography from "@mui/material/Typography";
 import LoadingPage from "@/components/loadingPage";
+
+import { AuthContext } from "@/app/context/AuthContext";
+import { getFirestore } from "firebase/firestore";
 
 const db = getFirestore(firebase_app);
 
@@ -60,15 +65,34 @@ export default function Trips() {
 
   return (
     <main className={styles.tripList}>
-      <h1>Your trips 🌎</h1>
-      {trips.map((trip) => (
-        <section key={trip}>
-          <Link key={trip} href={`/itineraries?destination=${trip}`}>
-            <button className={styles.trip}>{trip} 🗑️</button>
-          </Link>
-          <button onClick={() => handleDelete(trip)}>Delete</button>
-        </section>
-      ))}
+      <Stack gap={1}>
+        <Typography textAlign="center" variant="h3" fontWeight="bold">
+          Your trips 🌎
+        </Typography>
+        {trips.map((trip, i) => (
+          <ButtonGroup variant="contained" key={i}>
+            <Button
+              href="/itineraries"
+              component={Link}
+              size="large"
+              sx={{
+                width: "100%",
+                height: "80px",
+              }}
+            >
+              <Typography fontWeight="bold">{trip}</Typography>
+            </Button>
+            <Button
+              onClick={() => {
+                handleDelete(trip);
+              }}
+              size="large"
+            >
+              <DeleteIcon sx={{ color: "red" }} />
+            </Button>
+          </ButtonGroup>
+        ))}
+      </Stack>
     </main>
   );
 }

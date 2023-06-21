@@ -5,7 +5,13 @@ import Navbar from "@/components/navbar";
 import { NextAppDirEmotionCacheProvider } from "tss-react/next/appDir";
 import AppMuiThemeProvider from "@/shared/AppMuiThemeProvider";
 
-const inter = Inter({ subsets: ["latin"] });
+import { Do_Hyeon } from "next/font/google";
+
+const hyeon = Do_Hyeon({
+  weight: "400",
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export const metadata = {
   title: "Create Next App",
@@ -20,10 +26,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head></head>
-      <body>
+      <body
+        style={{
+          margin: 0,
+        }}
+      >
         <AuthContextProvider>
           <NextAppDirEmotionCacheProvider options={{ key: "css" }}>
-            <AppMuiThemeProvider>
+            <AppMuiThemeProvider fontFamily={hyeon.style.fontFamily}>
               <Navbar />
               <Container>{children}</Container>
             </AppMuiThemeProvider>
