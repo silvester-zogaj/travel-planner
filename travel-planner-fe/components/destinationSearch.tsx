@@ -1,7 +1,6 @@
 "use client";
-// @ts-nocheck
-import React, { useRef, useEffect, useState } from "react";
-// import { SearchBox } from "@mapbox/search-js-react";
+
+import React, { useState } from "react";
 import styles from "../app/page.module.css";
 import { SearchBoxRetrieveResponse } from "@mapbox/search-js-core";
 import dynamic from "next/dynamic";

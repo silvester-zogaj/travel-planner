@@ -1,28 +1,52 @@
 "use client";
+
+import { useSearchParams, usePathname } from "next/navigation";
 import { PlacesMap } from "@/components/placesMap";
-import styles from "../../page.module.css";
-import FetchData from "@/app/firebase/fetchData";
-import { AuthContext } from "@/app/context/AuthContext";
-import { useContext, useEffect } from "react";
+
+type itemProperties = {
+  name: string;
+  full_address: string;
+};
 
 export default function SingleDay() {
-  const {user} = useContext(AuthContext)
-  useEffect(()=>{
-    if (!user){
-      return
-    }
-    FetchData(user.uid)
-  },[user])
+  const searchParams = useSearchParams();
+  const currentDay = usePathname().slice(-1);
+  const places = searchParams.get("places") || null;
+  const restaurants = searchParams.get("restaurants") || null;
+
+  const parsedPlaces = places ? JSON.parse(places) : [];
+  const parsedRestaurants = restaurants ? JSON.parse(restaurants) : [];
+
   return (
-    <main className={styles.mapCenter}>
-      <h1>Day number</h1>
+    <main>
+      <h1>Day {currentDay}</h1>
       <PlacesMap />
-      <h2>Morning</h2>
-      <p>*Morning activities component goes here*</p>
-      <h2>Afternoon</h2>
-      <p>*Afternoon activities component goes here*</p>
-      <h2>Evening</h2>
-      <p>*Evening activities component goes here*</p>
+      <section>
+        <article>
+          <h2>Places to Visit</h2>
+          <ul>
+            {parsedPlaces.map((place: itemProperties, index: number) => (
+              <li key={index}>
+                <p>{place.name}</p>
+                <p>{place.full_address}</p>
+              </li>
+            ))}
+          </ul>
+        </article>
+        <article>
+          <h2>Restaurants to Visit</h2>
+          <ul>
+            {parsedRestaurants.map(
+              (restaurant: itemProperties, index: number) => (
+                <li key={index}>
+                  <p>{restaurant.name}</p>
+                  <p>{restaurant.full_address}</p>
+                </li>
+              )
+            )}
+          </ul>
+        </article>
+      </section>
     </main>
   );
 }

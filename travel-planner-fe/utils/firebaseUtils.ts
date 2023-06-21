@@ -1,6 +1,6 @@
 import { Firestore, doc, getDoc, updateDoc } from "firebase/firestore";
 
-async function writeDataToFirebase(
+export async function writeDataToFirebase(
   db: Firestore,
   uid: string,
   places: Array<{}>,
@@ -14,7 +14,7 @@ async function writeDataToFirebase(
 
     if (!userData) return;
 
-    const itineraryRef = await updateDoc(userRef, {
+    await updateDoc(userRef, {
       itineraries: {
         ...userData.itineraries,
         [destination]: {
@@ -26,8 +26,32 @@ async function writeDataToFirebase(
       },
     });
   } catch (error) {
-    console.error("Error writing test data to Firebase:", error);
+    console.error("Error writing data to Firebase:", error);
   }
 }
 
-export default writeDataToFirebase;
+export async function fetchDataByDestination(
+  db: Firestore,
+  uid: string,
+  destination: string
+) {
+  try {
+    const userRef = doc(db, "users", uid);
+    const userSnapshot = await getDoc(userRef);
+
+    if (userSnapshot.exists()) {
+      const userData = userSnapshot.data();
+
+      if (
+        userData &&
+        userData.itineraries &&
+        userData.itineraries[destination]
+      ) {
+        const itineraryData = userData.itineraries[destination];
+        return itineraryData;
+      }
+    }
+  } catch (error) {
+    console.error("Error fetching data from Firebase:", error);
+  }
+}
