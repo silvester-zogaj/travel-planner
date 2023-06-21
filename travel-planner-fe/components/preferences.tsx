@@ -94,36 +94,24 @@ export default function Preferences({
       }
       return cloned;
     });
+
+    console.log(preferences)
   };
 
   return (
     <>
       <h1>{`Finally, tell us what you enjoy doing when you're away...`}</h1>
-      {allCategories.map((category) => {
-        const isSelected = preferences.has(category);
-        return (
-          <button
-            className={styles.preferencesButtons}
-            onClick={() => {
-              handleToggle(category);
-            }}
-            key={category}
-            style={isSelected ? {} : { opacity: "0.5" }}
-          >
-            {category}
-          </button>
-        );
-      })}
       <br></br>
       <br></br>
       <form onSubmit={handleSubmit}>
         {allCategories.map((category) => {
           const isSelected = preferences.has(category);
           return (
-            <button
+            <button className={styles.preferencesButtons}
               onClick={() => {
                 handleToggle(category);
               }}
+              type="button"
               key={category}
               style={isSelected ? {} : { opacity: "0.5" }}
             >
