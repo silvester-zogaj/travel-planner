@@ -12,7 +12,7 @@ import Paper from "@mui/material/Paper";
 import ThemeProvider from "@mui/material/styles/ThemeProvider";
 import NextLink from "next/link";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { Box } from "@mui/material";
+import Box from "@mui/material/Box";
 import { StaticImageData } from "next/image";
 import milford from "../public/milford.jpg";
 
