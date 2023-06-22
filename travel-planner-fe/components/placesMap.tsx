@@ -67,7 +67,7 @@ export const PlacesMap = ({
     latitude: place.coordinates.latitude,
     longitude: place.coordinates.longitude,
     name: place.name,
-    address: place.full_address,
+    address: place.full_address.replaceAll('"', ""),
     category: place.categories,
   }));
 
@@ -77,6 +77,7 @@ export const PlacesMap = ({
       zoom: DEFAULT_ZOOM,
       essential: true,
     });
+    setPopupInfo(null);
   };
 
   const renderPopup = () => {
@@ -146,21 +147,12 @@ export const PlacesMap = ({
             longitude={location.longitude}
             onClick={(e) => {
               e.originalEvent.stopPropagation();
-              if (popupInfo) {
-                setPopupInfo(null);
-                mapRef.current?.flyTo({
-                  center: [location.longitude, location.latitude],
-                  zoom: DEFAULT_ZOOM,
-                  speed: 1,
-                });
-              } else {
-                setPopupInfo(location);
-                mapRef.current?.flyTo({
-                  center: [location.longitude, location.latitude],
-                  zoom: 15,
-                  speed: 0.7,
-                });
-              }
+              setPopupInfo(location);
+              mapRef.current?.flyTo({
+                center: [location.longitude, location.latitude],
+                zoom: 15,
+                speed: 0.7,
+              });
             }}
           >
             <div className={styles.markerBg}></div>
