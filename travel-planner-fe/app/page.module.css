@@ -149,6 +149,21 @@
   text-align: center;
   color: black;
 }
+.popupDiv {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.popupDiv h2 {
+  margin-top: -1px;
+}
+
+.popupDiv p {
+  margin-bottom: -5px;
+}
 
 .center {
   display: flex;
