@@ -2,6 +2,7 @@
 import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
+import Stack from "@mui/material/Stack";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import Logo from "@/components/logo";
@@ -10,7 +11,7 @@ function Home() {
   const { name } = useContext(AuthContext);
 
   return (
-    <>
+    <Stack gap={5} height="80vh" justifyContent="center" alignItems="center">
       <Logo
         style={{
           display: "block",
@@ -29,7 +30,7 @@ function Home() {
       <Button component={Link} href="/choices" variant="contained">
         Add a new trip!
       </Button>
-    </>
+    </Stack>
   );
 }
 

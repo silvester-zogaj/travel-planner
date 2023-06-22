@@ -19,7 +19,7 @@ export default function LandingPage() {
     }
   }, [user]);
   return (
-    <Stack sx={{ gap: 5 }}>
+    <Stack gap={5} height="80vh" justifyContent="center">
       <Logo
         style={{
           display: "block",

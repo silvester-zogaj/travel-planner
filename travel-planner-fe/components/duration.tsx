@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import { SelectChangeEvent } from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
 
 interface DurationProps {
   handleNextPage: () => void;
@@ -40,7 +41,7 @@ export default function Duration({
     setDay(event.target.value);
   };
   return (
-    <>
+    <Stack gap={5} height="80vh" justifyContent="center" alignItems="center">
       <form onSubmit={handleSubmit}>
         <FormControl
           fullWidth
@@ -51,7 +52,7 @@ export default function Duration({
             gap: "1rem",
           }}
         >
-          <Typography variant="h3">
+          <Typography textAlign="center" variant="h3">
             Tell us a little more about your trip
           </Typography>
           <FormControl fullWidth>
@@ -72,6 +73,6 @@ export default function Duration({
           </Button>
         </FormControl>
       </form>
-    </>
+    </Stack>
   );
 }

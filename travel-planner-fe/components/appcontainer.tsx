@@ -17,7 +17,13 @@ function Container({ children }: ContainerProps) {
           alignItems: "center",
         }}
       >
-        <Stack alignItems="center" justifyContent="center">
+        <Stack
+          alignItems="center"
+          justifyContent="center"
+          sx={{
+            p: 1,
+          }}
+        >
           {children}
         </Stack>
       </Box>

@@ -16,6 +16,7 @@ import TimelineItem, { timelineItemClasses } from "@mui/lab/TimelineItem";
 import TimelineSeparator from "@mui/lab/TimelineSeparator";
 import LoadingPage from "@/components/loadingPage";
 import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
 
 const db = getFirestore(firebase_app);
 
@@ -50,74 +51,60 @@ function Itinerary() {
 
   const days = itineraryData.places.length / 3;
   return (
-    <>
-      <section>
-        <Typography variant="h5" align="center">
-          Here is a day by day plan for your trip to {destination}. Enjoy your
-          travel!
-        </Typography>
-        <Timeline
-          sx={{
-            [`& .${timelineItemClasses.root}:before`]: {
-              flex: 0,
-              padding: 0,
-            },
-          }}
-        >
-          {Array.from({ length: days }, (_, index) => (
-            <TimelineItem key={index}>
-              <TimelineSeparator>
-                <TimelineConnector />
-                <TimelineDot
-                  sx={{
-                    height: "1rem",
-                    width: "1rem",
-                    backgroundColor:
-                      currentDay === index ? red[500] : orange[500],
-                  }}
-                />
-                <TimelineConnector />
-              </TimelineSeparator>
-              <TimelineContent
-                onClick={() => setCurrentDay(index)}
-                sx={{
-                  height: `${70 / days}vh`,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  width: "50vw",
-                }}
+    <Stack justifyContent="center" alignItems="center">
+      <Typography variant="h5" align="center">
+        Here is a day by day plan for your trip to {destination}. Enjoy your
+        travel!
+      </Typography>
+      <Timeline
+        sx={{
+          [`& .${timelineItemClasses.root}:before`]: {
+            flex: 0,
+            padding: 0,
+          },
+        }}
+      >
+        {Array.from({ length: days }, (_, index) => (
+          <TimelineItem key={index}>
+            <TimelineContent
+              onClick={() => setCurrentDay(index)}
+              sx={{
+                height: `${60 / days}vh`,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                width: "50vw",
+              }}
+            >
+              <Button
+                fullWidth
+                variant="contained"
+                href={`/itineraries/day-${
+                  index + 1
+                }?places=${encodeURIComponent(
+                  JSON.stringify(
+                    itineraryData.places.slice(index * 3, index * 3 + 3)
+                  )
+                )}&restaurants=${encodeURIComponent(
+                  JSON.stringify(
+                    itineraryData.restaurants.slice(index * 3, index * 3 + 3)
+                  )
+                )}&destination_coordinates=${encodeURIComponent(
+                  JSON.stringify(itineraryData.destination_coordinates)
+                )}&destination=${encodeURIComponent(destination)}`}
               >
-                <Button
-                  fullWidth
-                  variant="contained"
-                  href={`/itineraries/day-${
-                    index + 1
-                  }?places=${encodeURIComponent(
-                    JSON.stringify(
-                      itineraryData.places.slice(index * 3, index * 3 + 3)
-                    )
-                  )}&restaurants=${encodeURIComponent(
-                    JSON.stringify(
-                      itineraryData.restaurants.slice(index * 3, index * 3 + 3)
-                    )
-                  )}&destination_coordinates=${encodeURIComponent(
-                    JSON.stringify(itineraryData.destination_coordinates)
-                  )}&destination=${encodeURIComponent(destination)}`}
-                >
-                  <Typography variant="h2" align="center">
-                    Day {index + 1}
-                  </Typography>
-                </Button>
-              </TimelineContent>
-            </TimelineItem>
-          ))}
-        </Timeline>
-        <Button variant="contained" href="/trips">
-          Return to your trips
-        </Button>
-      </section>
-    </>
+                <Typography variant="h2" align="center">
+                  Day {index + 1}
+                </Typography>
+              </Button>
+            </TimelineContent>
+          </TimelineItem>
+        ))}
+      </Timeline>
+      <Button variant="contained" href="/trips">
+        Return to your trips
+      </Button>
+    </Stack>
   );
 }
 
