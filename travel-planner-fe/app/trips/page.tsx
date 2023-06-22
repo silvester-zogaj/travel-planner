@@ -70,7 +70,14 @@ export default function Trips() {
 
   return (
     <Stack gap={5} height="80vh" justifyContent="center" alignItems="center">
-      <Typography textAlign="center" variant="h3" fontWeight="bold">
+      <Typography
+        sx={{
+          textShadow: "0px 0px 20px black",
+        }}
+        textAlign="center"
+        variant="h3"
+        fontWeight="bold"
+      >
         Your trips 🌎
       </Typography>
       <Paper

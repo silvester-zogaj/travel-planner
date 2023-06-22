@@ -52,7 +52,13 @@ function Itinerary() {
   const days = itineraryData.places.length / 3;
   return (
     <Stack justifyContent="center" alignItems="center">
-      <Typography variant="h5" align="center">
+      <Typography
+        variant="h5"
+        align="center"
+        sx={{
+          textShadow: "0px 0px 20px black",
+        }}
+      >
         Here is a day by day plan for your trip to {destination}. Enjoy your
         travel!
       </Typography>

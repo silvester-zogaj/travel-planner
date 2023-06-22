@@ -67,7 +67,15 @@ export default function Destination({
   }
   return (
     <Stack gap={5} height="80vh" justifyContent="center" alignItems="center">
-      <Typography variant="h3">Where are you headed?</Typography>
+      <Typography
+        textAlign={"center"}
+        sx={{
+          textShadow: "0px 0px 20px black",
+        }}
+        variant="h3"
+      >
+        Where are you headed?
+      </Typography>
       <form onSubmit={handleSubmit}>
         <FormControl
           sx={{

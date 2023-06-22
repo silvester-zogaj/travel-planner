@@ -152,6 +152,9 @@ export default function Preferences({
       <Typography
         textAlign="center"
         variant="h6"
+        sx={{
+          textShadow: "0px 0px 20px black",
+        }}
       >{`Finally, tell us what you enjoy doing when you're away...`}</Typography>
       <Stack
         sx={{

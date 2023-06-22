@@ -52,7 +52,13 @@ export default function Duration({
             gap: "1rem",
           }}
         >
-          <Typography textAlign="center" variant="h3">
+          <Typography
+            sx={{
+              textShadow: "0px 0px 20px black",
+            }}
+            textAlign="center"
+            variant="h3"
+          >
             Tell us a little more about your trip
           </Typography>
           <FormControl fullWidth>

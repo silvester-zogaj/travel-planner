@@ -20,7 +20,13 @@ function Home() {
           objectFit: "contain",
         }}
       />
-      <Typography variant="h5" style={{ marginBottom: "10px" }}>
+      <Typography
+        sx={{
+          textShadow: "0px 0px 20px black",
+        }}
+        variant="h5"
+        style={{ marginBottom: "10px" }}
+      >
         Hi {name}, welcome back 🏖️
       </Typography>
       <Button component={Link} href="/trips" variant="contained">
