@@ -26,6 +26,7 @@ import LocalFloristIcon from "@mui/icons-material/LocalFlorist";
 import RestaurantIcon from "@mui/icons-material/Restaurant";
 import React from "react";
 import { SetStateAction } from "react";
+import { Button, Paper } from "@mui/material";
 
 interface ItemsProps {
   name: string;
@@ -47,14 +48,12 @@ interface PlacesMapProps {
 }
 
 interface LocationProps {
-  
-    id: number;
-    latitude: number;
-    longitude: number;
-    name: string;
-    address: string;
-    category: string[];
-  
+  id: number;
+  latitude: number;
+  longitude: number;
+  name: string;
+  address: string;
+  category: string[];
 }
 
 export const PlacesMap = ({
@@ -89,7 +88,7 @@ export const PlacesMap = ({
   console.log(places, restaurants);
 
   return (
-    <div id="mapbox-gl" className={styles.map}>
+    <>
       <ReactMapGL
         ref={mapRef}
         mapboxAccessToken="pk.eyJ1IjoibGFpOTYiLCJhIjoiY2xpdWVhdmQ3MHkybjNobzdnbjJwcmx6YSJ9.0CYohMf5CN77cD-BOo7mhw"
@@ -98,6 +97,14 @@ export const PlacesMap = ({
           longitude: DEFAULT_LNG,
           latitude: DEFAULT_LAT,
           zoom: DEFAULT_ZOOM,
+        }}
+        style={{
+          minWidth: "20vw",
+          minHeight: "20vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          borderRadius: "15px",
         }}
       >
         <NavigationControl
@@ -162,7 +169,9 @@ export const PlacesMap = ({
           );
         })}
       </ReactMapGL>
-      <button onClick={handleClick}>Center</button>
-    </div>
+      <Button variant="contained" onClick={handleClick}>
+        Center
+      </Button>
+    </>
   );
 };
