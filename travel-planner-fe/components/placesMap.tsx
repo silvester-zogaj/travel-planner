@@ -1,20 +1,14 @@
 "use client";
-import Image from "next/image";
-import { Map, MapRef, useMap } from "react-map-gl";
-import styles from "../app/page.module.css";
+import React, { useRef, useState } from "react";
+
 import ReactMapGL, {
   Marker,
+  MapRef,
   Popup,
-  Source,
-  Layer,
   NavigationControl,
 } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import { red } from "@mui/material/colors";
-import mapboxgl from "mapbox-gl";
-import { useRef, useState, useEffect } from "react";
-
 import BeachAccessIcon from "@mui/icons-material/BeachAccess";
 import MuseumIcon from "@mui/icons-material/Museum";
 import PaletteIcon from "@mui/icons-material/Palette";
@@ -24,8 +18,9 @@ import WineBarIcon from "@mui/icons-material/WineBar";
 import AttractionsIcon from "@mui/icons-material/Attractions";
 import LocalFloristIcon from "@mui/icons-material/LocalFlorist";
 import RestaurantIcon from "@mui/icons-material/Restaurant";
-import React from "react";
-import { SetStateAction } from "react";
+import styles from "../app/page.module.css";
+
+const accessToken = process.env.NEXT_PUBLIC_ACCESS_TOKEN;
 
 interface ItemsProps {
   name: string;
@@ -36,10 +31,10 @@ interface ItemsProps {
     latitude: number;
   };
 }
+
 interface PlacesMapProps {
   places: ItemsProps[];
   restaurants: ItemsProps[];
-
   destinationCoordinates: {
     lat: number;
     lng: number;
@@ -47,14 +42,12 @@ interface PlacesMapProps {
 }
 
 interface LocationProps {
-  
-    id: number;
-    latitude: number;
-    longitude: number;
-    name: string;
-    address: string;
-    category: string[];
-  
+  id: number;
+  latitude: number;
+  longitude: number;
+  name: string;
+  address: string;
+  category: string[];
 }
 
 export const PlacesMap = ({
@@ -86,13 +79,54 @@ export const PlacesMap = ({
     });
   };
 
-  console.log(places, restaurants);
+  const renderPopup = () => {
+    if (!popupInfo) return null;
+
+    const getIcon = () => {
+      if (popupInfo.category.includes("beach")) {
+        return <BeachAccessIcon />;
+      } else if (popupInfo.category.includes("museum")) {
+        return <MuseumIcon />;
+      } else if (popupInfo.category.includes("art")) {
+        return <PaletteIcon />;
+      } else if (popupInfo.category.includes("mountain")) {
+        return <HikingIcon />;
+      } else if (popupInfo.category.includes("park")) {
+        return <ParkIcon />;
+      } else if (popupInfo.category.includes("winery")) {
+        return <WineBarIcon />;
+      } else if (popupInfo.category.includes("theme park")) {
+        return <AttractionsIcon />;
+      } else if (popupInfo.category.includes("garden")) {
+        return <LocalFloristIcon />;
+      } else {
+        return <RestaurantIcon />;
+      }
+    };
+
+    return (
+      <Popup
+        closeButton={false}
+        className={styles.popup}
+        anchor="bottom"
+        longitude={popupInfo.longitude}
+        latitude={popupInfo.latitude}
+        onClose={() => setPopupInfo(null)}
+      >
+        <div className={styles.popupdiv}>
+          <h1>{popupInfo.name}</h1>
+          {getIcon()}
+          <h2>{popupInfo.address}</h2>
+        </div>
+      </Popup>
+    );
+  };
 
   return (
     <div id="mapbox-gl" className={styles.map}>
       <ReactMapGL
         ref={mapRef}
-        mapboxAccessToken="pk.eyJ1IjoibGFpOTYiLCJhIjoiY2xpdWVhdmQ3MHkybjNobzdnbjJwcmx6YSJ9.0CYohMf5CN77cD-BOo7mhw"
+        mapboxAccessToken={accessToken}
         mapStyle="mapbox://styles/mapbox/streets-v11"
         initialViewState={{
           longitude: DEFAULT_LNG,
@@ -105,62 +139,38 @@ export const PlacesMap = ({
           showCompass={false}
           visualizePitch={false}
         />
-        {locations.map((location) => {
-          return (
-            <>
-              <Marker
-                key={location.id}
-                latitude={location.latitude}
-                longitude={location.longitude}
-                onClick={(e) => {
-                  e.originalEvent.stopPropagation();
-                  setPopupInfo(location);
-                }}
-              >
-                {location.category.includes("restaurant") ? (
-                  <LocationOnIcon className={styles.restaurantMarker} />
-                ) : (
-                  <LocationOnIcon className={styles.activityMarker} />
-                )}
-              </Marker>
-
-              {popupInfo && (
-                <Popup
-                  closeButton={false}
-                  className={styles.popup}
-                  anchor="bottom"
-                  longitude={popupInfo.longitude}
-                  latitude={popupInfo.latitude}
-                  onClose={() => setPopupInfo(null)}
-                >
-                  <div className={styles.popupdiv}>
-                    <h1>{popupInfo.name}</h1>
-                    {popupInfo.category.includes("beach") ? (
-                      <BeachAccessIcon />
-                    ) : popupInfo.category.includes("museum") ? (
-                      <MuseumIcon />
-                    ) : popupInfo.category.includes("art") ? (
-                      <PaletteIcon />
-                    ) : popupInfo.category.includes("mountain") ? (
-                      <HikingIcon />
-                    ) : popupInfo.category.includes("park") ? (
-                      <ParkIcon />
-                    ) : popupInfo.category.includes("winery") ? (
-                      <WineBarIcon />
-                    ) : popupInfo.category.includes("theme park") ? (
-                      <AttractionsIcon />
-                    ) : popupInfo.category.includes("garden") ? (
-                      <LocalFloristIcon />
-                    ) : (
-                      <RestaurantIcon />
-                    )}
-                    <h2>{popupInfo.address}</h2>
-                  </div>
-                </Popup>
-              )}
-            </>
-          );
-        })}
+        {locations.map((location) => (
+          <Marker
+            key={location.id}
+            latitude={location.latitude}
+            longitude={location.longitude}
+            onClick={(e) => {
+              e.originalEvent.stopPropagation();
+              if (popupInfo) {
+                setPopupInfo(null);
+                mapRef.current?.flyTo({
+                  center: [location.longitude, location.latitude],
+                  zoom: DEFAULT_ZOOM,
+                  speed: 1,
+                });
+              } else {
+                setPopupInfo(location);
+                mapRef.current?.flyTo({
+                  center: [location.longitude, location.latitude],
+                  zoom: 15,
+                  speed: 0.7,
+                });
+              }
+            }}
+          >
+            {location.category.includes("restaurant") ? (
+              <LocationOnIcon className={styles.restaurantMarker} />
+            ) : (
+              <LocationOnIcon className={styles.activityMarker} />
+            )}
+          </Marker>
+        ))}
+        {renderPopup()}
       </ReactMapGL>
       <button onClick={handleClick}>Center</button>
     </div>

@@ -32,7 +32,11 @@ export default function Trips() {
       try {
         setIsLoading(true);
         const data = await fetchDataFromFirebase(db, user.uid);
-        const tripNames = Object.keys(data);
+        const tripNames = Object.keys(data).sort((a, b) => {
+          const timestampA = Date.parse(data[a].created_at);
+          const timestampB = Date.parse(data[b].created_at);
+          return timestampA - timestampB;
+        });
         setTrips(tripNames);
         setIsLoading(false);
       } catch (error) {

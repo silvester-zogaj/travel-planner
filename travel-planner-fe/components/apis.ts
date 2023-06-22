@@ -10,7 +10,7 @@ export function destinationSearch(
 ) {
   return axios
     .get(
-      `https://api.mapbox.com/search/searchbox/v1/category/${activity}?&proximity=${lng},${lat}&access_token=${accessToken}&limit=${limit}&language=en`
+      `https://api.mapbox.com/search/searchbox/v1/category/${activity}?&proximity=${lng},${lat}&access_token=${accessToken}&limit=${limit}&language=en&radius=2`
     )
     .then((response) => {
       return response.data;
