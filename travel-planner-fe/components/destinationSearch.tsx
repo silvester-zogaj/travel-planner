@@ -8,6 +8,7 @@ import dynamic from "next/dynamic";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import Stack from "@mui/material/Stack";
+import { Typography } from "@mui/material";
 
 const accessToken = process.env.NEXT_PUBLIC_ACCESS_TOKEN;
 if (!accessToken) {
@@ -66,7 +67,7 @@ export default function Destination({
   }
   return (
     <Stack gap={5} height="80vh" justifyContent="center" alignItems="center">
-      <h1>Where are you headed?</h1>
+      <Typography variant="h3">Where are you headed?</Typography>
       <form onSubmit={handleSubmit}>
         <FormControl
           sx={{

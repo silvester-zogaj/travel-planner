@@ -149,7 +149,7 @@ export default function SingleDay() {
 
   return (
     <>
-      <h1>Day {currentDay}</h1>
+      <Typography variant="h3">Day {currentDay}</Typography>
       <Stack
         alignContent={"center"}
         gap={2}
