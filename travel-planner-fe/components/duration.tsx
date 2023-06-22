@@ -9,27 +9,27 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
 interface DurationProps {
-  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
-  currentPage: number;
+  handleNextPage: () => void;
+  handlePrevPage: () => void;
   numDays: number | null;
   setNumDays: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
 export default function Duration({
-  setCurrentPage,
-  currentPage,
+  handleNextPage,
+  handlePrevPage,
   numDays,
   setNumDays,
 }: DurationProps) {
   const [day, setDay] = useState<string>("Monday");
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    setCurrentPage(currentPage + 1);
+  const handleSubmit = () => {
+    handleNextPage();
   };
 
-  const handleReturn = (e: React.MouseEvent<HTMLButtonElement>) => {
-    setCurrentPage(currentPage - 1);
+  const handleReturn = () => {
+    handlePrevPage();
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

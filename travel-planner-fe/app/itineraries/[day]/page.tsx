@@ -2,7 +2,7 @@
 
 import { useSearchParams, usePathname } from "next/navigation";
 import { PlacesMap } from "@/components/placesMap";
-import Link from "next/link";
+import Button from "@mui/material/Button";
 
 type itemProperties = {
   name: string;
@@ -58,11 +58,7 @@ export default function SingleDay() {
           </ul>
         </article>
       </section>
-      <Link
-        href={`/itineraries?destination=${encodeURIComponent(destination)}`}
-      >
-        <button>Return to itinerary</button>
-      </Link>
+      <Button variant="contained" href={`/itineraries?destination=${encodeURIComponent(destination)}`}>Return to itinerary</Button>
     </main>
   );
 }
