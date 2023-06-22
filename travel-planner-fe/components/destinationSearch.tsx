@@ -8,8 +8,12 @@ import dynamic from "next/dynamic";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 
-const accessToken = process.env.NEXT_PUBLIC_ACCESS_TOKEN || "";
-
+const accessToken = process.env.NEXT_PUBLIC_ACCESS_TOKEN;
+if (!accessToken) {
+  throw new Error(
+    "You must provide a Mapbox access token as an environment variable named NEXT_PUBLIC_ACCESS_TOKEN. See https://docs.mapbox.com/help/how-mapbox-works/access-tokens/ for more information."
+  );
+}
 const DynamicSearchBox = dynamic(
   () => import("@mapbox/search-js-react").then((module) => module.SearchBox),
   {
