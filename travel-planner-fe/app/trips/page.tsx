@@ -17,6 +17,7 @@ import LoadingPage from "@/components/loadingPage";
 import { AuthContext } from "@/app/context/AuthContext";
 import { getFirestore } from "firebase/firestore";
 import { redirect } from "next/navigation";
+import Divider from "@mui/material/Divider";
 
 const db = getFirestore(firebase_app);
 
@@ -73,21 +74,30 @@ export default function Trips() {
           Your trips 🌎
         </Typography>
         {trips.map((trip, i) => (
-          <ButtonGroup variant="contained" key={i}>
+          <ButtonGroup key={i}>
             <Button
+              variant="contained"
               href={`/itineraries?destination=${trip}`}
               component={Link}
               size="large"
               sx={{
                 width: "100%",
                 height: "80px",
+                borderTopRightRadius: 0,
+                borderBottomRightRadius: 0,
               }}
             >
               <Typography fontWeight="bold">{trip}</Typography>
             </Button>
+            <Divider />
             <Button
+              variant="contained"
               onClick={() => {
                 handleDelete(trip);
+              }}
+              sx={{
+                borderTopLeftRadius: 0,
+                borderBottomLeftRadius: 0,
               }}
               size="large"
             >
