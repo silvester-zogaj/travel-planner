@@ -124,12 +124,27 @@
   cursor: pointer;
   color: crimson;
   transform: scale(1.1);
+  z-index: 10;
+  position: relative;
 }
 .restaurantMarker {
   cursor: pointer;
   color: royalblue;
   transform: scale(1.1);
+  z-index: 10;
+  position: relative;
 }
+
+.markerBg {
+  position: absolute;
+  height: 9px;
+  width: 9px;
+  background-color: black;
+  top: 15%;
+  left: 35%;
+  border-radius: 50%;
+}
+
 .popup {
   text-align: center;
   color: black;

@@ -113,10 +113,10 @@ export const PlacesMap = ({
         latitude={popupInfo.latitude}
         onClose={() => setPopupInfo(null)}
       >
-        <div className={styles.popupdiv}>
+        <div className={styles.popupDiv}>
           <h1>{popupInfo.name}</h1>
           {getIcon()}
-          <h2>{popupInfo.address}</h2>
+          <p>{popupInfo.address}</p>
         </div>
       </Popup>
     );
@@ -163,6 +163,7 @@ export const PlacesMap = ({
               }
             }}
           >
+            <div className={styles.markerBg}></div>
             {location.category.includes("restaurant") ? (
               <LocationOnIcon className={styles.restaurantMarker} />
             ) : (
