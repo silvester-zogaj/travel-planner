@@ -12,7 +12,6 @@ function Container({ children }: ContainerProps) {
         sx={{
           p: 0,
           width: "100%",
-          height: "calc(100vh - 74px)",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",

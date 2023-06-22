@@ -18,7 +18,11 @@ import WineBarIcon from "@mui/icons-material/WineBar";
 import AttractionsIcon from "@mui/icons-material/Attractions";
 import LocalFloristIcon from "@mui/icons-material/LocalFlorist";
 import RestaurantIcon from "@mui/icons-material/Restaurant";
+import Button from "@mui/material/Button";
+import Paper from "@mui/material/Paper";
+import "./popup-styling.css";
 import styles from "../app/page.module.css";
+import { Box, Stack, Typography, useTheme } from "@mui/material";
 
 const accessToken = process.env.NEXT_PUBLIC_ACCESS_TOKEN;
 
@@ -107,65 +111,88 @@ export const PlacesMap = ({
 
     return (
       <Popup
+        className="popup-container"
         closeButton={false}
-        className={styles.popup}
         anchor="bottom"
         longitude={popupInfo.longitude}
         latitude={popupInfo.latitude}
         onClose={() => setPopupInfo(null)}
       >
-        <div className={styles.popupDiv}>
-          <h2>{popupInfo.name}</h2>
+        <Stack gap={0.5} alignItems="center">
+          <Typography textAlign="center" variant={"subtitle1"}>
+            {popupInfo.name}
+          </Typography>
           {getIcon()}
-          <p>{popupInfo.address}</p>
-        </div>
+          <Typography textAlign="center" variant="body2">
+            {popupInfo.address}
+          </Typography>
+        </Stack>
       </Popup>
     );
   };
 
   return (
-    <div id="mapbox-gl" className={styles.map}>
-      <ReactMapGL
-        ref={mapRef}
-        mapboxAccessToken={accessToken}
-        mapStyle="mapbox://styles/mapbox/streets-v11"
-        initialViewState={{
-          longitude: DEFAULT_LNG,
-          latitude: DEFAULT_LAT,
-          zoom: DEFAULT_ZOOM,
-        }}
-      >
-        <NavigationControl
-          showZoom={false}
-          showCompass={false}
-          visualizePitch={false}
-        />
-        {locations.map((location) => (
-          <Marker
-            key={location.id}
-            latitude={location.latitude}
-            longitude={location.longitude}
-            onClick={(e) => {
-              e.originalEvent.stopPropagation();
-              setPopupInfo(location);
-              mapRef.current?.flyTo({
-                center: [location.longitude, location.latitude],
-                zoom: 15,
-                speed: 0.7,
-              });
-            }}
-          >
-            <div className={styles.markerBg}></div>
-            {location.category.includes("restaurant") ? (
-              <LocationOnIcon className={styles.restaurantMarker} />
-            ) : (
-              <LocationOnIcon className={styles.activityMarker} />
-            )}
-          </Marker>
-        ))}
-        {renderPopup()}
-      </ReactMapGL>
-      <button onClick={handleClick}>Center</button>
-    </div>
+    <>
+      <Box>
+        <ReactMapGL
+          ref={mapRef}
+          mapboxAccessToken={accessToken}
+          mapStyle="mapbox://styles/mapbox/streets-v11"
+          initialViewState={{
+            longitude: DEFAULT_LNG,
+            latitude: DEFAULT_LAT,
+            zoom: DEFAULT_ZOOM,
+          }}
+          style={{
+            minWidth: "25vw",
+            minHeight: "50vh",
+            borderRadius: "15px",
+          }}
+        >
+          <NavigationControl
+            showZoom={false}
+            showCompass={false}
+            visualizePitch={false}
+          />
+          {locations.map((location) => (
+            <Marker
+              key={location.id}
+              latitude={location.latitude}
+              longitude={location.longitude}
+              onClick={(e) => {
+                e.originalEvent.stopPropagation();
+                if (popupInfo) {
+                  setPopupInfo(null);
+                  mapRef.current?.flyTo({
+                    center: [location.longitude, location.latitude],
+                    zoom: DEFAULT_ZOOM,
+                    speed: 1,
+                  });
+                } else {
+                  setPopupInfo(location);
+                  mapRef.current?.flyTo({
+                    center: [location.longitude, location.latitude],
+                    zoom: 15,
+                    speed: 0.7,
+                  });
+                }
+              }}
+            >
+              <div className={styles.markerBg}></div>
+              {location.category.includes("restaurant") ? (
+                <LocationOnIcon className={styles.restaurantMarker} />
+              ) : (
+                <LocationOnIcon className={styles.activityMarker} />
+              )}
+            </Marker>
+          ))}
+          {renderPopup()}
+        </ReactMapGL>
+      </Box>
+
+      <Button variant="contained" onClick={handleClick}>
+        Center
+      </Button>
+    </>
   );
 };
