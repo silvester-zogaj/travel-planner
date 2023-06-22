@@ -1,0 +1,10 @@
+.mapboxgl-popup-content {
+    padding: 5px;
+    border-radius: 15px;
+    background: #d01746;
+    max-width: 150px;
+}
+
+.mapboxgl-popup-tip {
+    border-top-color: #d01746 !important;
+}
