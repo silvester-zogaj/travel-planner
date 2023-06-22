@@ -5,15 +5,12 @@ import { PlacesMap } from "@/components/placesMap";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import MobileStepper from "@mui/material/MobileStepper";
-import {
-  Box,
-  CardContent,
-  CardMedia,
-  Paper,
-  Stack,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import useTheme from "@mui/material/styles/useTheme";
 import restaurant1 from "@/public/restaurant/restaurant1.avif";
 import restaurant2 from "@/public/restaurant/restaurant2.avif";
 import restaurant3 from "@/public/restaurant/restaurant3.avif";

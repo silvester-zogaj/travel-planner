@@ -1,11 +1,10 @@
 "use client";
 
-import { ReactElement, ReactNode, useEffect, useState } from "react";
+import { useState } from "react";
 import Destination from "@/components/destinationSearch";
 import Duration from "@/components/duration";
 import Preferences from "@/components/preferences";
-import Paper from "@mui/material/Paper";
-import Slide, { SlideProps } from "@mui/material/Slide";
+import { SlideProps } from "@mui/material/Slide";
 
 enum Pages {
   Destination,

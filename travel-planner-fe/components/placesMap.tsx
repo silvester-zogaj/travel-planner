@@ -18,7 +18,7 @@ import WineBarIcon from "@mui/icons-material/WineBar";
 import AttractionsIcon from "@mui/icons-material/Attractions";
 import LocalFloristIcon from "@mui/icons-material/LocalFlorist";
 import RestaurantIcon from "@mui/icons-material/Restaurant";
-import { Button } from "@mui/material";
+import Button from "@mui/material/Button";
 import styles from "../app/page.module.css";
 
 const accessToken = process.env.NEXT_PUBLIC_ACCESS_TOKEN;
