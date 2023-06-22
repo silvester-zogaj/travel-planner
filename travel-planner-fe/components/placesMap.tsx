@@ -71,7 +71,7 @@ export const PlacesMap = ({
     latitude: place.coordinates.latitude,
     longitude: place.coordinates.longitude,
     name: place.name,
-    address: place.full_address,
+    address: place.full_address.replaceAll('"', ""),
     category: place.categories,
   }));
 
@@ -81,6 +81,7 @@ export const PlacesMap = ({
       zoom: DEFAULT_ZOOM,
       essential: true,
     });
+    setPopupInfo(null);
   };
 
   const renderPopup = () => {
@@ -88,23 +89,23 @@ export const PlacesMap = ({
 
     const getIcon = () => {
       if (popupInfo.category.includes("beach")) {
-        return <BeachAccessIcon />;
+        return <BeachAccessIcon className={styles.popupIcon} />;
       } else if (popupInfo.category.includes("museum")) {
-        return <MuseumIcon />;
+        return <MuseumIcon className={styles.popupIcon} />;
       } else if (popupInfo.category.includes("art")) {
-        return <PaletteIcon />;
+        return <PaletteIcon className={styles.popupIcon} />;
       } else if (popupInfo.category.includes("mountain")) {
-        return <HikingIcon />;
+        return <HikingIcon className={styles.popupIcon} />;
       } else if (popupInfo.category.includes("park")) {
-        return <ParkIcon />;
+        return <ParkIcon className={styles.popupIcon} />;
       } else if (popupInfo.category.includes("winery")) {
-        return <WineBarIcon />;
+        return <WineBarIcon className={styles.popupIcon} />;
       } else if (popupInfo.category.includes("theme park")) {
-        return <AttractionsIcon />;
+        return <AttractionsIcon className={styles.popupIcon} />;
       } else if (popupInfo.category.includes("garden")) {
-        return <LocalFloristIcon />;
+        return <LocalFloristIcon className={styles.popupIcon} />;
       } else {
-        return <RestaurantIcon />;
+        return <RestaurantIcon className={styles.popupIcon} />;
       }
     };
 
