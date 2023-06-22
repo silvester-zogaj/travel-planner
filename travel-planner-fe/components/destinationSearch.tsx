@@ -53,7 +53,16 @@ export default function Destination({
   const handleChange = () => {
     setIsDisabled(true);
   };
-
+  if (!accessToken) {
+    return (
+      <div>
+        You must provide a Mapbox access token as an environment variable named
+        NEXT_PUBLIC_ACCESS_TOKEN. See
+        https://docs.mapbox.com/help/how-mapbox-works/access-tokens/ for more
+        information.
+      </div>
+    );
+  }
   return (
     <>
       <h1>Where are you headed?</h1>
