@@ -32,7 +32,7 @@ import { writeDataToFirebase } from "@/utils/firebaseUtils";
 const db = getFirestore(firebase_app);
 
 interface PreferencesProps {
-  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  handlePrevPage: () => void;
   currentPage: number;
   lng: number | null;
   lat: number | null;
@@ -41,8 +41,7 @@ interface PreferencesProps {
 }
 
 export default function Preferences({
-  setCurrentPage,
-  currentPage,
+  handlePrevPage,
   lng,
   lat,
   numDays,
@@ -134,7 +133,7 @@ export default function Preferences({
   }
 
   const handleReturn = (e: React.MouseEvent<HTMLButtonElement>) => {
-    setCurrentPage(currentPage - 1);
+    handlePrevPage()
     e.preventDefault();
   };
 

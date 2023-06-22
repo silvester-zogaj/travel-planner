@@ -17,6 +17,7 @@ import TimelineDot from "@mui/lab/TimelineDot";
 import TimelineItem, { timelineItemClasses } from "@mui/lab/TimelineItem";
 import TimelineSeparator from "@mui/lab/TimelineSeparator";
 import LoadingPage from "@/components/loadingPage";
+import Button from "@mui/material/Button";
 
 const db = getFirestore(firebase_app);
 
@@ -49,6 +50,7 @@ function Itinerary() {
     return <LoadingPage />;
   }
 
+  const days = itineraryData.places.length / 3;
   return (
     <>
     <section>
@@ -60,14 +62,14 @@ function Itinerary() {
         },
       }}
     >
-      {Array.from({ length: itineraryData.places.length / 3 }, (_, index) => (
+      {Array.from({ length: days }, (_, index) => (
         <TimelineItem key={index}>
           <TimelineSeparator>
             <TimelineConnector />
             <TimelineDot
               sx={{
-                height: "2rem",
-                width: "2rem",
+                height: "1rem",
+                width: "1rem",
                 backgroundColor: currentDay === index ? red[500] : orange[500],
               }}
             />
@@ -75,9 +77,16 @@ function Itinerary() {
           </TimelineSeparator>
           <TimelineContent
             onClick={() => setCurrentDay(index)}
-            sx={{ height: "14vh", width: "80vw" }}
+            sx={{
+              height: `${70 / days}vh`, display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "50vw",
+            }}
           >
-            <Link
+            <Button
+              fullWidth
+              variant="contained"
               href={`/itineraries/day-${index + 1}?places=${encodeURIComponent(
                 JSON.stringify(
                   itineraryData.places.slice(index * 3, index * 3 + 3)
@@ -91,26 +100,15 @@ function Itinerary() {
               )}&destination=${encodeURIComponent(destination)
               }`}
             >
-              <Paper
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: "100%",
-                }}
-              >
-                <Typography variant="h2" align="center">
-                  Day {index + 1}
-                </Typography>
-              </Paper>
-            </Link>
+              <Typography variant="h2" align="center">
+                Day {index + 1}
+              </Typography>
+            </Button>
           </TimelineContent>
         </TimelineItem>
       ))}
     </Timeline>
-    <Link href="/trips">
-      <button>Return to your trips</button>
-    </Link>
+    <Button variant="contained" href="/trips">Return to your trips</Button>
   </section>
   </>
   );

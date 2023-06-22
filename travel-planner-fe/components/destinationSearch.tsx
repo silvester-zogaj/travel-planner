@@ -22,7 +22,7 @@ const DynamicSearchBox = dynamic(
 );
 
 interface DestinationProps {
-  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  handleNextPage: () => void;
   setLng: React.Dispatch<React.SetStateAction<number | null>>;
   setLat: React.Dispatch<React.SetStateAction<number | null>>;
   setDestination: React.Dispatch<React.SetStateAction<string>>;
@@ -30,7 +30,7 @@ interface DestinationProps {
 }
 
 export default function Destination({
-  setCurrentPage,
+  handleNextPage,
   setLng,
   setLat,
   setDestination,
@@ -39,7 +39,7 @@ export default function Destination({
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    setCurrentPage((currPage) => currPage + 1);
+    handleNextPage();
     e.preventDefault();
   };
 
