@@ -22,10 +22,12 @@ function CurrentUser() {
         <Typography variant="body1">
           {user?.email ? `Logged In As ${name}` : "Logged Out"}
         </Typography>
-        <Avatar
-          src="https://cdn.domestika.org/c_fill,dpr_auto,f_auto,h_256,pg_1,t_base_params,w_256/v1492259543/avatars/000/518/341/518341-original.jpeg?1492259543"
-          alt="Profile picture"
-        />
+        {user && (
+          <Avatar
+            src="https://cdn.domestika.org/c_fill,dpr_auto,f_auto,h_256,pg_1,t_base_params,w_256/v1492259543/avatars/000/518/341/518341-original.jpeg?1492259543"
+            alt="Profile picture"
+          />
+        )}
       </Stack>
     </Paper>
   );
