@@ -142,7 +142,6 @@ export default function SingleDay() {
   const restaurants = searchParams.get("restaurants") || null;
   const destinationCoordinates =
     searchParams.get("destination_coordinates") || null;
-
   const destination = searchParams.get("destination") || "";
 
   const parsedPlaces = places ? JSON.parse(places) : [];

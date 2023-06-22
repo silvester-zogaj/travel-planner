@@ -1,13 +1,11 @@
 "use client";
 import { useState } from "react";
-import styles from "../app/page.module.css";
-import { redirect, useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import {
   fetchPlaces,
   fetchRestaurants,
   transformData,
 } from "@/utils/placesUtils";
-import List from "@mui/material/List";
 import Chip from "@mui/material/Chip";
 import CheckCircle from "@mui/icons-material/CheckCircle";
 import Circle from "@mui/icons-material/Circle";
@@ -21,7 +19,6 @@ import AttractionsIcon from "@mui/icons-material/Attractions";
 import LocalFloristIcon from "@mui/icons-material/LocalFlorist";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
-import Grid from "@mui/material/Grid";
 
 import { useContext } from "react";
 import { AuthContext } from "@/app/context/AuthContext";
@@ -47,7 +44,6 @@ export default function Preferences({
   numDays,
   destination,
 }: PreferencesProps) {
-  const router = useRouter();
   const [preferences, setPreferences] = useState<Set<string>>(new Set());
   const [redirectUrl, setRedirectUrl] = useState<string | null>(null);
   const { user } = useContext(AuthContext);

@@ -54,6 +54,10 @@ function Itinerary() {
   return (
     <>
     <section>
+    <Typography variant="h5" align="center">
+      Here is a day by day plan for your trip to {destination}. Enjoy your
+      travel!
+    </Typography>
     <Timeline
       sx={{
         [`& .${timelineItemClasses.root}:before`]: {
