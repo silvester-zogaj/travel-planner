@@ -85,23 +85,23 @@ export const PlacesMap = ({
 
     const getIcon = () => {
       if (popupInfo.category.includes("beach")) {
-        return <BeachAccessIcon />;
+        return <BeachAccessIcon className={styles.popupIcon} />;
       } else if (popupInfo.category.includes("museum")) {
-        return <MuseumIcon />;
+        return <MuseumIcon className={styles.popupIcon} />;
       } else if (popupInfo.category.includes("art")) {
-        return <PaletteIcon />;
+        return <PaletteIcon className={styles.popupIcon} />;
       } else if (popupInfo.category.includes("mountain")) {
-        return <HikingIcon />;
+        return <HikingIcon className={styles.popupIcon} />;
       } else if (popupInfo.category.includes("park")) {
-        return <ParkIcon />;
+        return <ParkIcon className={styles.popupIcon} />;
       } else if (popupInfo.category.includes("winery")) {
-        return <WineBarIcon />;
+        return <WineBarIcon className={styles.popupIcon} />;
       } else if (popupInfo.category.includes("theme park")) {
-        return <AttractionsIcon />;
+        return <AttractionsIcon className={styles.popupIcon} />;
       } else if (popupInfo.category.includes("garden")) {
-        return <LocalFloristIcon />;
+        return <LocalFloristIcon className={styles.popupIcon} />;
       } else {
-        return <RestaurantIcon />;
+        return <RestaurantIcon className={styles.popupIcon} />;
       }
     };
 
@@ -115,7 +115,7 @@ export const PlacesMap = ({
         onClose={() => setPopupInfo(null)}
       >
         <div className={styles.popupDiv}>
-          <h1>{popupInfo.name}</h1>
+          <h2>{popupInfo.name}</h2>
           {getIcon()}
           <p>{popupInfo.address}</p>
         </div>
