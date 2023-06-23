@@ -6,8 +6,6 @@ import { redirect } from "next/navigation";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
-import Box from "@mui/material/Box";
-import milford from "../public/milford.jpg";
 import { useBackgroundImage } from "@/shared/AppMuiThemeProvider";
 import Logo from "@/components/logo";
 
@@ -19,7 +17,7 @@ export default function LandingPage() {
     }
   }, [user]);
   return (
-    <Stack sx={{ gap: 5 }}>
+    <Stack gap={5} height="80vh" justifyContent="center">
       <Logo
         style={{
           display: "block",
@@ -28,7 +26,13 @@ export default function LandingPage() {
           objectFit: "contain",
         }}
       />
-      <Typography textAlign="center" variant="h6">
+      <Typography
+        sx={{
+          textShadow: "0px 0px 20px black",
+        }}
+        textAlign="center"
+        variant="h6"
+      >
         Welcome to your itinerary travel planner, the ultimate companion for
         seamless trip organization and unforgettable adventures!
       </Typography>
@@ -36,7 +40,12 @@ export default function LandingPage() {
         Sign in
       </Button>
       <br></br>
-      <Typography textAlign="center">
+      <Typography
+        sx={{
+          textShadow: "0px 0px 20px black",
+        }}
+        textAlign="center"
+      >
         If you do not have an account, <Link href="/sign-up">sign up here</Link>
       </Typography>
     </Stack>

@@ -18,6 +18,7 @@ import { AuthContext } from "@/app/context/AuthContext";
 import { getFirestore } from "firebase/firestore";
 import { redirect } from "next/navigation";
 import Divider from "@mui/material/Divider";
+import { Paper } from "@mui/material";
 
 const db = getFirestore(firebase_app);
 
@@ -67,49 +68,65 @@ export default function Trips() {
     return <LoadingPage />;
   }
 
-  if (trips.length === 0) {
-    return <p>No trips found</p>;
-  }
-
   return (
-    <main className={styles.tripList}>
-      <Stack gap={1}>
-        <Typography textAlign="center" variant="h3" fontWeight="bold">
-          Your trips 🌎
-        </Typography>
-        {trips.map((trip, i) => (
-          <ButtonGroup key={i}>
-            <Button
-              variant="contained"
-              href={`/itineraries?destination=${trip}`}
-              component={Link}
-              size="large"
-              sx={{
-                width: "100%",
-                height: "80px",
-                borderTopRightRadius: 0,
-                borderBottomRightRadius: 0,
-              }}
-            >
-              <Typography fontWeight="bold">{trip}</Typography>
-            </Button>
-            <Divider />
-            <Button
-              variant="contained"
-              onClick={() => {
-                handleDelete(trip);
-              }}
-              sx={{
-                borderTopLeftRadius: 0,
-                borderBottomLeftRadius: 0,
-              }}
-              size="large"
-            >
-              <DeleteIcon sx={{ color: "red" }} />
-            </Button>
-          </ButtonGroup>
-        ))}
-      </Stack>
-    </main>
+    <Stack gap={5} height="80vh" justifyContent="center" alignItems="center">
+      <Typography
+        sx={{
+          textShadow: "0px 0px 20px black",
+        }}
+        textAlign="center"
+        variant="h3"
+        fontWeight="bold"
+      >
+        Your trips 🌎
+      </Typography>
+      <Paper
+        sx={{
+          p: 1,
+        }}
+      >
+        <Stack gap={5} justifyContent="center" alignItems="center">
+          {trips.length !== 0 ? (
+            trips.map((trip, i) => (
+              <ButtonGroup key={i}>
+                <Button
+                  variant="contained"
+                  href={`/itineraries?destination=${trip}`}
+                  component={Link}
+                  size="large"
+                  sx={{
+                    width: "65vw",
+                    maxWidth: "200px",
+                    height: "80px",
+                    borderTopRightRadius: 0,
+                    borderBottomRightRadius: 0,
+                  }}
+                >
+                  <Typography fontWeight="bold">{trip}</Typography>
+                </Button>
+                <Divider />
+                <Button
+                  variant="contained"
+                  onClick={() => {
+                    handleDelete(trip);
+                  }}
+                  sx={{
+                    borderTopLeftRadius: 0,
+                    borderBottomLeftRadius: 0,
+                  }}
+                  size="large"
+                >
+                  <DeleteIcon sx={{ color: "red" }} />
+                </Button>
+              </ButtonGroup>
+            ))
+          ) : (
+            <Typography textAlign="center" variant="h3" fontWeight="bold">
+              No trips found
+            </Typography>
+          )}
+        </Stack>
+      </Paper>
+    </Stack>
   );
 }

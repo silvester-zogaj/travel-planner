@@ -19,7 +19,13 @@ const Navbar = () => {
     setOpen(false);
   };
   return (
-    <Stack direction="row" justifyContent="space-between">
+    <Stack
+      direction="row"
+      justifyContent="space-between"
+      sx={{
+        p: 1,
+      }}
+    >
       <IconButton style={{ borderRadius: 0 }} onClick={toggleMenu}>
         <MenuIcon />
       </IconButton>

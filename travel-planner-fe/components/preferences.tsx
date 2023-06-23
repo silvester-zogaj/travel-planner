@@ -25,6 +25,7 @@ import { AuthContext } from "@/app/context/AuthContext";
 import firebase_app from "@/app/firebase/config";
 import { getFirestore } from "firebase/firestore";
 import { writeDataToFirebase } from "@/utils/firebaseUtils";
+import { Typography } from "@mui/material";
 
 const db = getFirestore(firebase_app);
 
@@ -129,7 +130,7 @@ export default function Preferences({
   }
 
   const handleReturn = (e: React.MouseEvent<HTMLButtonElement>) => {
-    handlePrevPage()
+    handlePrevPage();
     e.preventDefault();
   };
 
@@ -147,51 +148,55 @@ export default function Preferences({
   };
 
   return (
-    <>
-      <Stack alignItems="center" justifyContent="center" gap={2}>
-        <h1>{`Finally, tell us what you enjoy doing when you're away...`}</h1>
-        <Stack
-          sx={{
-            background: "white",
-            bgcolor: "background.paper",
-            borderRadius: "16px",
-            padding: "16px",
-          }}
-          gap={2}
-        >
-          {allCategories.map(({ name, category, icon }) => {
-            const isSelected = preferences.has(category);
-            return (
-              <Chip
-                size="medium"
-                sx={{
-                  width: "200px",
-                }}
-                onClick={() => {
-                  handleToggle(category);
-                }}
-                label={category}
-                key={category}
-                onDelete={() => {
-                  handleToggle(category);
-                }}
-                color={isSelected ? "secondary" : "primary"}
-                icon={icon}
-                deleteIcon={isSelected ? <CheckCircle /> : <Circle />}
-                variant={isSelected ? "filled" : "outlined"}
-              />
-            );
-          })}
-        </Stack>
-        <Stack alignContent="space-around" direction="row">
-          <Button variant="contained" onClick={handleSubmit}>
-            Generate plan
-          </Button>
-          <Button variant="contained" onClick={handleReturn}>
-            Return
-          </Button>
-        </Stack>
+    <Stack gap={5} height="80vh" justifyContent="center" alignItems="center">
+      <Typography
+        textAlign="center"
+        variant="h6"
+        sx={{
+          textShadow: "0px 0px 20px black",
+        }}
+      >{`Finally, tell us what you enjoy doing when you're away...`}</Typography>
+      <Stack
+        sx={{
+          background: "white",
+          bgcolor: "background.paper",
+          borderRadius: "16px",
+          padding: "16px",
+        }}
+        gap={2}
+      >
+        {allCategories.map(({ name, category, icon }) => {
+          const isSelected = preferences.has(category);
+          return (
+            <Chip
+              size="medium"
+              sx={{
+                width: "200px",
+              }}
+              onClick={() => {
+                handleToggle(category);
+              }}
+              label={category}
+              key={category}
+              onDelete={() => {
+                handleToggle(category);
+              }}
+              color={isSelected ? "secondary" : "primary"}
+              icon={icon}
+              deleteIcon={isSelected ? <CheckCircle /> : <Circle />}
+              variant={isSelected ? "filled" : "outlined"}
+            />
+          );
+        })}
       </Stack>
-    </>
+      <Stack alignContent="space-around" direction="row">
+        <Button variant="contained" onClick={handleSubmit}>
+          Generate plan
+        </Button>
+        <Button variant="contained" onClick={handleReturn}>
+          Return
+        </Button>
+      </Stack>
+    </Stack>
   );
 }

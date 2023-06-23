@@ -57,7 +57,13 @@ export default function SignUp() {
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          <Typography
+            sx={{
+              textShadow: "0px 0px 20px black",
+            }}
+            component="h1"
+            variant="h5"
+          >
             Sign up
           </Typography>
           <form onSubmit={handleSignUp}>
@@ -105,7 +111,13 @@ export default function SignUp() {
             >
               Sign up
             </Button>
-            <Link href="/sign-in" variant="body2">
+            <Link
+              sx={{
+                textShadow: "0px 0px 20px black",
+              }}
+              href="/sign-in"
+              variant="body2"
+            >
               {"Already have an account? Sign in"}
             </Link>
           </form>

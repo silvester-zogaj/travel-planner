@@ -7,6 +7,8 @@ import { SearchBoxRetrieveResponse } from "@mapbox/search-js-core";
 import dynamic from "next/dynamic";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
+import Stack from "@mui/material/Stack";
+import { Typography } from "@mui/material";
 
 const accessToken = process.env.NEXT_PUBLIC_ACCESS_TOKEN;
 if (!accessToken) {
@@ -64,8 +66,16 @@ export default function Destination({
     );
   }
   return (
-    <>
-      <h1>Where are you headed?</h1>
+    <Stack gap={5} height="80vh" justifyContent="center" alignItems="center">
+      <Typography
+        textAlign={"center"}
+        sx={{
+          textShadow: "0px 0px 20px black",
+        }}
+        variant="h3"
+      >
+        Where are you headed?
+      </Typography>
       <form onSubmit={handleSubmit}>
         <FormControl
           sx={{
@@ -91,6 +101,6 @@ export default function Destination({
           </Button>
         </FormControl>
       </form>
-    </>
+    </Stack>
   );
 }

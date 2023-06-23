@@ -14,7 +14,7 @@ import NextLink from "next/link";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Box from "@mui/material/Box";
 import { StaticImageData } from "next/image";
-import milford from "../public/milford.jpg";
+import maldives from "../public/maldives.jpeg";
 
 const contextIsDark = createContext<
   { isDark: boolean; setIsDark: (isDark: boolean) => void } | undefined
@@ -38,7 +38,7 @@ export default function AppMuiThemeProvider(props: {
   fontFamily?: string;
 }) {
   const { children } = props;
-  const [backgroundImage, setBackgroundImage] = useState<string>(milford.src);
+  const [backgroundImage, setBackgroundImage] = useState<string>(maldives.src);
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
 
   useEffect(() => {
