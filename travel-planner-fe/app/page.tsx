@@ -28,7 +28,13 @@ export default function LandingPage() {
           objectFit: "contain",
         }}
       />
-      <Typography textAlign="center" variant="h6">
+      <Typography
+        sx={{
+          textShadow: "0px 0px 20px black",
+        }}
+        textAlign="center"
+        variant="h6"
+      >
         Welcome to your itinerary travel planner, the ultimate companion for
         seamless trip organization and unforgettable adventures!
       </Typography>
@@ -36,7 +42,12 @@ export default function LandingPage() {
         Sign in
       </Button>
       <br></br>
-      <Typography textAlign="center">
+      <Typography
+        sx={{
+          textShadow: "0px 0px 20px black",
+        }}
+        textAlign="center"
+      >
         If you do not have an account, <Link href="/sign-up">sign up here</Link>
       </Typography>
     </Stack>

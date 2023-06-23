@@ -84,7 +84,13 @@ export default function SignIn() {
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          <Typography
+            sx={{
+              textShadow: "0px 0px 20px black",
+            }}
+            component="h1"
+            variant="h5"
+          >
             {showResetPassword ? "Reset password" : "Sign in"}
           </Typography>
           <form onSubmit={handleFormSubmit}>
@@ -127,12 +133,25 @@ export default function SignIn() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" onClick={toggleResetPassword} variant="body2">
+                <Link
+                  sx={{
+                    textShadow: "0px 0px 20px black",
+                  }}
+                  href="#"
+                  onClick={toggleResetPassword}
+                  variant="body2"
+                >
                   {showResetPassword ? "Sign in" : "Forgot password?"}
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="/sign-up" variant="body2">
+                <Link
+                  sx={{
+                    textShadow: "0px 0px 20px black",
+                  }}
+                  href="/sign-up"
+                  variant="body2"
+                >
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
