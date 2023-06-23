@@ -6,8 +6,6 @@ import { redirect } from "next/navigation";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
-import Box from "@mui/material/Box";
-import milford from "../public/milford.jpg";
 import { useBackgroundImage } from "@/shared/AppMuiThemeProvider";
 import Logo from "@/components/logo";
 
