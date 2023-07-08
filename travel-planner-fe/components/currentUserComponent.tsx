@@ -21,7 +21,7 @@ function CurrentUser() {
             spacing={1}
             sx={{ height: "100%" }}
           >
-            <Typography variant="body1">Logged In As {name}</Typography>
+            <Typography variant="body1">Logged in as: {name}</Typography>
             <Avatar
               src="https://cdn.domestika.org/c_fill,dpr_auto,f_auto,h_256,pg_1,t_base_params,w_256/v1492259543/avatars/000/518/341/518341-original.jpeg?1492259543"
               alt="Profile picture"
