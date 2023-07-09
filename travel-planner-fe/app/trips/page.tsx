@@ -127,6 +127,9 @@ export default function Trips() {
           )}
         </Stack>
       </Paper>
+      <Link href="/">
+        <Button variant="contained">Home</Button>
+      </Link>
     </Stack>
   );
 }
