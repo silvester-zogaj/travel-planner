@@ -190,11 +190,11 @@ export default function Preferences({
         })}
       </Stack>
       <Stack alignContent="space-around" direction="row">
-        <Button variant="contained" onClick={handleSubmit}>
-          Generate plan
-        </Button>
         <Button variant="contained" onClick={handleReturn}>
           Return
+        </Button>
+        <Button variant="contained" onClick={handleSubmit}>
+          Generate Plan
         </Button>
       </Stack>
     </Stack>
