@@ -49,7 +49,7 @@ export default function AppMuiThemeProvider(props: {
     document.head.insertAdjacentHTML(
       "afterend",
       `<style id="${rootColorSchemeStyleTagId}">:root { color-scheme: ${
-        prefersDarkMode ? "dark" : "light"
+        prefersDarkMode ? "dark" : "dark"
       }; }</style>`
     );
   }, [prefersDarkMode]);
@@ -71,6 +71,7 @@ export default function AppMuiThemeProvider(props: {
           },
           text: {
             primary: "rgba(255,255,255,0.87)",
+            secondary: "rgba(16,16,16,0.54)",
           },
           divider: "#000044",
         },
