@@ -57,7 +57,7 @@ export default function AppMuiThemeProvider(props: {
   const theme = useMemo(
     () =>
       createTheme({
-        mode: "light",
+        mode: "dark",
         palette: {
           primary: {
             main: "#fff685",
@@ -71,7 +71,6 @@ export default function AppMuiThemeProvider(props: {
           },
           text: {
             primary: "rgba(255,255,255,0.87)",
-            secondary: "rgba(16,16,16,0.54)",
           },
           divider: "#000044",
         },
